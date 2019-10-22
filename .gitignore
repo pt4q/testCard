@@ -36,3 +36,4 @@ Pomiar_pojemnosci_pakietow.csv
 .~lock.Pomiar_pojemnosci_pakietow.csv#
 *.properties
 *.csv
+*.csv#

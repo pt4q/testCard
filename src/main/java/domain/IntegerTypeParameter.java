@@ -1,6 +1,11 @@
 package domain;
 
-public class IntegerTypeParameter {
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Builder
+public class IntegerTypeParameter implements Param {
     private String nameInPolish;
     private String nameInEnglish;
 

@@ -2,9 +2,10 @@ package domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Builder
-@AllArgsConstructor
+@NoArgsConstructor
 public class DesignationTypeParam implements Param {
     private String nameInPolish;
     private String nameInEnglish;
@@ -12,4 +13,5 @@ public class DesignationTypeParam implements Param {
     private Integer punctation;
 
     private String value;
+
 }

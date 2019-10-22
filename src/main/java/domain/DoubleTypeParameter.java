@@ -1,15 +1,21 @@
 package domain;
 
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
-public class BinaryTypeParam implements Param {
+public class DoubleTypeParameter implements Param {
     private String nameInPolish;
     private String nameInEnglish;
 
     private Integer punctation;
 
-    private boolean value;
+    private String subtype;
+    private Double value;
 }
