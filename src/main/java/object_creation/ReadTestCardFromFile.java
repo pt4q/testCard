@@ -5,6 +5,8 @@ import domain.RangeOfResearch;
 import domain.TestCard;
 import object_creation.creation_utils.CsvFileReader;
 
+import java.util.Map;
+
 public class ReadTestCardFromFile {
 
 
@@ -13,6 +15,8 @@ public class ReadTestCardFromFile {
         CsvFileReader reader = new CsvFileReader().builder()
                 .pathToFile(pathToFile)
                 .build();
+
+        Map lines = reader.read();
 
         return null;
     }

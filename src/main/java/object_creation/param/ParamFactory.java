@@ -31,7 +31,7 @@ class ParamFactory implements Builder <Param, List<String>> {
             return builder.build(input);
         }
 
-        return null;
+        throw new IllegalArgumentException(ParamFactoryStatusEnum.PARAM_BUILD_ERR.toString());
     }
 
     private ParamTypeEnum paramTypeRecognizer(List<String> input) {

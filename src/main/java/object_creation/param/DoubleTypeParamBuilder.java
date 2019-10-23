@@ -23,28 +23,28 @@ class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String
     }
 
     private DoubleTypeParameter tryToAddSubtypeAndValue(DoubleTypeParameter param, List<String> list) {
-        String value = list .get(5);
+        String value = list.get(5);
         List<String> tmp = Arrays.asList(value.split(" - "));
-        if (tmp.size() == 2){
+
+        if (tmp.size() == 2) {
             param.setSubtype(tmp.get(0));
             tmp = Arrays.asList(tmp.get(1).split(", "));
-            if (tmp.size() > 1)
+
+            if (tmp.size() > 1) {
                 param.setValue(calcAverage(tmp));
-            else
-                ;
+            } else
+                throw new ArithmeticException(ParamFactoryStatusEnum.DOUBLE_PARAMETER_BUILDER_SUBTYPE_ERR.toString());
         }
-
-
         return param;
     }
 
-    private Double calcAverage (List<String> list){
+    private Double calcAverage(List<String> list) {
         OptionalDouble result = list.stream()
                 .mapToDouble(Double::parseDouble)
                 .average();
         if (result.isPresent())
             return result.getAsDouble();
         else
-            return null;
+            throw new ArithmeticException();
     }
 }
