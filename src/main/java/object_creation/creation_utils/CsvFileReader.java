@@ -20,9 +20,14 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CsvFileReader {
 
-    private String pathToFile;
+    private String pathToFile = null;
     private static final String FILE_NOT_FOUND = "File not found";
     private static final String READING_ERR = "File reading error";
+    private String fileSeparator = ";";
+
+    public CsvFileReader(String fileSeparator) {
+        this.fileSeparator = fileSeparator;
+    }
 
     public Map<Integer, List<String>> read() {
         Map<Integer, List<String>> lines = new HashMap<>();
@@ -65,7 +70,7 @@ public class CsvFileReader {
                 .collect(Collectors.joining());
 
         line = line.substring(0, line.length() - 1);
-        return line.split(";");
+        return line.split(fileSeparator);
     }
 
     private Map<Integer, List<String>> mapValueConverter(Map<Integer, String[]> inputMap) {

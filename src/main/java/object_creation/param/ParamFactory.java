@@ -8,7 +8,7 @@ import java.util.List;
 class ParamFactory implements Builder <Param, List<String>> {
 
     @Override
-    public Param build(List<String> input) {
+    public Param build(List<String> input) throws IllegalArgumentException {
         ParamTypeEnum paramType = paramTypeRecognizer(input);
 
         if (paramType.equals(ParamTypeEnum.BINARY)) {
