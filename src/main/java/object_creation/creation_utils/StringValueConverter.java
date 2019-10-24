@@ -1,6 +1,8 @@
 package object_creation.creation_utils;
 
-public class ValueConverter {
+import org.joda.time.DateTime;
+
+public class StringValueConverter {
     public Integer castToInteger(String input) {
         try {
             return Integer.parseInt(input);
@@ -9,7 +11,7 @@ public class ValueConverter {
         }
     }
 
-    public Boolean castToBoolean(String input) {
+    public Boolean castPositiveScoreToBoolean(String input) {
         input = input.toLowerCase();
 
         if (input.equals("ok"))
@@ -20,5 +22,9 @@ public class ValueConverter {
             return true;
 
         return false;
+    }
+
+    public DateTime convertStringToTime (String input){
+        return DateTime.parse(input);
     }
 }

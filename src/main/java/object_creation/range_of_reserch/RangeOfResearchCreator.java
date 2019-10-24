@@ -2,45 +2,45 @@ package object_creation.range_of_reserch;
 
 import domain.Param;
 import domain.RangeOfResearch;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import object_creation.creation_utils.Creator;
-import object_creation.creation_utils.ValueConverter;
-import object_creation.param.ParamCreator;
+import object_creation.creation_utils.StringValueConverter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-class RangeOfResearchCreator implements Creator<RangeOfResearch, Map<Integer, List<String>>> {
+@NoArgsConstructor
+@Builder
+public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<String>>> {
 
     @Override
-    public RangeOfResearch create(Map<Integer, List<String>> input) {
+    public RangeOfResearch create(List<List<String>> input) throws IllegalArgumentException {
+        RangeOfResearch rangeOfResearch = getRangeOfResearchMainParameters(input.get(0));
+        input = removeRangeOfResearchMainParameters(input);
+
         List<Param> params;
-        ValueConverter converter = new ValueConverter();
-        
+
+
+        return rangeOfResearch;
+    }
+
+    private RangeOfResearch getRangeOfResearchMainParameters(List<String> input) throws IllegalArgumentException {
+        StringValueConverter converter = new StringValueConverter();
         RangeOfResearch rangeOfResearch = new RangeOfResearch().builder()
-                .nameInPolish(input.get(0).get(1))
-                .nameInEnglish(input.get(0).get(2))
-                .punctation(converter.castToInteger(input.get(0).get(3)))
+                .nameInPolish(input.get(1))
+                .punctation(null)
                 .params(null)
                 .overallScore(null)
                 .build();
 
-        input.remove(0);
-        params = buildParams(input);
-        
-        rangeOfResearch.setParams(params);
-        
+        if (input.size() > 2)
+            rangeOfResearch.setPunctation(converter.castToInteger(input.get(2)));
+
         return rangeOfResearch;
     }
 
-    private List<Param> buildParams(Map<Integer, List<String>> input) {
-        return input.entrySet().stream()
-                .map(entry -> buildParam(entry.getValue()))
-                .collect(Collectors.toList());
-    }
-
-    private Param buildParam(List<String> line) {
-        ParamCreator paramCreator = new ParamCreator();
-        return paramCreator.create(line);
+    private List<List<String>> removeRangeOfResearchMainParameters(List<List<String>> input) {
+        input.remove(0);
+        return input;
     }
 }

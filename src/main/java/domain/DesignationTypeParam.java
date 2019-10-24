@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DesignationTypeParam implements Param {
     private String nameInPolish;
-    private String nameInEnglish;
 
     private Integer punctation;
 

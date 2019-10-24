@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BinaryTypeParam implements Param {
     private String nameInPolish;
-    private String nameInEnglish;
 
     private Integer punctation;
 

@@ -2,7 +2,7 @@ package object_creation.param;
 
 import domain.DoubleTypeParameter;
 import object_creation.creation_utils.Builder;
-import object_creation.creation_utils.ValueConverter;
+import object_creation.creation_utils.StringValueConverter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,18 +12,17 @@ class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String
 
     @Override
     public DoubleTypeParameter build(List<String> input) {
-        ValueConverter converter = new ValueConverter();
+        StringValueConverter converter = new StringValueConverter();
         return tryToAddSubtypeAndValue(new DoubleTypeParameter().builder()
                 .nameInPolish(input.get(1))
-                .nameInEnglish(input.get(2))
-                .punctation(converter.castToInteger(input.get(3)))
+                .punctation(converter.castToInteger(input.get(2)))
                 .subtype(null)
                 .value(null)
                 .build(), input);
     }
 
     private DoubleTypeParameter tryToAddSubtypeAndValue(DoubleTypeParameter param, List<String> list) {
-        String value = list.get(5);
+        String value = list.get(4);
         List<String> tmp = Arrays.asList(value.split(" - "));
 
         if (tmp.size() == 2) {
