@@ -21,13 +21,13 @@ class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String
 
         try {
             parameter.setPunctation(converter.castToInteger(input.get(2)));
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
             parameter.setPunctation(null);
         }
 
         try {
-            parameter.setValue(converter.castToDouble(input.get(4)));
             parameter = tryToAddSubtypeAndValue(parameter, input);
+            parameter.setValue(converter.castToDouble(input.get(4)));
         } catch (IndexOutOfBoundsException e) {
             parameter.setValue(null);
         }
@@ -36,27 +36,64 @@ class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String
 
     private DoubleTypeParameter tryToAddSubtypeAndValue(DoubleTypeParameter param, List<String> list) {
         String value = list.get(4);
-        List<String> tmp = Arrays.asList(value.split(" - "));
 
-        if (tmp.size() == 2) {
-            param.setSubtype(tmp.get(0));
-            tmp = Arrays.asList(tmp.get(1).split(", "));
+        String breakPoint = "6 - 44, 49 , 48,5";
+        if (breakPoint.equals(value))
+            System.out.println(breakPoint);
 
-            if (tmp.size() > 1) {
-                param.setValue(calcAverage(tmp));
-            } else
-                throw new ArithmeticException(ParamFactoryStatusEnum.DOUBLE_PARAMETER_BUILDER_SUBTYPE_ERR.toString());
-        }
+        param = tryToGetSubType(value, param);
+
+        value = cleanStringAfterGetSubtype(value);
+
+        param.setValue(
+                calcAverage(
+                        splitStringToStringList(value)));
+
+//                throw new ArithmeticException(ParamFactoryStatusEnum.DOUBLE_PARAMETER_BUILDER_SUBTYPE_ERR.toString());
+
         return param;
     }
 
-    private Double calcAverage(List<String> list) {
-        OptionalDouble result = list.stream()
+    private String cleanStringAfterGetSubtype(String input) {
+        return input.replace(".+- ", "");
+    }
+
+    private DoubleTypeParameter tryToGetSubType(String inputStr, DoubleTypeParameter parameter) {
+        List<String> result;
+
+        if (inputStr.matches(" - ")){
+            inputStr = cleanStringAfterGetSubtype(inputStr);
+            parameter.setSubtype(inputStr);
+        }
+
+        return parameter;
+    }
+
+    private Double calcAverage(List<String> input) {
+        OptionalDouble result = input.stream()
                 .mapToDouble(Double::parseDouble)
                 .average();
         if (result.isPresent())
             return result.getAsDouble();
         else
             throw new ArithmeticException();
+    }
+
+    private List<String> splitStringToStringList(String input) {
+        List<String> result;
+        input = prepareFractionAndDeleteSpaces(input);
+
+        result = Arrays.asList(input.split(","));
+
+        if (result.size() < 2)
+            result = Arrays.asList(input.split("/"));
+
+        return result;
+    }
+
+    private String prepareFractionAndDeleteSpaces(String input) {
+        return input
+                .replace(",[0-9]{1,3}", ".")
+                .replace(" ", "");
     }
 }

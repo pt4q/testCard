@@ -15,4 +15,11 @@ public class DoubleTypeParameter implements Param {
 
     private String subtype;
     private Double value;
+
+    public String toString() {
+        return nameInPolish
+                + " " + punctation.toString()
+                + " " + subtype
+                + " " + value.toString() ;
+    }
 }

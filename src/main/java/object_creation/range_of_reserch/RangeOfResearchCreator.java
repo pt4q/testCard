@@ -22,7 +22,7 @@ public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<Lis
         List<Param> params = getParams(input);
 
         rangeOfResearch.setParams(params);
-        System.out.println(rangeOfResearch.getNameInPolish() + "\t" + params.size());
+        System.out.println(rangeOfResearch.getNameInPolish() + "\t>>>" + params.size() + "<<<");
         return rangeOfResearch;
     }
 
@@ -35,7 +35,7 @@ public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<Lis
                 .overallScore(null)
                 .build();
 
-        if (input.size() > 2)
+        if (input.size() > 2)                                                       // zmienic na wyjatek IndexBoundException
             rangeOfResearch.setPunctation(converter.castToInteger(input.get(2)));
 
         return rangeOfResearch;

@@ -18,9 +18,12 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
         Integer inputSize = input.size();
 
         for (int i = 0; i < inputSize; i++) {
-            Param param = createParam(input.get(i));
-            System.out.println(param.toString());
-            params.add(param);
+            List<String> stringLines = input.get(i);
+
+            if (stringLines.size() > 2) {
+                Param param = createParam(stringLines);
+                params.add(param);
+            }
         }
         return params;
     }

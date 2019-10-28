@@ -5,7 +5,8 @@ enum ParamTypeEnum {
     BINARY("b"),
     TEXT("n"),
     DOUBLE("f"),
-    INTEGER("i");
+    INTEGER("i"),
+    PIC("");
 
     private String regex;
 
