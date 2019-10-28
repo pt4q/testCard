@@ -20,28 +20,32 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
     public List<RangeOfResearch> create(List<List<String>> input) {
         List<RangeOfResearch> rangeOfResearchList = new ArrayList<>();
         List<List<String>> paramLine = initEmptyParamLine();
+
         Integer inputSize = input.size();
         boolean addedRangeOfResearch = false;
 
         for (int i = 0; i < inputSize; i++) {
-            String mark = input.get(i).get(0);
+            String mark = getMark(input, i);
 
             if (mark.matches(rangeOfResearchMark)) {
                 String nextMark;
-                paramLine.add(input.get(i));
+                List<String> rangeOfResearchHeader = input.get(i);
+                paramLine.add(rangeOfResearchHeader);
 
                 do {
                     if (i < inputSize - 1)
                         i++;
 
-                    nextMark = input.get(i).get(0);
+                    List<String> lineList = input.get(i);
+                    nextMark = getMark(input, i);
 
                     if (nextMark.matches(rangeOfResearchMark)) {
-                        rangeOfResearchList.add(createRangeOfResearch(paramLine));
+                        RangeOfResearch newRangeOfResearch = createRangeOfResearch(paramLine);
+                        rangeOfResearchList.add(newRangeOfResearch);
                         addedRangeOfResearch = true;
-                    }
-
-                    paramLine.add(input.get(i));
+                        i--;
+                    } else
+                        paramLine.add(lineList);
 
                 } while (!addedRangeOfResearch);
             }
@@ -51,6 +55,10 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
         }
 
         return rangeOfResearchList;
+    }
+
+    private String getMark(List<List<String>> list, Integer index) {
+        return list.get(index).get(0);
     }
 
     private List<List<String>> initEmptyParamLine() {

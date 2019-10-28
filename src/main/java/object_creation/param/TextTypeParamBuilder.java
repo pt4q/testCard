@@ -1,17 +1,17 @@
 package object_creation.param;
 
-import domain.BinaryTypeParam;
+import domain.TextTypeParam;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
 
 import java.util.List;
 
-class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
-
+class TextTypeParamBuilder implements Builder<TextTypeParam, List<String>> {
     @Override
-    public BinaryTypeParam build(List<String> input) {
+    public TextTypeParam build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
-        BinaryTypeParam parameter = new BinaryTypeParam().builder()
+
+        TextTypeParam parameter = new TextTypeParam().builder()
                 .nameInPolish(input.get(1))
                 .build();
 
@@ -22,9 +22,9 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
         }
 
         try {
-            parameter.setValue(converter.castPositiveScoreToBoolean(input.get(4)));
+            parameter.setValue((input.get(4)));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(false);
+            parameter.setValue(null);
         }
         return parameter;
     }

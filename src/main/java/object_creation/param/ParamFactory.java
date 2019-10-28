@@ -16,12 +16,12 @@ class ParamFactory implements Builder <Param, List<String>> {
             return builder.build(input);
         }
 
-        else if (paramType.equals(ParamTypeEnum.DESIGNATION)) {
-            DesignationTypeParamBuilder builder = new DesignationTypeParamBuilder();
+        else if (paramType.equals(ParamTypeEnum.TEXT)) {
+            TextTypeParamBuilder builder = new TextTypeParamBuilder();
             return builder.build(input);
         }
 
-        else if (paramType.equals(ParamTypeEnum.FLOAT)) {
+        else if (paramType.equals(ParamTypeEnum.DOUBLE)) {
             DoubleTypeParamBuilder builder = new DoubleTypeParamBuilder();
             return builder.build(input);
         }
@@ -41,11 +41,11 @@ class ParamFactory implements Builder <Param, List<String>> {
         if (StringMatcher.isMatch(type, ParamTypeEnum.BINARY.toString()))
             return ParamTypeEnum.BINARY;
 
-        else if (StringMatcher.isMatch(type, ParamTypeEnum.DESIGNATION.toString()))
-            return ParamTypeEnum.DESIGNATION;
+        else if (StringMatcher.isMatch(type, ParamTypeEnum.TEXT.toString()))
+            return ParamTypeEnum.TEXT;
 
-        else if (StringMatcher.isMatch(type, ParamTypeEnum.FLOAT.toString()))
-            return ParamTypeEnum.FLOAT;
+        else if (StringMatcher.isMatch(type, ParamTypeEnum.DOUBLE.toString()))
+            return ParamTypeEnum.DOUBLE;
 
         else if (StringMatcher.isMatch(type, ParamTypeEnum.INTEGER.toString()))
             return ParamTypeEnum.INTEGER;

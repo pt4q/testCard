@@ -13,12 +13,25 @@ class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String
     @Override
     public DoubleTypeParameter build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
-        return tryToAddSubtypeAndValue(new DoubleTypeParameter().builder()
+
+        DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
                 .nameInPolish(input.get(1))
-                .punctation(converter.castToInteger(input.get(2)))
                 .subtype(null)
-                .value(null)
-                .build(), input);
+                .build();
+
+        try {
+            parameter.setPunctation(converter.castToInteger(input.get(2)));
+        } catch (IndexOutOfBoundsException e) {
+            parameter.setPunctation(null);
+        }
+
+        try {
+            parameter.setValue(converter.castToDouble(input.get(4)));
+            parameter = tryToAddSubtypeAndValue(parameter, input);
+        } catch (IndexOutOfBoundsException e) {
+            parameter.setValue(null);
+        }
+        return parameter;
     }
 
     private DoubleTypeParameter tryToAddSubtypeAndValue(DoubleTypeParameter param, List<String> list) {

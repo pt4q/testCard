@@ -1,10 +1,11 @@
 package object_creation.param;
 
 enum ParamTypeEnum {
-    BINARY(""),
-    DESIGNATION(""),
-    FLOAT(""),
-    INTEGER("");
+    HEADER("h"),
+    BINARY("b"),
+    TEXT("n"),
+    DOUBLE("f"),
+    INTEGER("i");
 
     private String regex;
 

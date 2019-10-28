@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.creation_utils.StringValueConverter;
+import object_creation.param.ParamListCreator;
 
 import java.util.List;
 
@@ -18,9 +19,10 @@ public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<Lis
         RangeOfResearch rangeOfResearch = getRangeOfResearchMainParameters(input.get(0));
         input = removeRangeOfResearchMainParameters(input);
 
-        List<Param> params;
+        List<Param> params = getParams(input);
 
-
+        rangeOfResearch.setParams(params);
+        System.out.println(rangeOfResearch.getNameInPolish() + "\t" + params.size());
         return rangeOfResearch;
     }
 
@@ -42,5 +44,9 @@ public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<Lis
     private List<List<String>> removeRangeOfResearchMainParameters(List<List<String>> input) {
         input.remove(0);
         return input;
+    }
+
+    private List<Param> getParams(List<List<String>> paramStrings) {
+        return new ParamListCreator().create(paramStrings);
     }
 }

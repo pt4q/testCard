@@ -11,6 +11,14 @@ public class StringValueConverter {
         }
     }
 
+    public Double castToDouble(String input) {
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     public Boolean castPositiveScoreToBoolean(String input) {
         input = input.toLowerCase();
 
@@ -24,7 +32,7 @@ public class StringValueConverter {
         return false;
     }
 
-    public DateTime convertStringToTime (String input){
+    public DateTime convertStringToTime(String input) {
         return DateTime.parse(input);
     }
 }
