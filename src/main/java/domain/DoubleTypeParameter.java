@@ -13,13 +13,12 @@ public class DoubleTypeParameter implements Param {
 
     private Integer punctation;
 
-    private String subtype;
+    private String valueString;
     private Double value;
 
     public String toString() {
         return nameInPolish
                 + " " + punctation.toString()
-                + " " + subtype
                 + " " + value.toString() ;
     }
 }

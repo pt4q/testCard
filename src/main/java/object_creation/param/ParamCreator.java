@@ -12,10 +12,6 @@ public class ParamCreator implements Creator<Param, List<String>> {
         ParamFactory factory = new ParamFactory();
         Param param = null;
 
-        String brakePoint = "Wiertła w kompletacji – rozmiar i twardości  [mm], [HRC]";
-        if (input.get(1).equals(brakePoint))
-            System.out.println(">>> " + input.get(1));
-
         if (checkRequiredColumnNumber(input)) {
             param = factory.build(input);
             System.out.println("added:\t" + input.get(1));

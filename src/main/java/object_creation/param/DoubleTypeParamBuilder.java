@@ -8,65 +8,55 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
 
-class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
+public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
 
     @Override
     public DoubleTypeParameter build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
 
+        String brakePoint = "3,5 / 3,2";
+
+        String punctation;
+        String value;
+
+        if (input.get(4).equals(brakePoint))
+            System.out.println(">>> " + input.get(1)); // breakpoint
+
         DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
                 .nameInPolish(input.get(1))
-                .subtype(null)
                 .build();
 
         try {
-            parameter.setPunctation(converter.castToInteger(input.get(2)));
+            punctation = input.get(2);
+            if (punctation != null || !punctation.equals(""))
+                parameter.setPunctation(converter.castToInteger());
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            parameter.setPunctation(null);
+            System.out.println();
         }
 
         try {
-            parameter = tryToAddSubtypeAndValue(parameter, input);
-            parameter.setValue(converter.castToDouble(input.get(4)));
+            value = input.get(4);
+            parameter.setValueString(value);
+
+            parameter.setValue(calcAverageInComplexString(parameter, input));
+
+            parameter.setValue(converter.castToDouble(value));
         } catch (IndexOutOfBoundsException e) {
             parameter.setValue(null);
         }
         return parameter;
     }
 
-    private DoubleTypeParameter tryToAddSubtypeAndValue(DoubleTypeParameter param, List<String> list) {
-        String value = list.get(4);
+    public Double calcAverageInComplexString(String input) {
 
         String breakPoint = "6 - 44, 49 , 48,5";
-        if (breakPoint.equals(value))
+        if (breakPoint.equals(input))
             System.out.println(breakPoint);
 
-        param = tryToGetSubType(value, param);
+        List<String> stringList = splitStringToStringList(input);
 
-        value = cleanStringAfterGetSubtype(value);
 
-        param.setValue(
-                calcAverage(
-                        splitStringToStringList(value)));
-
-//                throw new ArithmeticException(ParamFactoryStatusEnum.DOUBLE_PARAMETER_BUILDER_SUBTYPE_ERR.toString());
-
-        return param;
-    }
-
-    private String cleanStringAfterGetSubtype(String input) {
-        return input.replace(".+- ", "");
-    }
-
-    private DoubleTypeParameter tryToGetSubType(String inputStr, DoubleTypeParameter parameter) {
-        List<String> result;
-
-        if (inputStr.matches(" - ")){
-            inputStr = cleanStringAfterGetSubtype(inputStr);
-            parameter.setSubtype(inputStr);
-        }
-
-        return parameter;
+        return calcAverage(stringList);
     }
 
     private Double calcAverage(List<String> input) {
