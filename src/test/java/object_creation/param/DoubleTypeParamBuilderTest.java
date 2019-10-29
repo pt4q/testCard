@@ -20,7 +20,6 @@ public class DoubleTypeParamBuilderTest {
 
     @Test
     public void tryToAddSubtypeAndValue() {
-
-        doubleTypeParamBuilder.calcAverageInComplexString()
+        doubleTypeParamBuilder.calcAverageInComplexString();
     }
 }
