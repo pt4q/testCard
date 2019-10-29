@@ -29,7 +29,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
         try {
             punctation = input.get(2);
             if (punctation != null || !punctation.equals(""))
-                parameter.setPunctation(converter.castToInteger());
+                parameter.setPunctation(converter.castToInteger(punctation));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println();
         }
@@ -38,7 +38,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
             value = input.get(4);
             parameter.setValueString(value);
 
-            parameter.setValue(calcAverageInComplexString(parameter, input));
+            parameter.setValue(calcAverageInComplexString(value));
 
             parameter.setValue(converter.castToDouble(value));
         } catch (IndexOutOfBoundsException e) {
