@@ -59,9 +59,9 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
         input = changePointBetweenNumbers(input);
         input = deleteSpaces(input);
 
-        if (StringMatcher.isMatch(input,"[0-9]{1}/[0-9]{1}"))
-            stringList = splitStringToStringList(input, "/");
-        else
+        stringList = splitStringToStringList(input, "/");
+
+        if (stringList.size() < 2)
             stringList = splitStringToStringList(input, ",");
 
         average = calcAverage(stringList);
