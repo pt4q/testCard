@@ -2,11 +2,14 @@ package object_creation.param;
 
 import domain.DoubleTypeParameter;
 import object_creation.creation_utils.Builder;
+import object_creation.creation_utils.StringMatcher;
 import object_creation.creation_utils.StringValueConverter;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
 
@@ -48,15 +51,22 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
     }
 
     public Double calcAverageInComplexString(String input) {
+        List<String> stringList;
+        Double average;
 
-        String breakPoint = "6 - 44, 49 , 48,5";
-        if (breakPoint.equals(input))
-            System.out.println(breakPoint);
+        input = changeCommaToPointInFraction(input);
+        input = deleteNonDoubleCharSequence(input);
+        input = changePointBetweenNumbers(input);
+        input = deleteSpaces(input);
 
-        List<String> stringList = splitStringToStringList(input);
+        if (StringMatcher.isMatch(input,"[0-9]{1}/[0-9]{1}"))
+            stringList = splitStringToStringList(input, "/");
+        else
+            stringList = splitStringToStringList(input, ",");
 
+        average = calcAverage(stringList);
 
-        return calcAverage(stringList);
+        return average;
     }
 
     private Double calcAverage(List<String> input) {
@@ -69,21 +79,23 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
             throw new ArithmeticException();
     }
 
-    private List<String> splitStringToStringList(String input) {
-        List<String> result;
-        input = prepareFractionAndDeleteSpaces(input);
-
-        result = Arrays.asList(input.split(","));
-
-        if (result.size() < 2)
-            result = Arrays.asList(input.split("/"));
-
-        return result;
+    public List<String> splitStringToStringList(String input, String splitStr) {
+        return Arrays.asList(input.split(splitStr));
     }
 
-    private String prepareFractionAndDeleteSpaces(String input) {
-        return input
-                .replace(",[0-9]{1,3}", ".")
-                .replace(" ", "");
+    public String changePointBetweenNumbers(String input) {
+        return input.replaceAll("(\\. )", ",");
+    }
+
+    public String changeCommaToPointInFraction(String input) {
+        return input.replaceAll(",", ".");
+    }
+
+    public String deleteNonDoubleCharSequence(String input) {
+        return input.replaceAll("([0-9]{1,}[ ]*[-]{1}[ ]*)", "");
+    }
+
+    public String deleteSpaces(String input) {
+        return input.replaceAll(" ", "");
     }
 }
