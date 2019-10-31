@@ -2,13 +2,14 @@ package object_creation.param;
 
 import domain.*;
 import object_creation.creation_utils.Creator;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 
 import java.util.List;
 
 public class ParamCreator implements Creator<Param, List<String>> {
 
     @Override
-    public Param create(List<String> input) {
+    public Param create(List<String> input) throws RecognizeParamTypeException {
         ParamFactory factory = new ParamFactory();
         Param param = null;
 
@@ -18,7 +19,7 @@ public class ParamCreator implements Creator<Param, List<String>> {
         }
 
         if (param == null)
-            System.out.println("NULL in:\t" + input.get(1));
+            System.out.println("Empty VALUE in:\t" + input.get(1));
 
         return param;
     }

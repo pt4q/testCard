@@ -5,6 +5,7 @@ import domain.RangeOfResearch;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import object_creation.creation_utils.Creator;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringValueConverter;
 import object_creation.param.ParamListCreator;
 
@@ -12,17 +13,21 @@ import java.util.List;
 
 @NoArgsConstructor
 @Builder
-public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<String>>> {
+class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<String>>> {
 
     @Override
-    public RangeOfResearch create(List<List<String>> input) throws IllegalArgumentException {
+    public RangeOfResearch create(List<List<String>> input) throws RecognizeParamTypeException {
         RangeOfResearch rangeOfResearch = getRangeOfResearchMainParameters(input.get(0));
         input = removeRangeOfResearchMainParameters(input);
 
-        List<Param> params = getParams(input);
+        String breakpoint = input.get(0).get(1);
+        if (breakpoint.equals("Urzadzenie klasy II  (punkty sprawdzenia , pomiedzy cześciami przewodzącymi oddzielonymi izolacją)"))
+            System.out.println("breakpoint");
 
+        List<Param> params = getParams(input);
         rangeOfResearch.setParams(params);
-        System.out.println(rangeOfResearch.getNameInPolish() + "\t>>>" + params.size() + "<<<");
+
+        System.out.println("==========\t" + rangeOfResearch.getNameInPolish() + "\t==========\t>>> " + params.size() + " <<<");
         return rangeOfResearch;
     }
 
@@ -46,7 +51,7 @@ public class RangeOfResearchCreator implements Creator<RangeOfResearch, List<Lis
         return input;
     }
 
-    private List<Param> getParams(List<List<String>> paramStrings) {
+    private List<Param> getParams(List<List<String>> paramStrings) throws RecognizeParamTypeException {
         return new ParamListCreator().create(paramStrings);
     }
 }

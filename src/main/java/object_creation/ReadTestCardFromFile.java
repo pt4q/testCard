@@ -5,6 +5,7 @@ import domain.RangeOfResearch;
 import domain.TestCard;
 import lombok.NoArgsConstructor;
 import object_creation.creation_utils.CsvFileReader;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.test_card.TestCardCreator;
 
 import java.util.Map;
@@ -14,7 +15,7 @@ public class ReadTestCardFromFile {
 
     private TestCard testCard;
 
-    public TestCard createTestCardFromFile(String pathToFile){
+    public TestCard createTestCardFromFile(String pathToFile) throws RecognizeParamTypeException {
         CsvFileReader reader = new CsvFileReader().builder()
                 .pathToFile(pathToFile)
                 .fileSeparator("\t")

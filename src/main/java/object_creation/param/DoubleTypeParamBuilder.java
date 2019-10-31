@@ -2,11 +2,14 @@ package object_creation.param;
 
 import domain.DoubleTypeParameter;
 import object_creation.creation_utils.Builder;
+import object_creation.creation_utils.StringMatcher;
 import object_creation.creation_utils.StringValueConverter;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
 
@@ -14,13 +17,8 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
     public DoubleTypeParameter build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
 
-        String brakePoint = "3,5 / 3,2";
-
         String punctation;
         String value;
-
-        if (input.get(4).equals(brakePoint))
-            System.out.println(">>> " + input.get(1)); // breakpoint
 
         DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
                 .nameInPolish(input.get(1))
@@ -29,7 +27,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
         try {
             punctation = input.get(2);
             if (punctation != null || !punctation.equals(""))
-                parameter.setPunctation(converter.castToInteger());
+                parameter.setPunctation(converter.castToInteger(punctation));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println();
         }
@@ -38,7 +36,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
             value = input.get(4);
             parameter.setValueString(value);
 
-            parameter.setValue(calcAverageInComplexString(parameter, input));
+            parameter.setValue(calcAverageInComplexString(value));
 
             parameter.setValue(converter.castToDouble(value));
         } catch (IndexOutOfBoundsException e) {
@@ -48,15 +46,22 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
     }
 
     public Double calcAverageInComplexString(String input) {
+        List<String> stringList;
+        Double average;
 
-        String breakPoint = "6 - 44, 49 , 48,5";
-        if (breakPoint.equals(input))
-            System.out.println(breakPoint);
+        input = changeCommaToPointInFraction(input);
+        input = deleteNonDoubleCharSequence(input);
+        input = changePointBetweenNumbers(input);
+        input = deleteSpaces(input);
 
-        List<String> stringList = splitStringToStringList(input);
+        stringList = splitStringToStringList(input, "/");
 
+        if (stringList.size() < 2)
+            stringList = splitStringToStringList(input, ",");
 
-        return calcAverage(stringList);
+        average = calcAverage(stringList);
+
+        return average;
     }
 
     private Double calcAverage(List<String> input) {
@@ -69,21 +74,23 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
             throw new ArithmeticException();
     }
 
-    private List<String> splitStringToStringList(String input) {
-        List<String> result;
-        input = prepareFractionAndDeleteSpaces(input);
-
-        result = Arrays.asList(input.split(","));
-
-        if (result.size() < 2)
-            result = Arrays.asList(input.split("/"));
-
-        return result;
+    public List<String> splitStringToStringList(String input, String splitStr) {
+        return Arrays.asList(input.split(splitStr));
     }
 
-    private String prepareFractionAndDeleteSpaces(String input) {
-        return input
-                .replace(",[0-9]{1,3}", ".")
-                .replace(" ", "");
+    public String changePointBetweenNumbers(String input) {
+        return input.replaceAll("(\\. )", ",");
+    }
+
+    public String changeCommaToPointInFraction(String input) {
+        return input.replaceAll(",", ".");
+    }
+
+    public String deleteNonDoubleCharSequence(String input) {
+        return input.replaceAll("([0-9]{1,}[ ]*[-]{1}[ ]*)", "");
+    }
+
+    public String deleteSpaces(String input) {
+        return input.replaceAll(" ", "");
     }
 }

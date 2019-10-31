@@ -3,13 +3,16 @@ package object_creation.param;
 import domain.*;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringMatcher;
+import object_creation.param.status_and_exceptions.ParamFactoryStatusEnum;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
+import object_creation.param.types.ParamTypeEnum;
 
 import java.util.List;
 
 class ParamFactory implements Builder<Param, List<String>> {
 
     @Override
-    public Param build(List<String> input) throws IllegalArgumentException {
+    public Param build(List<String> input) throws RecognizeParamTypeException {
         ParamTypeEnum paramType = paramTypeRecognizer(input);
 
         if (paramType != null) {
@@ -28,7 +31,7 @@ class ParamFactory implements Builder<Param, List<String>> {
             }
         }
 
-        throw new IllegalArgumentException(ParamFactoryStatusEnum.PARAM_BUILD_ERR.toString());
+        throw new RecognizeParamTypeException(ParamFactoryStatusEnum.PARAM_BUILD_NOT_RECOGNIZED.toString()+ " for " + input.get(1));
     }
 
     private ParamTypeEnum paramTypeRecognizer(List<String> input) {
