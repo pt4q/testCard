@@ -2,15 +2,15 @@ package object_creation.param;
 
 import domain.Param;
 import object_creation.creation_utils.Creator;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ParamListCreator implements Creator<List<Param>, List<List<String>>> {
 
     @Override
-    public List<Param> create(List<List<String>> input) {
+    public List<Param> create(List<List<String>> input) throws RecognizeParamTypeException {
 //        return input.stream()
 //                .map(list -> createParam(list))
 //                .collect(Collectors.toList());
@@ -28,7 +28,7 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
         return params;
     }
 
-    private Param createParam(List<String> input) {
+    private Param createParam(List<String> input) throws RecognizeParamTypeException {
         return new ParamCreator().create(input);
     }
 }

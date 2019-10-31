@@ -17,13 +17,8 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
     public DoubleTypeParameter build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
 
-        String brakePoint = "3,5 / 3,2";
-
         String punctation;
         String value;
-
-        if (input.get(4).equals(brakePoint))
-            System.out.println(">>> " + input.get(1)); // breakpoint
 
         DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
                 .nameInPolish(input.get(1))

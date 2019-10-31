@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import object_creation.creation_utils.Creator;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
     private String rangeOfResearchMark = "#";
 
     @Override
-    public List<RangeOfResearch> create(List<List<String>> input) {
+    public List<RangeOfResearch> create(List<List<String>> input) throws RecognizeParamTypeException {
         List<RangeOfResearch> rangeOfResearchList = new ArrayList<>();
         List<List<String>> paramsStringList = initEmptyParamLine();
 
@@ -66,7 +67,7 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
         return new ArrayList<>();
     }
 
-    private RangeOfResearch createRangeOfResearch(List<List<String>> input) {
+    private RangeOfResearch createRangeOfResearch(List<List<String>> input) throws RecognizeParamTypeException {
         return new RangeOfResearchCreator().create(input);
     }
 }

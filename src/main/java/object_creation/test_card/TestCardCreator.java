@@ -3,8 +3,8 @@ package object_creation.test_card;
 import domain.RangeOfResearch;
 import domain.TestCard;
 import object_creation.creation_utils.Creator;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringMatcher;
-import object_creation.range_of_reserch.RangeOfResearchCreator;
 import object_creation.range_of_reserch.RangeOfResearchListCreator;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
     private List<String> titleRow;
 
     @Override
-    public TestCard create(Map<Integer, List<String>> input) throws IllegalArgumentException {
+    public TestCard create(Map<Integer, List<String>> input) throws RecognizeParamTypeException {
         TestCard testCard;
         List<List<String>> header;
         List<RangeOfResearch> rangeOfResearchList;
@@ -39,7 +39,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
         return testCard;
     }
 
-    private List<RangeOfResearch> createRangeOfResearchList(List<List<String>> input, String rangeOfResearchMark) {
+    private List<RangeOfResearch> createRangeOfResearchList(List<List<String>> input, String rangeOfResearchMark) throws RecognizeParamTypeException {
         RangeOfResearchListCreator rangeOfResearchListCreator = new RangeOfResearchListCreator().builder()
                 .rangeOfResearchMark(rangeOfResearchMark)
                 .build();

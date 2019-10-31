@@ -1,6 +1,6 @@
-package object_creation.param;
+package object_creation.param.types;
 
-enum ParamTypeEnum {
+public enum ParamTypeEnum {
     HEADER("h"),
     BINARY("b"),
     TEXT("n"),
