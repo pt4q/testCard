@@ -1,26 +1,25 @@
 package object_creation.range_of_reserch;
 
 import domain.RangeOfResearch;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
+import object_creation.test_card.config.TestCardConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@RequiredArgsConstructor
 public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>, List<List<String>>> {
 
-    private String rangeOfResearchMark = "#";
+    @NonNull
+    private TestCardConfig config;
 
     @Override
     public List<RangeOfResearch> create(List<List<String>> input) throws RecognizeParamTypeException {
+        String rangeOfResearchMark = config.getParamTypes().getRANGE_OF_RESEARCH_MARK();
         List<RangeOfResearch> rangeOfResearchList = new ArrayList<>();
-        List<List<String>> paramsStringList = initEmptyParamLine();
+        List<List<String>> paramsStringList = initEmptyList();
 
         Integer inputSize = input.size();
         boolean addedRangeOfResearch = false;
@@ -52,7 +51,7 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
                 } while (!addedRangeOfResearch);
             }
 
-            paramsStringList = initEmptyParamLine();
+            paramsStringList = initEmptyList();
             addedRangeOfResearch = false;
         }
 
@@ -60,14 +59,14 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
     }
 
     private String getMark(List<List<String>> list, Integer index) {
-        return list.get(index).get(0);
+        return list.get(index).get(config.getColumnsNumbers().getRangeOfResearchColumnNumber());
     }
 
-    private List<List<String>> initEmptyParamLine() {
+    private List<List<String>> initEmptyList() {
         return new ArrayList<>();
     }
 
     private RangeOfResearch createRangeOfResearch(List<List<String>> input) throws RecognizeParamTypeException {
-        return new RangeOfResearchCreator().create(input);
+        return new RangeOfResearchCreator(config).create(input);
     }
 }

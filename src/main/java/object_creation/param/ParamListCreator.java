@@ -1,6 +1,8 @@
 package object_creation.param;
 
 import domain.Param;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.test_card.config.TestCardConfig;
@@ -8,9 +10,11 @@ import object_creation.test_card.config.TestCardConfig;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ParamListCreator implements Creator<List<Param>, List<List<String>>> {
 
-    private TestCardConfig testCardConfig;
+    @NonNull
+    private TestCardConfig config;
 
     @Override
     public List<Param> create(List<List<String>> input) throws RecognizeParamTypeException {
@@ -37,6 +41,6 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
     }
 
     private Param createParam(List<String> input) throws RecognizeParamTypeException {
-        return new ParamCreator(testCardConfig).create(input);
+        return new ParamCreator(config).create(input);
     }
 }

@@ -1,31 +1,37 @@
 package object_creation.param;
 
 import domain.DoubleTypeParameter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
-import object_creation.creation_utils.StringMatcher;
 import object_creation.creation_utils.StringValueConverter;
+import object_creation.test_card.config.TestCardColumnsNumbers;
+import object_creation.test_card.config.TestCardConfig;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
-import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
+
+    @NonNull
+    private TestCardConfig config;
 
     @Override
     public DoubleTypeParameter build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
+        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
         String punctation;
         String value;
 
         DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
-                .nameInPolish(input.get(1))
+                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
                 .build();
 
         try {
-            punctation = input.get(2);
+            punctation = input.get(columnsNumbers.getPunctationColumnNumber());
             if (punctation != null || !punctation.equals(""))
                 parameter.setPunctation(converter.castToInteger(punctation));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
@@ -33,7 +39,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
         }
 
         try {
-            value = input.get(4);
+            value = input.get(columnsNumbers.getMeasuredValuesColumnNumber());
             parameter.setValueString(value);
 
             parameter.setValue(calcAverageInComplexString(value));

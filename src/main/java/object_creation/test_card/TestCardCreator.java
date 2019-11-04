@@ -37,7 +37,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 
         header = getHeader(inputList);
         inputList = removeHeader(inputList, header);
-        rangeOfResearchList = createRangeOfResearchList(inputList, rangeOfResearchMark);
+        rangeOfResearchList = createRangeOfResearchList(inputList);
 
         testCard = new TestCard().builder()
                 .header(header)
@@ -54,9 +54,6 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 
         for (int i = 0; i < inputSize; i++) {
 
-            if(i == 103)
-                System.out.println(i);
-
             List<String> line = input.get(i);
             Integer lineSize = line.size();
 
@@ -69,7 +66,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
                     i--;
                 }
             } else {
-                System.out.println("remove index " + i + "\t =>\t" + line.get(config.getColumnsNumbers().getNameInPolishColumnNumber()));
+                System.out.println("remove line with\t=>\t" + line.get(config.getColumnsNumbers().getNameInPolishColumnNumber()));
                 input.remove(i);
                 inputSize--;
                 i--;
@@ -78,10 +75,8 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
         return input;
     }
 
-    private List<RangeOfResearch> createRangeOfResearchList(List<List<String>> input, String rangeOfResearchMark) throws RecognizeParamTypeException {
-        RangeOfResearchListCreator rangeOfResearchListCreator = new RangeOfResearchListCreator().builder()
-                .rangeOfResearchMark(rangeOfResearchMark)
-                .build();
+    private List<RangeOfResearch> createRangeOfResearchList(List<List<String>> input) throws RecognizeParamTypeException {
+        RangeOfResearchListCreator rangeOfResearchListCreator = new RangeOfResearchListCreator(config);
 
         return rangeOfResearchListCreator.create(input);
     }

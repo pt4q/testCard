@@ -17,25 +17,25 @@ import java.util.List;
 class ParamFactory implements Builder<Param, List<String>> {
 
     @NonNull
-    private TestCardConfig testCardConfig;
+    private TestCardConfig config;
 
     @Override
     public Param build(List<String> input) throws RecognizeParamTypeException {
-        TestCardParamMarks testCardParamMarks = testCardConfig.getParamTypes();
+        TestCardParamMarks testCardParamMarks = config.getParamTypes();
         String paramType = paramTypeRecognizer(input);
 
         if (paramType != null) {
             if (paramType.equals(testCardParamMarks.getBINARY_TYPE())) {
-                BinaryTypeParamBuilder builder = new BinaryTypeParamBuilder();
+                BinaryTypeParamBuilder builder = new BinaryTypeParamBuilder(config);
                 return builder.build(input);
             } else if (paramType.equals(testCardParamMarks.getTEXT_TYPE())) {
-                TextTypeParamBuilder builder = new TextTypeParamBuilder();
+                TextTypeParamBuilder builder = new TextTypeParamBuilder(config);
                 return builder.build(input);
             } else if (paramType.equals(testCardParamMarks.getDOUBLE_TYPE())) {
-                DoubleTypeParamBuilder builder = new DoubleTypeParamBuilder();
+                DoubleTypeParamBuilder builder = new DoubleTypeParamBuilder(config);
                 return builder.build(input);
             } else if (paramType.equals(testCardParamMarks.getINTEGER_TYPE())) {
-                IntegerTypeParameterBuilder builder = new IntegerTypeParameterBuilder();
+                IntegerTypeParameterBuilder builder = new IntegerTypeParameterBuilder(config);
                 return builder.build(input);
             }
         }
@@ -43,8 +43,8 @@ class ParamFactory implements Builder<Param, List<String>> {
     }
 
     private String paramTypeRecognizer(List<String> input) {
-        TestCardColumnsNumbers testCardColumnsNumbers = testCardConfig.getColumnsNumbers();
-        TestCardParamMarks testCardParamMarks = testCardConfig.getParamTypes();
+        TestCardColumnsNumbers testCardColumnsNumbers = config.getColumnsNumbers();
+        TestCardParamMarks testCardParamMarks = config.getParamTypes();
 
         TestCardParamMarks result = null;
         Integer inputSize = input.size();

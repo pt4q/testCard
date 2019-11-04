@@ -2,18 +2,23 @@ package object_creation.range_of_reserch;
 
 import domain.Param;
 import domain.RangeOfResearch;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import domain.TestCard;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringValueConverter;
 import object_creation.param.ParamListCreator;
+import object_creation.test_card.config.TestCardColumnsNumbers;
+import object_creation.test_card.config.TestCardConfig;
 
 import java.util.List;
 
-@NoArgsConstructor
-@Builder
+@RequiredArgsConstructor
 class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<String>>> {
+
+    @NonNull
+    private TestCardConfig config;
 
     @Override
     public RangeOfResearch create(List<List<String>> input) throws RecognizeParamTypeException {
@@ -29,15 +34,16 @@ class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<Strin
 
     private RangeOfResearch getRangeOfResearchMainParameters(List<String> input) throws IllegalArgumentException {
         StringValueConverter converter = new StringValueConverter();
+        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
         RangeOfResearch rangeOfResearch = new RangeOfResearch().builder()
-                .nameInPolish(input.get(1))
+                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
                 .punctation(null)
                 .params(null)
                 .overallScore(null)
                 .build();
 
         if (input.size() > 2)                                                       // zmienic na wyjatek IndexBoundException
-            rangeOfResearch.setPunctation(converter.castToInteger(input.get(2)));
+            rangeOfResearch.setPunctation(converter.castToInteger(input.get(columnsNumbers.getPunctationColumnNumber())));
 
         return rangeOfResearch;
     }
@@ -48,6 +54,6 @@ class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<Strin
     }
 
     private List<Param> getParams(List<List<String>> paramStrings) throws RecognizeParamTypeException {
-        return new ParamListCreator().create(paramStrings);
+        return new ParamListCreator(config).create(paramStrings);
     }
 }

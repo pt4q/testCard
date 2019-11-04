@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class TestCardParamMarks {
+
     @NonNull
     private String RANGE_OF_RESEARCH_MARK;
     @NonNull
