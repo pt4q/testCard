@@ -2,18 +2,26 @@ package object_creation.test_card;
 
 import domain.RangeOfResearch;
 import domain.TestCard;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringMatcher;
 import object_creation.range_of_reserch.RangeOfResearchListCreator;
+import object_creation.test_card.config.TestCardColumnsNumbers;
+import object_creation.test_card.config.TestCardConfig;
+import object_creation.test_card.config.TestCardParamMarks;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class TestCardCreator implements Creator<TestCard, Map<Integer, List<String>>> {
 
+    @NonNull
+    private TestCardConfig config;
     private String testCardBeginWordOrSentence = "KARTA ";
     private String rangeOfResearchMark = "#";
     private List<String> titleRow;
@@ -25,6 +33,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
         List<RangeOfResearch> rangeOfResearchList;
 
         List<List<String>> inputList = removeEverythingBeforeHeader(convertMapToList(searchAndRemoveEmptyLines(input)));
+        inputList = removeNotMarkedLines(inputList);
 
         header = getHeader(inputList);
         inputList = removeHeader(inputList, header);
@@ -39,6 +48,36 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
         return testCard;
     }
 
+    private List<List<String>> removeNotMarkedLines(List<List<String>> input) {
+        Integer inputSize = input.size();
+        Integer paramTypeColumnNumber = config.getColumnsNumbers().getParamTypeColumnNumber();
+
+        for (int i = 0; i < inputSize; i++) {
+
+            if(i == 103)
+                System.out.println(i);
+
+            List<String> line = input.get(i);
+            Integer lineSize = line.size();
+
+            if (lineSize > paramTypeColumnNumber) {
+                String readParamType = line.get(paramTypeColumnNumber);
+
+                if (readParamType == null || readParamType.equals("")) {
+                    input.remove(i);
+                    inputSize--;
+                    i--;
+                }
+            } else {
+                System.out.println("remove index " + i + "\t =>\t" + line.get(config.getColumnsNumbers().getNameInPolishColumnNumber()));
+                input.remove(i);
+                inputSize--;
+                i--;
+            }
+        }
+        return input;
+    }
+
     private List<RangeOfResearch> createRangeOfResearchList(List<List<String>> input, String rangeOfResearchMark) throws RecognizeParamTypeException {
         RangeOfResearchListCreator rangeOfResearchListCreator = new RangeOfResearchListCreator().builder()
                 .rangeOfResearchMark(rangeOfResearchMark)
@@ -48,20 +87,30 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
     }
 
     private List<List<String>> getHeader(List<List<String>> input) throws IllegalArgumentException {
+        Integer rangeOfResearchColumnNumber = config.getColumnsNumbers().getRangeOfResearchColumnNumber();
+        String headerMark = config.getParamTypes().getHEADER_TYPE();
+        String rangeOfResearchMark = config.getParamTypes().getRANGE_OF_RESEARCH_MARK();
+
         List<List<String>> header = new ArrayList<>();
+
         Integer inputSize = input.size();
         int marks = 0;
 
         for (int i = 0; i < inputSize; i++) {
-            String prefix = input.get(i).get(0);
+            List<String> line = input.get(i);
+            if (line.size() > rangeOfResearchColumnNumber) {
+                String prefix = line.get(rangeOfResearchColumnNumber);
 
-            if (prefix.matches(rangeOfResearchMark))
-                marks++;
+                if (prefix.matches(rangeOfResearchMark))
+                    marks++;
 
-            if (marks == 2)
-                return header;
+                if (marks == 2) {
+                    return header;
+                }
 
-            header.add(input.get(i));
+                if (prefix.equals(headerMark) || prefix.equals(rangeOfResearchMark))
+                    header.add(input.get(i));
+            }
         }
         throw new IllegalArgumentException(TestCardStatusEnum.CANT_GET_HEADER.toString());
     }
@@ -74,13 +123,18 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
     }
 
     private List<List<String>> removeEverythingBeforeHeader(List<List<String>> input) throws IllegalArgumentException {
+        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
+        TestCardParamMarks paramTypes = config.getParamTypes();
         Integer inputSize = input.size();
 
         for (int i = 0; i < inputSize; i++) {
             List<String> line = input.get(i);
+            Integer rangeOfResearchColumnNumber = columnsNumbers.getRangeOfResearchColumnNumber();
+            String rangeOfResearchReadMark = line.get(rangeOfResearchColumnNumber);
+            Integer nameColumnNumber = columnsNumbers.getNameInPolishColumnNumber();
 
-            if (StringMatcher.isMatch(line.get(0), rangeOfResearchMark)) {
-                if (StringMatcher.isMatch(line.get(1), testCardBeginWordOrSentence + ".+"))
+            if (StringMatcher.isMatch(rangeOfResearchReadMark, rangeOfResearchMark)) {
+                if (StringMatcher.isMatch(line.get(nameColumnNumber), testCardBeginWordOrSentence + ".+"))
                     return input;
 
             }

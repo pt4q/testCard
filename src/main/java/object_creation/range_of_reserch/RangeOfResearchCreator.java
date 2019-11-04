@@ -20,10 +20,6 @@ class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<Strin
         RangeOfResearch rangeOfResearch = getRangeOfResearchMainParameters(input.get(0));
         input = removeRangeOfResearchMainParameters(input);
 
-        String breakpoint = input.get(0).get(1);
-        if (breakpoint.equals("Urzadzenie klasy II  (punkty sprawdzenia , pomiedzy cześciami przewodzącymi oddzielonymi izolacją)"))
-            System.out.println("breakpoint");
-
         List<Param> params = getParams(input);
         rangeOfResearch.setParams(params);
 

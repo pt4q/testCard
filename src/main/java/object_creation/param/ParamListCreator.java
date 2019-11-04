@@ -3,11 +3,14 @@ package object_creation.param;
 import domain.Param;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
+import object_creation.test_card.config.TestCardConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ParamListCreator implements Creator<List<Param>, List<List<String>>> {
+
+    private TestCardConfig testCardConfig;
 
     @Override
     public List<Param> create(List<List<String>> input) throws RecognizeParamTypeException {
@@ -20,6 +23,11 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
         for (int i = 0; i < inputSize; i++) {
             List<String> stringLines = input.get(i);
 
+            String readParam = stringLines.get(1);
+            String brakepoint = "Przyrost rezystancji uzwojeń wirnika ∆t";
+            if (readParam.equals(brakepoint))
+                System.out.println("breakpoint");
+
             if (stringLines.size() > 2) {
                 Param param = createParam(stringLines);
                 params.add(param);
@@ -29,6 +37,6 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
     }
 
     private Param createParam(List<String> input) throws RecognizeParamTypeException {
-        return new ParamCreator().create(input);
+        return new ParamCreator(testCardConfig).create(input);
     }
 }
