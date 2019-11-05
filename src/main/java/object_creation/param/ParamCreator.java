@@ -21,15 +21,18 @@ public class ParamCreator implements Creator<Param, List<String>> {
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
         ParamFactory factory = new ParamFactory(config);
         Param param = null;
+        String paramName;
 
         if (checkRequiredColumnNumber(input)) {
             param = factory.build(input);
-            System.out.println("added:\t" + input.get(columnsNumbers.getNameInPolishColumnNumber()));
+            paramName = input.get(columnsNumbers.getNameInPolishColumnNumber());
+            System.out.println("added:\t" + (!paramName.equals("") ? paramName : "{ parameter has no name }"));
         }
 
-        if (param == null)
-            System.out.println("Empty VALUE in:\t" + input.get(columnsNumbers.getNameInPolishColumnNumber()));
-
+        if (param == null) {
+            paramName = input.get(columnsNumbers.getNameInPolishColumnNumber());
+            System.out.println("Empty VALUE in:\t" + (!paramName.equals("") ? paramName : "{ parameter has no name }"));
+        }
         return param;
     }
 
