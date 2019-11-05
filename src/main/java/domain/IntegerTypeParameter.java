@@ -12,5 +12,6 @@ public class IntegerTypeParameter implements Param {
 
     private Integer punctation;
 
+    private String valueString;
     private Integer value;
 }

@@ -2,10 +2,10 @@ package object_creation.param;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import object_creation.test_card.config.BinaryTypePositiveDefinition;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
-import object_creation.test_card.config.TestCardParamMarks;
+import config.BinaryTypePositiveDefinition;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
+import config.TestCardParamMarks;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ public class DoubleTypeParamBuilderTest {
 
         TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 4);
         TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#", "h", "b", "n", "f", "i");
-        BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"));
+        BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"),"TAK","NIE");
         TestCardConfig testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardParamMarks, positiveDefinition);
 
         doubleTypeParamBuilder = new DoubleTypeParamBuilder(testCardConfig);

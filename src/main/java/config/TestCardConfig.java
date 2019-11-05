@@ -1,4 +1,4 @@
-package object_creation.test_card.config;
+package config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

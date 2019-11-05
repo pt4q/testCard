@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardConfig;
 
 import java.util.ArrayList;
 import java.util.List;

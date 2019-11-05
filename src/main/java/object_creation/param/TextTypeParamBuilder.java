@@ -5,8 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.List;
 
