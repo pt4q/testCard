@@ -2,12 +2,15 @@ package object_creation.param;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import object_creation.test_card.config.BinaryTypePositiveDefinition;
 import object_creation.test_card.config.TestCardColumnsNumbers;
 import object_creation.test_card.config.TestCardConfig;
 import object_creation.test_card.config.TestCardParamMarks;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,9 +23,10 @@ public class DoubleTypeParamBuilderTest {
     @Before
     public void setUp() throws Exception {
 
-        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0,1,2,2,3,4);
-        TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#","h","b","n","f","i");
-        TestCardConfig testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardParamMarks);
+        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 4);
+        TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#", "h", "b", "n", "f", "i");
+        BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"));
+        TestCardConfig testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardParamMarks, positiveDefinition);
 
         doubleTypeParamBuilder = new DoubleTypeParamBuilder(testCardConfig);
     }

@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
+import object_creation.test_card.config.BinaryTypePositiveDefinition;
 import object_creation.test_card.config.TestCardColumnsNumbers;
 import object_creation.test_card.config.TestCardConfig;
 
@@ -18,6 +19,7 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
 
     @Override
     public BinaryTypeParam build(List<String> input) {
+        BinaryTypePositiveDefinition positiveDefinition = config.getPositiveDefinition();
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
@@ -32,7 +34,7 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
         }
 
         try {
-            parameter.setValue(converter.castPositiveScoreToBoolean(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
+            parameter.setValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
             parameter.setValue(false);
         }

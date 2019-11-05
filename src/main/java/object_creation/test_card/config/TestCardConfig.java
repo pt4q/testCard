@@ -13,4 +13,6 @@ public class TestCardConfig {
     private TestCardColumnsNumbers columnsNumbers;
     @NonNull
     private TestCardParamMarks paramTypes;
+    @NonNull
+    private BinaryTypePositiveDefinition positiveDefinition;
 }
