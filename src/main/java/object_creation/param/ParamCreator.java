@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
+import object_creation.test_card.config.TestCardColumnsNumbers;
 import object_creation.test_card.config.TestCardConfig;
 
 import java.util.List;
@@ -13,26 +14,29 @@ import java.util.List;
 public class ParamCreator implements Creator<Param, List<String>> {
 
     @NonNull
-    private TestCardConfig testCardConfig;
+    private TestCardConfig config;
 
     @Override
     public Param create(List<String> input) throws RecognizeParamTypeException {
-        ParamFactory factory = new ParamFactory(testCardConfig);
+        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
+        ParamFactory factory = new ParamFactory(config);
         Param param = null;
+        String paramName;
 
         if (checkRequiredColumnNumber(input)) {
             param = factory.build(input);
-            System.out.println("added:\t" + input.get(1));
+            paramName = input.get(columnsNumbers.getNameInPolishColumnNumber());
+            System.out.println("added:\t" + (!paramName.equals("") ? paramName : "{ parameter has no name }"));
         }
 
-        if (param == null)
-            System.out.println("Empty VALUE in:\t" + input.get(1));
-
+        if (param == null) {
+            paramName = input.get(columnsNumbers.getNameInPolishColumnNumber());
+            System.out.println("Empty VALUE in:\t" + (!paramName.equals("") ? paramName : "{ parameter has no name }"));
+        }
         return param;
     }
 
     private boolean checkRequiredColumnNumber(List<String> input) {
-        Integer REQUIRED_COLUMN_NUMBER = 5;
-        return REQUIRED_COLUMN_NUMBER == input.size();
+        return input.size() > config.getColumnsNumbers().getParamTypeColumnNumber();
     }
 }

@@ -36,17 +36,17 @@ public class RangeOfResearchListCreator implements Creator<List<RangeOfResearch>
                     if (i < inputSize - 1)
                         i++;
 
-                    List<String> nextRangeOfResearchHeader = input.get(i);
+                    List<String> nextHeaderOrParam = input.get(i);
                     nextMark = getMark(input, i);
 
-                    if (nextMark.matches(rangeOfResearchMark)) {
+                    if (nextMark.matches(rangeOfResearchMark) || i == inputSize - 1) {
 
                         RangeOfResearch newRangeOfResearch = createRangeOfResearch(paramsStringList);
                         rangeOfResearchList.add(newRangeOfResearch);
                         addedRangeOfResearch = true;
                         i--;
                     } else
-                        paramsStringList.add(nextRangeOfResearchHeader);
+                        paramsStringList.add(nextHeaderOrParam);
 
                 } while (!addedRangeOfResearch);
             }

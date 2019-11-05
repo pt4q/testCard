@@ -27,11 +27,6 @@ public class ParamListCreator implements Creator<List<Param>, List<List<String>>
         for (int i = 0; i < inputSize; i++) {
             List<String> stringLines = input.get(i);
 
-            String readParam = stringLines.get(1);
-            String brakepoint = "Przyrost rezystancji uzwojeń wirnika ∆t";
-            if (readParam.equals(brakepoint))
-                System.out.println("breakpoint");
-
             if (stringLines.size() > 2) {
                 Param param = createParam(stringLines);
                 params.add(param);
