@@ -5,8 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.List;
 
@@ -32,9 +32,11 @@ class TextTypeParamBuilder implements Builder<TextTypeParam, List<String>> {
         }
 
         try {
-            parameter.setValue((input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
+            parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setMeasuredValue(input.get(columnsNumbers.getMeasuredValuesColumnNumber()));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(null);
+            parameter.setValueString(null);
+            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

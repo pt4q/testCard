@@ -5,9 +5,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.CsvFileReader;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
-import object_creation.test_card.config.TestCardColumnsNumbers;
 import object_creation.test_card.TestCardCreator;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardConfig;
 
 import java.util.Map;
 
@@ -28,10 +27,5 @@ public class ReadTestCardFromFile {
 
         testCard = new TestCardCreator(config).create(lines);
         return testCard;
-    }
-
-    public TestCard calcScores(){
-
-        return null;
     }
 }

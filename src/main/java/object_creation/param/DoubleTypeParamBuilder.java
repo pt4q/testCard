@@ -1,32 +1,32 @@
 package object_creation.param;
 
-import domain.DoubleTypeParameter;
+import domain.DoubleTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.OptionalDouble;
 
 @RequiredArgsConstructor
-public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List<String>> {
+public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<String>> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public DoubleTypeParameter build(List<String> input) {
+    public DoubleTypeParam build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
         String punctation;
         String value;
 
-        DoubleTypeParameter parameter = new DoubleTypeParameter().builder()
+        DoubleTypeParam parameter = new DoubleTypeParam().builder()
                 .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
                 .build();
 
@@ -41,12 +41,11 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParameter, List
         try {
             value = input.get(columnsNumbers.getMeasuredValuesColumnNumber());
             parameter.setValueString(value);
-
-            parameter.setValue(calcAverageInComplexString(value));
-
-            parameter.setValue(converter.castToDouble(value));
+            parameter.setMeasuredValue(calcAverageInComplexString(value));
+            parameter.setMeasuredValue(converter.castToDouble(value));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(null);
+            parameter.setValueString(null);
+            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

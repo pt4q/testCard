@@ -12,5 +12,7 @@ public class BinaryTypeParam implements Param {
 
     private Integer punctation;
 
-    private boolean value;
+    private String valueString;
+    private boolean measuredValue;
+    private boolean declaredValue;
 }

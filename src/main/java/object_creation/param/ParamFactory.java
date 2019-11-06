@@ -7,9 +7,9 @@ import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringMatcher;
 import object_creation.param.status_and_exceptions.ParamFactoryStatusEnum;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
-import object_creation.test_card.config.TestCardParamMarks;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
+import config.TestCardParamMarks;
 
 import java.util.List;
 

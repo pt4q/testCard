@@ -7,10 +7,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IntegerTypeParameter implements Param {
+public class IntegerTypeParam implements Param {
     private String nameInPolish;
 
     private Integer punctation;
 
-    private Integer value;
+    private String readValueString;
+    private Integer measuredValue;
+    private Integer declaredValue;
 }

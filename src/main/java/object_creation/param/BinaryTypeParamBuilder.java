@@ -5,9 +5,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
-import object_creation.test_card.config.BinaryTypePositiveDefinition;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.BinaryTypePositiveDefinition;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.List;
 
@@ -34,9 +34,11 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
         }
 
         try {
-            parameter.setValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
+            parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setMeasuredValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(false);
+            parameter.setValueString(null);
+            parameter.setMeasuredValue(false);
         }
         return parameter;
     }

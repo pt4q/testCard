@@ -12,6 +12,7 @@ public class TextTypeParam implements Param {
 
     private Integer punctation;
 
-    private String value;
-
+    private String valueString;
+    private String measuredValue;
+    private String declaredValue;
 }

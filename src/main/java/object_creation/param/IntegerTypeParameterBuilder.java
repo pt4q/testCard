@@ -1,28 +1,28 @@
 package object_creation.param;
 
-import domain.IntegerTypeParameter;
+import domain.IntegerTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Builder;
 import object_creation.creation_utils.StringValueConverter;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-class IntegerTypeParameterBuilder implements Builder<IntegerTypeParameter, List<String>> {
+class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<String>> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public IntegerTypeParameter build(List<String> input) {
+    public IntegerTypeParam build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
         Integer inputSize = input.size();
 
-        IntegerTypeParameter parameter = new IntegerTypeParameter().builder()
+        IntegerTypeParam parameter = new IntegerTypeParam().builder()
                 .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
                 .build();
 
@@ -33,9 +33,11 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParameter, List<
         }
 
         try {
-            parameter.setValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
+            parameter.setReadValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setMeasuredValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(null);
+            parameter.setReadValueString(null);
+            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

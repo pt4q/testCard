@@ -2,15 +2,14 @@ package object_creation.range_of_reserch;
 
 import domain.Param;
 import domain.RangeOfResearch;
-import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringValueConverter;
 import object_creation.param.ParamListCreator;
-import object_creation.test_card.config.TestCardColumnsNumbers;
-import object_creation.test_card.config.TestCardConfig;
+import config.TestCardColumnsNumbers;
+import config.TestCardConfig;
 
 import java.util.List;
 
