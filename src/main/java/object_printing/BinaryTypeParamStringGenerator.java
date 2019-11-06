@@ -6,7 +6,6 @@ import domain.BinaryTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,8 +18,11 @@ class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>,
     @Override
     public List<ParamPrintModel> generate(BinaryTypeParam input) {
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        String measuredBinaryToStringValue = input.isMeasuredValue() ? config.getPositiveDefinition().getPositive() : config.getPositiveDefinition().getNegative();
-        String declaredBinaryToStringValue = input.isDeclaredValue() ? config.getPositiveDefinition().getPositive() : config.getPositiveDefinition().getNegative();
+        Boolean measuredValue = input.getMeasuredValue();
+        Boolean declaredValue = input.getDeclaredValue();
+
+        String measuredBinaryToStringValue = convertMeasuredValueToString(measuredValue);
+        String declaredBinaryToStringValue = convertDeclaredValueToString(declaredValue);
 
         return Arrays.asList(
                 new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), input.getNameInPolish()),
@@ -29,5 +31,23 @@ class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>,
                 new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), measuredBinaryToStringValue),
                 new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), declaredBinaryToStringValue)
         );
+    }
+
+    private String convertMeasuredValueToString(Boolean measuredValue) {
+        if (measuredValue.equals(true))
+            return config.getPositiveDefinition().getPositive();
+        else if (measuredValue.equals(false))
+            return config.getPositiveDefinition().getNegative();
+        else
+            return "";
+    }
+
+    private String convertDeclaredValueToString(Boolean declaredValue) {
+        if (declaredValue.equals(true))
+            return config.getPositiveDefinition().getPositive();
+        else if (declaredValue.equals(false))
+            return config.getPositiveDefinition().getNegative();
+        else
+            return "";
     }
 }
