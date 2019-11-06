@@ -6,8 +6,8 @@ public class CalculatedRangeOfResearch {
 
     private RangeOfResearch rangeOfResearch;
 
+    private Double score;
     private Double difference;
     private Double percent;
-    private Double score;
 
 }
