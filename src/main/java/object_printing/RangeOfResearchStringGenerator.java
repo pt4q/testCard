@@ -20,7 +20,7 @@ class RangeOfResearchStringGenerator implements Generator<List<List<String>>, Ra
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
         List<List<String>> result = null;
 
-        for()
+//        for()
 
         return result;
     }

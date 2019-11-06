@@ -23,7 +23,7 @@ public class DoubleTypeParamBuilderTest {
     @Before
     public void setUp() throws Exception {
 
-        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 4);
+        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3,3, 4);
         TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#", "h", "b", "n", "f", "i");
         BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"),"TAK","NIE");
         TestCardConfig testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardParamMarks, positiveDefinition);

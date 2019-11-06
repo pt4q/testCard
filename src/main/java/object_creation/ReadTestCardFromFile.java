@@ -28,9 +28,4 @@ public class ReadTestCardFromFile {
         testCard = new TestCardCreator(config).create(lines);
         return testCard;
     }
-
-    public TestCard calcScores(){
-
-        return null;
-    }
 }

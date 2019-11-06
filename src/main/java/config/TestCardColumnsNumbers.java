@@ -16,7 +16,8 @@ public class TestCardColumnsNumbers {
     private Integer paramTypeColumnNumber;
     @NonNull
     private Integer rangeOfResearchColumnNumber;
-
+    @NonNull
+    private Integer readValueColumnNumber;
     @NonNull
     private Integer measuredValuesColumnNumber;
     @NonNull

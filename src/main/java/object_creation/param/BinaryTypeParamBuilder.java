@@ -34,9 +34,11 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
         }
 
         try {
-            parameter.setValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
+            parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setMeasuredValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValue(false);
+            parameter.setValueString(null);
+            parameter.setMeasuredValue(false);
         }
         return parameter;
     }

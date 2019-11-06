@@ -19,7 +19,7 @@ public class Runner {
         TestCardPrinter testCardPrinter;
         TestCard testCard = null;
 
-        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 4);
+        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3,3, 4);
         TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#", "h", "b", "n", "f", "i");
         BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"),"TAK","NIE");
 
@@ -35,10 +35,10 @@ public class Runner {
         System.out.println("\nu^u^u^u\tTest card created successfully!!!\tu^u^u^u\n");
 
         testCardPrinter = new TestCardPrinter(testCardConfig);
-        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCard);
+//        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCard);
 
-        if (testCard != null)
-            System.out.println(testCardPrinter.generate(testCard));
+//        if (testCard != null)
+//            System.out.println(testCardPrinter.generate(testCard));
 
     }
 }

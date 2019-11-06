@@ -18,16 +18,16 @@ class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>,
 
     @Override
     public List<ParamPrintModel> generate(BinaryTypeParam input) {
-        List<ParamPrintModel> result = new ArrayList<>();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
+        String measuredBinaryToStringValue = input.isMeasuredValue() ? config.getPositiveDefinition().getPositive() : config.getPositiveDefinition().getNegative();
+        String declaredBinaryToStringValue = input.isDeclaredValue() ? config.getPositiveDefinition().getPositive() : config.getPositiveDefinition().getNegative();
 
-        result.add(new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), input.getNameInPolish()));
-        result.add(new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(), input.getPunctation().toString()));
-//        result.add(new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), input.getValueString()));
-
-        String binaryValue = input.isValue() ? config.getPositiveDefinition().getPositive() : config.getPositiveDefinition().getNegative();
-        result.add(new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(),input.getValueString());
-
-        return result;
+        return Arrays.asList(
+                new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), input.getNameInPolish()),
+                new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(), input.getPunctation().toString()),
+                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), input.getValueString()),
+                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), measuredBinaryToStringValue),
+                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), declaredBinaryToStringValue)
+        );
     }
 }

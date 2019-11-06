@@ -8,17 +8,19 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DoubleTypeParameter implements Param {
+public class DoubleTypeParam implements Param {
     private String nameInPolish;
 
     private Integer punctation;
 
     private String valueString;
-    private Double value;
+    private Double measuredValue;
+    private Double declaredValue;
 
     public String toString() {
         return nameInPolish
                 + " " + punctation.toString()
-                + " " + value.toString() ;
+                + " " + measuredValue.toString() ;
     }
+
 }
