@@ -11,6 +11,7 @@ public class BinaryTypeParam implements Param {
     private String nameInPolish;
 
     private Integer punctation;
+    private String type;
 
     private String valueString;
     private Boolean measuredValue;

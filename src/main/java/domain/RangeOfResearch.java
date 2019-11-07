@@ -4,8 +4,7 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -16,5 +15,5 @@ public class RangeOfResearch {
     private Integer punctation;
     private Double overallScore;
 
-    List<Param> params;
+    private List<Param> params;
 }

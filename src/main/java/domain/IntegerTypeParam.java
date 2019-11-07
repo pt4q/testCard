@@ -11,6 +11,7 @@ public class IntegerTypeParam implements Param {
     private String nameInPolish;
 
     private Integer punctation;
+    private String type;
 
     private String readValueString;
     private Integer measuredValue;

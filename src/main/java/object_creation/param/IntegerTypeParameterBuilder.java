@@ -32,6 +32,12 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<Stri
             parameter.setPunctation(null);
         }
 
+        try{
+            parameter.setDeclaredValue(converter.castToInteger(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
+        } catch (IndexOutOfBoundsException e){
+            parameter.setDeclaredValue(null);
+        }
+
         try {
             parameter.setReadValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));

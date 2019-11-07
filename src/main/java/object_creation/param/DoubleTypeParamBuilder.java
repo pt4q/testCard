@@ -39,10 +39,21 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
         }
 
         try {
+            parameter.setDeclaredValue(converter.castToDouble(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
+        } catch (IndexOutOfBoundsException e) {
+            parameter.setDeclaredValue(null);
+        }
+
+        try {
             value = input.get(columnsNumbers.getMeasuredValuesColumnNumber());
             parameter.setValueString(value);
-            parameter.setMeasuredValue(calcAverageInComplexString(value));
-            parameter.setMeasuredValue(converter.castToDouble(value));
+
+            Double average = calcAverageInComplexString(value);
+            if (average != null)
+                parameter.setMeasuredValue(average);
+            else
+                parameter.setMeasuredValue(converter.castToDouble(value));
+
         } catch (IndexOutOfBoundsException e) {
             parameter.setValueString(null);
             parameter.setMeasuredValue(null);
@@ -52,7 +63,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
 
     public Double calcAverageInComplexString(String input) {
         List<String> stringList;
-        Double average;
+        Double average = null;
 
         input = changeCommaToPointInFraction(input);
         input = deleteNonDoubleCharSequence(input);
@@ -76,7 +87,7 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
         if (result.isPresent())
             return result.getAsDouble();
         else
-            throw new ArithmeticException();
+            return null;
     }
 
     public List<String> splitStringToStringList(String input, String splitStr) {
