@@ -1,7 +1,9 @@
 package object_calculation;
 
+import config.TestCardConfig;
 import domain.BinaryTypeParam;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import object_calculation.models.ParamCalcModel;
 
 import java.util.OptionalDouble;
@@ -9,16 +11,18 @@ import java.util.OptionalDouble;
 @NoArgsConstructor
 class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam> {
 
+    @NonNull
+    private TestCardConfig config;
+
     @Override
     public ParamCalcModel calculate(BinaryTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
-
         return calcModel;
     }
 
-    private ParamCalcModel calcDifference(ParamCalcModel input){
+    private ParamCalcModel calcDifference(ParamCalcModel input) {
         BinaryTypeParam binaryTypeParam = (BinaryTypeParam) input.getParam();
         Boolean declared = binaryTypeParam.getDeclaredValue();
         Boolean measured = binaryTypeParam.getMeasuredValue();
@@ -31,9 +35,9 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         return input;
     }
 
-    private ParamCalcModel calcPercent(ParamCalcModel input){
+    private ParamCalcModel calcPercent(ParamCalcModel input) {
         Double difference = input.getDifference();
-        OptionalDouble percent = OptionalDouble.of(difference*100);
+        OptionalDouble percent = OptionalDouble.of(difference * 100);
 
         if (percent.isPresent())
             input.setPercent(percent.getAsDouble());
@@ -41,7 +45,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         return input;
     }
 
-    private ParamCalcModel calcScore(ParamCalcModel input){
+    private ParamCalcModel calcScore(ParamCalcModel input) {
         BinaryTypeParam binaryTypeParam = (BinaryTypeParam) input.getParam();
         Integer availablePoints = binaryTypeParam.getPunctation();
         Double percent = input.getPercent();

@@ -1,7 +1,9 @@
 package object_calculation;
 
+import config.TestCardConfig;
 import domain.DoubleTypeParam;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import object_calculation.models.ParamCalcModel;
 
 import java.util.OptionalDouble;
@@ -9,12 +11,18 @@ import java.util.OptionalDouble;
 @NoArgsConstructor
 class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam> {
 
+    @NonNull
+    private TestCardConfig config;
+
     @Override
     public ParamCalcModel calculate(DoubleTypeParam input) {
-        return null;
+        ParamCalcModel calcModel = new ParamCalcModel(input);
+
+        calcModel = calcScore(calcPercent(calcDifference(calcModel)));
+        return calcModel;
     }
 
-    private ParamCalcModel calcDifference(ParamCalcModel input){
+    private ParamCalcModel calcDifference(ParamCalcModel input) {
         DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
         Double declared = doubleTypeParam.getDeclaredValue();
         Double measured = doubleTypeParam.getMeasuredValue();
@@ -26,14 +34,34 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         return input;
     }
 
-    private ParamCalcModel calcPercent(ParamCalcModel input){
+    private ParamCalcModel calcPercent(ParamCalcModel input) {
         DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
-        return null;
+        Double declared = doubleTypeParam.getDeclaredValue();
+        Double measured = doubleTypeParam.getMeasuredValue();
+        OptionalDouble percent = OptionalDouble.of((measured * 100) / declared);
+
+        if (percent.isPresent())
+            input.setPercent(percent.getAsDouble());
+
+        return input;
     }
 
-    private ParamCalcModel calcScore(ParamCalcModel input){
+    private ParamCalcModel calcScore(ParamCalcModel input) {
         DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
-        return null;
+        Integer availablePoints = doubleTypeParam.getPunctation();
+        Double percent = Math.abs(input.getPercent());
+
+        if (percent > 100)
+            percent = Double.parseDouble("100");
+        else if (percent < 0)
+            percent = Double.parseDouble("0");
+
+        OptionalDouble score = OptionalDouble.of(percent * availablePoints);
+
+        if (score.isPresent())
+            input.setScore(score.getAsDouble());
+
+        return input;
     }
 
 }
