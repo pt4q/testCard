@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ParamCalculator implements Calculator <List<ParamCalcModel> , List<Param>> {
+public class ParamListCalculator implements Calculator <List<ParamCalcModel> , List<Param>> {
 
     @NonNull
     private TestCardConfig config;

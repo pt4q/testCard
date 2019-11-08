@@ -13,9 +13,12 @@ public class RangeOfResearchCalcModel {
     @NonNull
     private RangeOfResearch rangeOfResearch;
 
-    private Integer availablePoints;
-    private Double score;
+    private Integer sumOfAvailablePointsFromParams;
+    private Double sumOfGainedPointsFromParams;
+
+//    private Integer punctation;
     private Double difference;
+    private Double score;
     private Double percent;
 
 }
