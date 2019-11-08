@@ -19,8 +19,12 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     @Override
     public TestCardCalcModel calculate(TestCard input) {
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
-        List<RangeOfResearchCalcModel> rangeOfResearches = calcinput.getRangeOfResearchList();
+        List<RangeOfResearchCalcModel> rangeOfResearches = calcAllRangeOfResearch(input.getRangeOfResearchList());
 
+        return null;
+    }
+
+    private TestCardCalcModel calcAvailablePoints(){
         return null;
     }
 

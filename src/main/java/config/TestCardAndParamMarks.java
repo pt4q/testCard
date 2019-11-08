@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class TestCardParamMarks {
+public class TestCardAndParamMarks {
 
     @NonNull
     private String RANGE_OF_RESEARCH_MARK;
@@ -22,5 +22,7 @@ public class TestCardParamMarks {
     private String INTEGER_TYPE;
 
     private String PIC_TYPE;
+
+    private String testCardBeginWordOrSentence = "KARTA ";
 
 }

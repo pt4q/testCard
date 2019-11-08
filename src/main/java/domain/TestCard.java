@@ -7,20 +7,12 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 public class TestCard {
 
-//    private String model;
-//    private String lot;
-//    private String deviceTypeInPolish;
-////    private String deviceTypeInEnglish;
-//    private String testTime;
-//    private String performer;
-//
-//    private boolean reference;
-    List<List<String>> header;
+    private List<List<String>> header;
+    private List<RangeOfResearch> rangeOfResearchList;
+    private Integer punctation;
 
-    List<RangeOfResearch> rangeOfResearchList;
 }

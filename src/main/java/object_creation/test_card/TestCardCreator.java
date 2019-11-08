@@ -5,12 +5,13 @@ import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_creation.creation_utils.Creator;
+import object_creation.creation_utils.StringValueConverter;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.creation_utils.StringMatcher;
 import object_creation.range_of_reserch.RangeOfResearchListCreator;
 import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
-import config.TestCardParamMarks;
+import config.TestCardAndParamMarks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,6 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 
     @NonNull
     private TestCardConfig config;
-    private String testCardBeginWordOrSentence = "KARTA ";
-    private String rangeOfResearchMark = "#";
     private List<String> titleRow;
 
     @Override
@@ -37,15 +36,22 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 
         header = getHeader(inputList);
         inputList = removeHeader(inputList, header);
+
         rangeOfResearchList = createRangeOfResearchList(inputList);
 
         testCard = new TestCard().builder()
                 .header(header)
                 .rangeOfResearchList(rangeOfResearchList)
+                .punctation(getGeneralPunctation(header))
                 .build();
 
-
         return testCard;
+    }
+
+    private Integer getGeneralPunctation(List<List<String>> header){
+        StringValueConverter converter = new StringValueConverter();
+        Integer punctation = converter.castToInteger(header.get(0).get(config.getColumnsNumbers().getPunctationColumnNumber()));
+        return punctation;
     }
 
     private List<List<String>> removeNotMarkedLines(List<List<String>> input) {
@@ -119,7 +125,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 
     private List<List<String>> removeEverythingBeforeHeader(List<List<String>> input) throws IllegalArgumentException {
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        TestCardParamMarks paramTypes = config.getParamTypes();
+        TestCardAndParamMarks testCardMarks = config.getParamTypes();
         Integer inputSize = input.size();
 
         for (int i = 0; i < inputSize; i++) {
@@ -128,8 +134,8 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
             String rangeOfResearchReadMark = line.get(rangeOfResearchColumnNumber);
             Integer nameColumnNumber = columnsNumbers.getNameInPolishColumnNumber();
 
-            if (StringMatcher.isMatch(rangeOfResearchReadMark, rangeOfResearchMark)) {
-                if (StringMatcher.isMatch(line.get(nameColumnNumber), testCardBeginWordOrSentence + ".+"))
+            if (StringMatcher.isMatch(rangeOfResearchReadMark, testCardMarks.getRANGE_OF_RESEARCH_MARK())) {
+                if (StringMatcher.isMatch(line.get(nameColumnNumber), testCardMarks.getTestCardBeginWordOrSentence() + ".+"))
                     return input;
 
             }

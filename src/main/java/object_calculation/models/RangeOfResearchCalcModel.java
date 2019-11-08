@@ -1,6 +1,5 @@
 package object_calculation.models;
 
-import domain.Param;
 import domain.RangeOfResearch;
 import lombok.Data;
 import lombok.NonNull;

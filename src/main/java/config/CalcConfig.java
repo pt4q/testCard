@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ParametersCalcConfig {
+public class CalcConfig {
 
     @NonNull
     private Double maxPercentTolerance;

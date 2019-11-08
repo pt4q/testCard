@@ -1,14 +1,10 @@
+import config.*;
 import domain.TestCard;
 import object_creation.ReadTestCardFromFile;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
-import config.BinaryTypePositiveDefinition;
-import config.TestCardColumnsNumbers;
-import config.TestCardConfig;
-import config.TestCardParamMarks;
 import object_printing.TestCardPrinter;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Runner {
     public static void main(String[] args) {
@@ -20,10 +16,11 @@ public class Runner {
         TestCard testCard = null;
 
         TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3,3, 4);
-        TestCardParamMarks testCardParamMarks = new TestCardParamMarks("#", "h", "b", "n", "f", "i");
+        TestCardAndParamMarks testCardAndParamMarks = new TestCardAndParamMarks("#", "h", "b", "n", "f", "i");
         BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"),"TAK","NIE");
+//        ParametersCalcConfig parametersCalcConfig = new ParametersCalcConfig();
 
-        testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardParamMarks, positiveDefinition);
+        testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardAndParamMarks, positiveDefinition);
 
         testCardReader = new ReadTestCardFromFile(testCardConfig);
         try {
