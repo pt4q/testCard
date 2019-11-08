@@ -7,11 +7,12 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class ParamCalcModel implements Param {
+public class ParamCalcModel {
 
     @NonNull
     private Param param;
 
+    private Integer availablePoints;
     private Double score;
     private Double difference;
     private Double percent;

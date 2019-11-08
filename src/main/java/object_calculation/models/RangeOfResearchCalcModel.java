@@ -8,11 +8,12 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class RangeOfResearchCalcModel implements Param {
+public class RangeOfResearchCalcModel {
 
     @NonNull
     private RangeOfResearch rangeOfResearch;
 
+    private Integer availablePoints;
     private Double score;
     private Double difference;
     private Double percent;

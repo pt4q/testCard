@@ -22,7 +22,7 @@ class IntegerTypeParamStringGenerator implements Generator<List<ParamPrintModel>
         return Arrays.asList(
                 new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(),input.getNameInPolish()),
                 new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(),input.getPunctation().toString()),
-                new ParamPrintModel(columnsNumbers.getReadValueColumnNumber(),input.getReadValueString()),
+                new ParamPrintModel(columnsNumbers.getReadValueColumnNumber(),input.getValueString()),
                 new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(),input.getMeasuredValue().toString()),
                 new ParamPrintModel(columnsNumbers.getDeclaredValuesColumnNumber(),input.getDeclaredValue().toString())
         );

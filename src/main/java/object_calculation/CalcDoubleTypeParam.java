@@ -17,6 +17,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
     @Override
     public ParamCalcModel calculate(DoubleTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
+        calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
         return calcModel;
@@ -47,8 +48,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
     }
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
-        DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
-        Integer availablePoints = doubleTypeParam.getPunctation();
+        Integer availablePoints = input.getAvailablePoints();
         Double percent = Math.abs(input.getPercent());
 
         if (percent > 100)

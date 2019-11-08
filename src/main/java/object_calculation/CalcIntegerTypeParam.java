@@ -17,6 +17,7 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
     @Override
     public ParamCalcModel calculate(IntegerTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
+        calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
         return calcModel;
@@ -48,8 +49,7 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
     }
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
-        IntegerTypeParam integerTypeParam = (IntegerTypeParam) input.getParam();
-        Integer availablePoints = integerTypeParam.getPunctation();
+        Integer availablePoints = input.getAvailablePoints();
         Double percent = Math.abs(input.getPercent());
 
         if (percent > 100)

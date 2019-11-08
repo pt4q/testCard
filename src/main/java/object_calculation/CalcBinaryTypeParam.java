@@ -17,6 +17,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
     @Override
     public ParamCalcModel calculate(BinaryTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
+        calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
         return calcModel;
@@ -47,7 +48,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
         BinaryTypeParam binaryTypeParam = (BinaryTypeParam) input.getParam();
-        Integer availablePoints = binaryTypeParam.getPunctation();
+        Integer availablePoints = input.getAvailablePoints();
         Double percent = input.getPercent();
 
         OptionalDouble score = OptionalDouble.of(availablePoints * (percent/100));

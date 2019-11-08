@@ -17,6 +17,7 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam>{
     @Override
     public ParamCalcModel calculate(TextTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
+        calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
         return calcModel;

@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class TestCardCalcModel implements Param {
+public class TestCardCalcModel {
 
     @NonNull
     private TestCard testCard;
 
-    private Integer maxNumberOfPoints;
+    private Integer availablePoints;
     private Double score;
     private Double difference;
     private Double percent;

@@ -39,10 +39,10 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<Stri
         }
 
         try {
-            parameter.setReadValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setReadValueString(null);
+            parameter.setValueString(null);
             parameter.setMeasuredValue(null);
         }
         return parameter;

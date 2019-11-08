@@ -2,18 +2,18 @@ package domain;
 
 import lombok.*;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IntegerTypeParam implements Param {
+public class IntegerTypeParam implements Param <Integer> {
     private String nameInPolish;
 
     private Integer punctation;
     private String type;
 
-    private String readValueString;
+    private String valueString;
     private Integer measuredValue;
     private Integer declaredValue;
+
 }
