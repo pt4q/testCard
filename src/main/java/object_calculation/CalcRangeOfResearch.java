@@ -17,7 +17,7 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     private TestCardConfig config;
 
     private Integer totalAvailablePoints = 0;
-    private Double points = 0.0;
+    private Double gainedPoints = 0.0;
 
     @Override
     public RangeOfResearchCalcModel calculate(RangeOfResearch input) {
@@ -29,24 +29,24 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
 
     private RangeOfResearchCalcModel calcAvailablePointsFromParamsAndGainedPoints(RangeOfResearchCalcModel input) {
         RangeOfResearch rangeOfResearch = input.getRangeOfResearch();
-        ParamListCalculator paramListCalculator = new ParamListCalculator(config);
 
+        ParamListCalculator paramListCalculator = new ParamListCalculator(config);
         List<ParamCalcModel> paramsCalculated = paramListCalculator.calculate(rangeOfResearch.getParams());
 
         for (ParamCalcModel param : paramsCalculated) {
             this.totalAvailablePoints = this.totalAvailablePoints + param.getAvailablePoints();
-            this.points = this.points + param.getScore();
+            this.gainedPoints = this.gainedPoints + param.getScore();
         }
 
-        input.setSumOfAvailablePointsFromParams(totalAvailablePoints);
-        input.setSumOfGainedPointsFromParams(points);
+        input.setSumOfAvailablePoints(totalAvailablePoints);
+        input.setSumOfGainedPoints(gainedPoints);
 
         return input;
     }
 
     private RangeOfResearchCalcModel calcPercent(RangeOfResearchCalcModel input) {
-        Integer sumOfAvailablePoints = input.getSumOfAvailablePointsFromParams();
-        Double sumOfGainedPointsFromParams = input.getSumOfGainedPointsFromParams();
+        Integer sumOfAvailablePoints = input.getSumOfAvailablePoints();
+        Double sumOfGainedPointsFromParams = input.getSumOfGainedPoints();
 
         OptionalDouble percent = OptionalDouble.of((sumOfGainedPointsFromParams * 100) / sumOfAvailablePoints);
 

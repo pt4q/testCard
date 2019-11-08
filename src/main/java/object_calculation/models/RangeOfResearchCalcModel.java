@@ -12,8 +12,8 @@ public class RangeOfResearchCalcModel {
     @NonNull
     private RangeOfResearch rangeOfResearch;
 
-    private Integer sumOfAvailablePointsFromParams;
-    private Double sumOfGainedPointsFromParams;
+    private Integer sumOfAvailablePoints;
+    private Double sumOfGainedPoints;
 
 //    private Integer punctation;
     private Double difference;

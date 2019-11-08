@@ -16,19 +16,42 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     @NonNull
     private TestCardConfig config;
 
+    private Integer totalAvailablePoints = 0;
+    private Double gainedPoints = 0.0;
+
     @Override
     public TestCardCalcModel calculate(TestCard input) {
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
-        List<RangeOfResearchCalcModel> rangeOfResearches = calcAllRangeOfResearch(input.getRangeOfResearchList());
+
 
         return null;
     }
 
-    private TestCardCalcModel calcAvailablePoints(){
-        return null;
-    }
-
-    private List<RangeOfResearchCalcModel> calcAllRangeOfResearch(List<RangeOfResearch> input){
+    private List<RangeOfResearchCalcModel> calcAllRangeOfResearch(List<RangeOfResearch> input) {
         return new RangeOfResearchListCalculator(config).calculate(input);
+    }
+
+    private TestCardCalcModel calcAvailableAndGainedPoints(TestCardCalcModel input) {
+        TestCard testCard = input.getTestCard();
+
+        List<RangeOfResearchCalcModel> rangeOfResearchesCalculated = calcAllRangeOfResearch(testCard.getRangeOfResearchList());
+
+        for (RangeOfResearchCalcModel rangeOfResearch : rangeOfResearchesCalculated) {
+            this.totalAvailablePoints = totalAvailablePoints + rangeOfResearch.getSumOfAvailablePoints();
+            this.gainedPoints = gainedPoints + rangeOfResearch.getSumOfGainedPoints();
+        }
+
+        input.setSumOfAvailablePoints(totalAvailablePoints);
+        input.setSumOfGainedPoints(gainedPoints);
+
+        return input;
+    }
+
+    private TestCardCalcModel calcPercent(TestCardCalcModel input) {
+        return null;
+    }
+
+    private TestCardCalcModel calcScore(TestCardCalcModel input) {
+        return null;
     }
 }

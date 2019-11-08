@@ -13,7 +13,9 @@ public class TestCardCalcModel {
     @NonNull
     private TestCard testCard;
 
-    private Integer availablePoints;
+    private Integer sumOfAvailablePoints;
+    private Double sumOfGainedPoints;
+
     private Double score;
     private Double difference;
     private Double percent;
