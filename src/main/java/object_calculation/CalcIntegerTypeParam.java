@@ -1,14 +1,12 @@
 package object_calculation;
 
 import config.TestCardConfig;
-import domain.DoubleTypeParam;
 import domain.IntegerTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
 
 import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
 @RequiredArgsConstructor
 class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypeParam> {
@@ -37,10 +35,33 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
     }
 
     private ParamCalcModel calcPercent(ParamCalcModel input) {
-        return null;
+        IntegerTypeParam integerTypeParam = (IntegerTypeParam) input.getParam();
+        Integer declared = integerTypeParam.getDeclaredValue();
+        Integer measured = integerTypeParam.getMeasuredValue();
+
+        OptionalDouble percent = OptionalDouble.of((measured * 100) / declared);
+
+        if (percent.isPresent())
+            input.setPercent(percent.getAsDouble());
+
+        return input;
     }
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
-        return null;
+        IntegerTypeParam integerTypeParam = (IntegerTypeParam) input.getParam();
+        Integer availablePoints = integerTypeParam.getPunctation();
+        Double percent = Math.abs(input.getPercent());
+
+        if (percent > 100)
+            percent = Double.parseDouble("100");
+        else if (percent < 0)
+            percent = Double.parseDouble("0");
+
+        OptionalDouble score = OptionalDouble.of((percent/100) * availablePoints);
+
+        if (score.isPresent())
+            input.setScore(score.getAsDouble());
+
+        return input;
     }
 }

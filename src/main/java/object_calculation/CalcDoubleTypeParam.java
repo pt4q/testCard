@@ -2,13 +2,13 @@ package object_calculation;
 
 import config.TestCardConfig;
 import domain.DoubleTypeParam;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
 
 import java.util.OptionalDouble;
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam> {
 
     @NonNull
@@ -56,7 +56,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         else if (percent < 0)
             percent = Double.parseDouble("0");
 
-        OptionalDouble score = OptionalDouble.of(percent * availablePoints);
+        OptionalDouble score = OptionalDouble.of((percent/100) * availablePoints);
 
         if (score.isPresent())
             input.setScore(score.getAsDouble());
