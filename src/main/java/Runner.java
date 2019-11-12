@@ -1,5 +1,7 @@
 import config.*;
 import domain.TestCard;
+import object_calculation.TestCardCalculator;
+import object_calculation.models.TestCardCalcModel;
 import object_creation.ReadTestCardFromFile;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_printing.TestCardPrinter;
@@ -31,7 +33,12 @@ public class Runner {
 
         System.out.println("\nu^u^u^u\tTest card created successfully!!!\tu^u^u^u\n");
 
-        testCardPrinter = new TestCardPrinter(testCardConfig);
+        TestCardCalculator cardCalculator = new TestCardCalculator(testCardConfig);
+        TestCardCalcModel testCardCalcModel = cardCalculator.calculate(testCard);
+
+        System.out.println("\nu^u^u^u\tTest card calculated successfully!!!\tu^u^u^u\n");
+
+//        testCardPrinter = new TestCardPrinter(testCardConfig);
 //        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCard);
 
 //        if (testCard != null)

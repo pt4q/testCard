@@ -20,6 +20,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
+        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
         return calcModel;
     }
 
@@ -27,11 +28,13 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
         Double declared = doubleTypeParam.getDeclaredValue();
         Double measured = doubleTypeParam.getMeasuredValue();
-        OptionalDouble difference = OptionalDouble.of(declared - measured);
 
-        if (difference.isPresent())
-            input.setDifference(difference.getAsDouble());
+        if (declared != null && measured != null) {
+            OptionalDouble difference = OptionalDouble.of(declared - measured);
 
+            if (difference.isPresent())
+                input.setDifference(difference.getAsDouble());
+        }
         return input;
     }
 
@@ -39,7 +42,10 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         DoubleTypeParam doubleTypeParam = (DoubleTypeParam) input.getParam();
         Double declared = doubleTypeParam.getDeclaredValue();
         Double measured = doubleTypeParam.getMeasuredValue();
-        OptionalDouble percent = OptionalDouble.of((measured * 100) / declared);
+        OptionalDouble percent = OptionalDouble.empty();
+
+        if ((declared != null && declared > 0) && (measured!= null && measured > 0))
+            percent = OptionalDouble.of((measured * 100) / declared);
 
         if (percent.isPresent())
             input.setPercent(percent.getAsDouble());
@@ -49,18 +55,22 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
         Integer availablePoints = input.getAvailablePoints();
-        Double percent = Math.abs(input.getPercent());
+        Double percent = input.getPercent();
+        Double percentAbs;
 
-        if (percent > 100)
-            percent = Double.parseDouble("100");
-        else if (percent < 0)
-            percent = Double.parseDouble("0");
+        if (percent != null) {
+            percentAbs = Math.abs(percent);
 
-        OptionalDouble score = OptionalDouble.of((percent/100) * availablePoints);
+            if (percentAbs > 100)
+                percentAbs = Double.parseDouble("100");
+            else if (percentAbs < 0)
+                percentAbs = Double.parseDouble("0");
 
-        if (score.isPresent())
-            input.setScore(score.getAsDouble());
+            OptionalDouble score = OptionalDouble.of((percentAbs / 100) * availablePoints);
 
+            if (score.isPresent())
+                input.setScore(score.getAsDouble());
+        }
         return input;
     }
 

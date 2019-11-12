@@ -9,6 +9,7 @@ import object_calculation.models.RangeOfResearchCalcModel;
 import object_calculation.models.TestCardCalcModel;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 @RequiredArgsConstructor
 public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCard> {
@@ -22,9 +23,10 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     @Override
     public TestCardCalcModel calculate(TestCard input) {
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
+        calcModel = calcScore(calcPercent(calcAvailableAndGainedPoints(calcModel)));
 
-
-        return null;
+        System.out.println("==========\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore()) ;
+        return calcModel;
     }
 
     private List<RangeOfResearchCalcModel> calcAllRangeOfResearch(List<RangeOfResearch> input) {
@@ -33,7 +35,6 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
 
     private TestCardCalcModel calcAvailableAndGainedPoints(TestCardCalcModel input) {
         TestCard testCard = input.getTestCard();
-
         List<RangeOfResearchCalcModel> rangeOfResearchesCalculated = calcAllRangeOfResearch(testCard.getRangeOfResearchList());
 
         for (RangeOfResearchCalcModel rangeOfResearch : rangeOfResearchesCalculated) {
@@ -48,10 +49,30 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     }
 
     private TestCardCalcModel calcPercent(TestCardCalcModel input) {
-        return null;
+        Integer sumOfAvailablePoints = input.getSumOfAvailablePoints();
+        Double sumOfGainedPoints = input.getSumOfGainedPoints();
+        OptionalDouble percent =OptionalDouble.of((sumOfGainedPoints * 100) / sumOfAvailablePoints);
+
+        if(percent.isPresent())
+            input.setPercent(percent.getAsDouble());
+
+        return input;
     }
 
     private TestCardCalcModel calcScore(TestCardCalcModel input) {
-        return null;
+        Integer availablePoints = input.getTestCard().getPunctation();
+        double percent = Math.abs(input.getPercent());
+
+        if (percent > 100)
+            percent = Double.parseDouble("100");
+        else if (percent < 0)
+            percent = Double.parseDouble("0");
+
+        OptionalDouble score = OptionalDouble.of((percent / 100) * availablePoints);
+
+        if (score.isPresent())
+            input.setScore(score.getAsDouble());
+
+        return input;
     }
 }

@@ -20,6 +20,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
+        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
         return calcModel;
     }
 
@@ -29,16 +30,21 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         Boolean measured = binaryTypeParam.getMeasuredValue();
         String resultString = "0";
 
-        if (declared == measured)
-            resultString = "1";
+        if (declared != null && measured != null) {
+            if (declared == measured)
+                resultString = "1";
 
-        input.setDifference(Double.parseDouble(resultString));
+            input.setDifference(Double.parseDouble(resultString));
+        }
         return input;
     }
 
     private ParamCalcModel calcPercent(ParamCalcModel input) {
         Double difference = input.getDifference();
-        OptionalDouble percent = OptionalDouble.of(difference * 100);
+        OptionalDouble percent = OptionalDouble.empty();
+
+        if (difference != null)
+            percent = OptionalDouble.of(difference * 100);
 
         if (percent.isPresent())
             input.setPercent(percent.getAsDouble());
@@ -47,15 +53,15 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
     }
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
-        BinaryTypeParam binaryTypeParam = (BinaryTypeParam) input.getParam();
         Integer availablePoints = input.getAvailablePoints();
         Double percent = input.getPercent();
 
-        OptionalDouble score = OptionalDouble.of(availablePoints * (percent/100));
+        if (availablePoints !=null && percent != null) {
+            OptionalDouble score = OptionalDouble.of(availablePoints * (percent / 100));
 
-        if (score.isPresent())
-            input.setScore(score.getAsDouble());
-
+            if (score.isPresent())
+                input.setScore(score.getAsDouble());
+        }
         return input;
     }
 }

@@ -24,6 +24,7 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
         RangeOfResearchCalcModel calcModel = new RangeOfResearchCalcModel(input);
 
         calcModel = calcScore(calcPercent(calcAvailablePointsFromParamsAndGainedPoints(calcModel)));
+        System.out.println("==========\t" +calcModel.getRangeOfResearch().getNameInPolish() + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore() + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<") ;
         return calcModel;
     }
 
@@ -34,8 +35,13 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
         List<ParamCalcModel> paramsCalculated = paramListCalculator.calculate(rangeOfResearch.getParams());
 
         for (ParamCalcModel param : paramsCalculated) {
-            this.totalAvailablePoints = this.totalAvailablePoints + param.getAvailablePoints();
-            this.gainedPoints = this.gainedPoints + param.getScore();
+            Integer paramAvailablePoints = param.getAvailablePoints();
+            Double paramScore = param.getScore();
+
+            if (paramAvailablePoints != null && paramScore != null) {
+                this.totalAvailablePoints = this.totalAvailablePoints + paramAvailablePoints;
+                this.gainedPoints = this.gainedPoints + paramScore;
+            }
         }
 
         input.setSumOfAvailablePoints(totalAvailablePoints);
@@ -58,7 +64,7 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
 
     private RangeOfResearchCalcModel calcScore(RangeOfResearchCalcModel input) {
         Integer availablePoints = input.getRangeOfResearch().getPunctation();
-        Double percent = Math.abs(input.getPercent());
+        double percent = Math.abs(input.getPercent());
 
         if (percent > 100)
             percent = Double.parseDouble("100");
