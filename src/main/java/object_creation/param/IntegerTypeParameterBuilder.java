@@ -20,7 +20,6 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<Stri
     public IntegerTypeParam build(List<String> input) {
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        Integer inputSize = input.size();
 
         IntegerTypeParam parameter = new IntegerTypeParam().builder()
                 .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
@@ -33,10 +32,22 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<Stri
         }
 
         try {
-            parameter.setReadValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
+            parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+            parameter.setType(null);
+        }
+
+        try {
+            parameter.setDeclaredValue(converter.castToInteger(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
+        } catch (IndexOutOfBoundsException e) {
+            parameter.setDeclaredValue(null);
+        }
+
+        try {
+            parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setReadValueString(null);
+            parameter.setValueString(null);
             parameter.setMeasuredValue(null);
         }
         return parameter;

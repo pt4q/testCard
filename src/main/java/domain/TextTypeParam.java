@@ -11,6 +11,7 @@ public class TextTypeParam implements Param {
     private String nameInPolish;
 
     private Integer punctation;
+    private String type;
 
     private String valueString;
     private String measuredValue;

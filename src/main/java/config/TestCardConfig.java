@@ -12,7 +12,9 @@ public class TestCardConfig {
     @NonNull
     private TestCardColumnsNumbers columnsNumbers;
     @NonNull
-    private TestCardParamMarks paramTypes;
+    private TestCardAndParamMarks paramTypes;
     @NonNull
     private BinaryTypePositiveDefinition positiveDefinition;
+//    @NonNull
+//    private ParametersCalcConfig calcConfig;
 }

@@ -32,6 +32,18 @@ class TextTypeParamBuilder implements Builder<TextTypeParam, List<String>> {
         }
 
         try {
+            parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+            parameter.setType(null);
+        }
+
+        try {
+            parameter.setDeclaredValue(input.get(columnsNumbers.getDeclaredValuesColumnNumber()));
+        } catch (IndexOutOfBoundsException e) {
+            parameter.setDeclaredValue(null);
+        }
+
+        try {
             parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(input.get(columnsNumbers.getMeasuredValuesColumnNumber()));
         } catch (IndexOutOfBoundsException e) {

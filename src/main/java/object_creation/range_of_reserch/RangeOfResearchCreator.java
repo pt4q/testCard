@@ -38,7 +38,6 @@ class RangeOfResearchCreator implements Creator<RangeOfResearch, List<List<Strin
                 .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
                 .punctation(null)
                 .params(null)
-                .overallScore(null)
                 .build();
 
         if (input.size() > 2)                                                       // zmienic na wyjatek IndexBoundException
