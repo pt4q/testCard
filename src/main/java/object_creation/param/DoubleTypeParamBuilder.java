@@ -39,6 +39,12 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
         }
 
         try {
+            parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
+        } catch (IndexOutOfBoundsException | NullPointerException e) {
+            parameter.setType(null);
+        }
+
+        try {
             parameter.setDeclaredValue(converter.castToDouble(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
             parameter.setDeclaredValue(null);

@@ -20,7 +20,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
-        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
+//        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
         return calcModel;
     }
 
@@ -28,11 +28,11 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         BinaryTypeParam binaryTypeParam = (BinaryTypeParam) input.getParam();
         Boolean declared = binaryTypeParam.getDeclaredValue();
         Boolean measured = binaryTypeParam.getMeasuredValue();
-        String resultString = "0";
+        String resultString = "1";
 
         if (declared != null && measured != null) {
             if (declared == measured)
-                resultString = "1";
+                resultString = "0";
 
             input.setDifference(Double.parseDouble(resultString));
         }
@@ -44,7 +44,10 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         OptionalDouble percent = OptionalDouble.empty();
 
         if (difference != null)
-            percent = OptionalDouble.of(difference * 100);
+            if (difference == 0)
+                percent = OptionalDouble.of(100);
+            else
+                percent = OptionalDouble.of(0);
 
         if (percent.isPresent())
             input.setPercent(percent.getAsDouble());
@@ -56,7 +59,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         Integer availablePoints = input.getAvailablePoints();
         Double percent = input.getPercent();
 
-        if (availablePoints !=null && percent != null) {
+        if (availablePoints != null && percent != null) {
             OptionalDouble score = OptionalDouble.of(availablePoints * (percent / 100));
 
             if (score.isPresent())

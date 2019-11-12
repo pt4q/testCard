@@ -20,7 +20,7 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam> {
         calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
-        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
+//        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
         return calcModel;
     }
 
@@ -28,11 +28,11 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam> {
         TextTypeParam textTypeParam = (TextTypeParam) input.getParam();
         String declared = textTypeParam.getDeclaredValue();
         String measured = textTypeParam.getMeasuredValue();
-        String resultString = "0";
+        String resultString = "1";
 
         if (declared != null && measured != null) {
             if (declared.equals(measured))
-                resultString = "1";
+                resultString = "0";
 
             input.setDifference(Double.parseDouble(resultString));
         }
@@ -44,7 +44,10 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam> {
         OptionalDouble percent = OptionalDouble.empty();
 
         if (difference != null)
-            percent = OptionalDouble.of(difference * 100);
+            if (difference == 0)
+                percent = OptionalDouble.of(100);
+            else
+                percent = OptionalDouble.of(0);
 
         if (percent.isPresent())
             input.setPercent(percent.getAsDouble());
