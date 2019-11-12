@@ -13,6 +13,7 @@ public class RangeOfResearchCalcModel {
     private RangeOfResearch rangeOfResearch;
 
     private Integer sumOfAvailablePoints;
+    private Integer sumOfUnavailablePoints;
     private Double sumOfGainedPoints;
 
 //    private Integer punctation;
