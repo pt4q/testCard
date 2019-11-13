@@ -27,7 +27,7 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
         calcModel = calcScore(calcPercent(calcAvailableAndGainedPoints(calcModel)));
 
-        System.out.println("==========\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
+        System.out.println("++++++++++++\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore() + "\t++++++++++++");
         System.out.println("unavailable points: " + totalUnAvailablePoints + "\tnumber of not available params: " + numberOfNotAvailableParams);
         return calcModel;
     }
@@ -41,17 +41,32 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         List<RangeOfResearchCalcModel> rangeOfResearchesCalculated = calcAllRangeOfResearch(testCard.getRangeOfResearchList());
 
         for (RangeOfResearchCalcModel rangeOfResearch : rangeOfResearchesCalculated) {
-            this.totalAvailablePoints = totalAvailablePoints + rangeOfResearch.getSumOfAvailablePoints();
-            this.gainedPoints = gainedPoints + rangeOfResearch.getSumOfGainedPoints();
+            Integer sumOfAvailablePoints = rangeOfResearch.getSumOfAvailablePoints();
+            Double sumOfGainedPoints = rangeOfResearch.getSumOfGainedPoints();
+            Integer sumOfUnavailablePoints = rangeOfResearch.getSumOfUnavailablePoints();
+            Integer numberOfNotAvailableParams = rangeOfResearch.getNumberOfNotAvailableParams();
 
-            this.totalUnAvailablePoints = totalUnAvailablePoints + rangeOfResearch.getSumOfUnavailablePoints();
-            this.numberOfNotAvailableParams = numberOfNotAvailableParams + rangeOfResearch.getSumOfUnavailablePoints();
+            this.totalAvailablePoints = totalAvailablePoints + sumOfAvailablePoints;
+            this.gainedPoints = gainedPoints + sumOfGainedPoints;
+
+            addToNotAvailablePoints(sumOfUnavailablePoints);
+            addToNotAvailableParams(numberOfNotAvailableParams);
         }
 
         input.setSumOfAvailablePoints(totalAvailablePoints);
         input.setSumOfGainedPoints(gainedPoints);
 
         return input;
+    }
+
+    private void addToNotAvailablePoints(Integer totalUnavailablePoints) {
+        if (totalUnavailablePoints != null)
+            this.totalUnAvailablePoints = this.totalUnAvailablePoints + totalUnavailablePoints;
+    }
+
+    private void addToNotAvailableParams(Integer totalNotAvailableParams) {
+        if (totalNotAvailableParams != null)
+            this.numberOfNotAvailableParams = this.numberOfNotAvailableParams + totalNotAvailableParams;
     }
 
     private TestCardCalcModel calcPercent(TestCardCalcModel input) {

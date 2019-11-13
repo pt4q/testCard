@@ -19,6 +19,9 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
         ParamCalcModel calcModel = new ParamCalcModel(input);
         calcModel.setAvailablePoints(input.getPunctation());
 
+        if (input.getNameInPolish().equals("Łuk ciągły w czasie testu. urządzenie pali się"))
+            System.out.println();
+
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
 //        System.out.println(calcModel.getParam().getNameInPolish() + "\t" + calcModel.getAvailablePoints() + "\t" + calcModel.getDifference() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore());
         return calcModel;

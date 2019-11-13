@@ -16,11 +16,6 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     @NonNull
     private TestCardConfig config;
 
-    private Integer totalAvailablePoints = 0;
-    private Integer totalUnAvailablePoints = 0;
-    private Integer numberOfNotAvailableParams = 0;
-    private Double gainedPoints = 0.0;
-
     @Override
     public RangeOfResearchCalcModel calculate(RangeOfResearch input) {
         RangeOfResearchCalcModel calcModel = new RangeOfResearchCalcModel(input);
@@ -33,6 +28,11 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     private RangeOfResearchCalcModel calcAvailablePointsFromParamsAndGainedPoints(RangeOfResearchCalcModel input) {
         RangeOfResearch rangeOfResearch = input.getRangeOfResearch();
 
+        Integer totalAvailablePoints = 0;
+        Integer totalUnAvailablePoints = 0;
+        Integer numberOfNotAvailableParams = 0;
+        Double gainedPoints = 0.0;
+
         ParamListCalculator paramListCalculator = new ParamListCalculator(config);
         List<ParamCalcModel> paramsCalculated = paramListCalculator.calculate(rangeOfResearch.getParams());
 
@@ -41,19 +41,21 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
             Double paramScore = param.getScore();
 
             if (paramAvailablePoints != null) {
-                this.totalAvailablePoints = this.totalAvailablePoints + paramAvailablePoints;
+                totalAvailablePoints = totalAvailablePoints + paramAvailablePoints;
 
-                if (paramScore != null)
-                    this.gainedPoints = this.gainedPoints + paramScore;
+                if (paramScore != null && paramScore > 0.0)
+                    gainedPoints = gainedPoints + paramScore;
                 else {
-                    this.totalUnAvailablePoints = this.totalUnAvailablePoints + paramAvailablePoints;
-                    this.numberOfNotAvailableParams = numberOfNotAvailableParams++;
+                    totalUnAvailablePoints = totalUnAvailablePoints + paramAvailablePoints;
+                    numberOfNotAvailableParams++;
                 }
             }
         }
 
         input.setSumOfAvailablePoints(totalAvailablePoints);
         input.setSumOfGainedPoints(gainedPoints);
+        input.setSumOfUnavailablePoints(totalUnAvailablePoints);
+        input.setNumberOfNotAvailableParams(numberOfNotAvailableParams);
 
         return input;
     }
