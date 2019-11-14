@@ -24,7 +24,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));
 
-        printSummary(calcModel);
+//        printSummary(calcModel);
          return calcModel;
     }
 
