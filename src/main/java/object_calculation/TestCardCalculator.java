@@ -27,9 +27,13 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
         calcModel = calcScore(calcPercent(calcAvailableAndGainedPoints(calcModel)));
 
+        printSummary(calcModel);
+        return calcModel;
+    }
+
+    private void printSummary(TestCardCalcModel calcModel) {
         System.out.println("++++++++++++\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore() + "\t++++++++++++");
         System.out.println("unavailable points: " + totalUnAvailablePoints + "\tnumber of not available params: " + numberOfNotAvailableParams);
-        return calcModel;
     }
 
     private List<RangeOfResearchCalcModel> calcAllRangeOfResearch(List<RangeOfResearch> input) {

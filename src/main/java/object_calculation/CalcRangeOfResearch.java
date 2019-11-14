@@ -20,9 +20,23 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     public RangeOfResearchCalcModel calculate(RangeOfResearch input) {
         RangeOfResearchCalcModel calcModel = new RangeOfResearchCalcModel(input);
 
-        calcModel = calcScore(calcPercent(calcAvailablePointsFromParamsAndGainedPoints(calcModel)));
-        System.out.println("==========\tname: " + calcModel.getRangeOfResearch().getNameInPolish() + "\tsum of available: " + calcModel.getSumOfAvailablePoints() + "\tsum of gained: " + calcModel.getSumOfGainedPoints() + "\tpercent:" + calcModel.getPercent() + "\tscore: " + calcModel.getScore() + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<");
+        calcModel = calcScore(
+                calcPercent(
+                        calcDifference(
+                                calcAvailablePointsFromParamsAndGainedPoints(calcModel)
+                        )));
+
+        printSummary(calcModel);
         return calcModel;
+    }
+
+    private void printSummary(RangeOfResearchCalcModel calcModel){
+        System.out.println("==========\tname: " + calcModel.getRangeOfResearch().getNameInPolish()
+                + "\tsum of available: " + calcModel.getSumOfAvailablePoints()
+                + "\tsum of gained: " + calcModel.getSumOfGainedPoints()
+                + "\tpercent:" + calcModel.getPercent()
+                + "\tscore: " + calcModel.getScore()
+                + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<");
     }
 
     private RangeOfResearchCalcModel calcAvailablePointsFromParamsAndGainedPoints(RangeOfResearchCalcModel input) {
@@ -57,6 +71,18 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
         input.setSumOfUnavailablePoints(totalUnAvailablePoints);
         input.setNumberOfNotAvailableParams(numberOfNotAvailableParams);
 
+        return input;
+    }
+
+    private RangeOfResearchCalcModel calcDifference(RangeOfResearchCalcModel input) {
+        Integer availablePoints = input.getSumOfAvailablePoints();
+        Double gainedPoints = input.getSumOfGainedPoints();
+        double difference = 0.0;
+
+        if (availablePoints != null && gainedPoints != null)
+            difference = availablePoints - gainedPoints;
+
+        input.setDifference(difference);
         return input;
     }
 
