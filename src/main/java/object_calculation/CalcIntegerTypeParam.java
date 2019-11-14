@@ -29,12 +29,14 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
         Integer declared = integerTypeParam.getDeclaredValue();
         Integer measured = integerTypeParam.getMeasuredValue();
 
-        if (measured != null && declared!= 0) {
+        if (measured != null && declared != 0) {
             OptionalDouble difference = OptionalDouble.of(declared - measured);
 
             if (difference.isPresent())
                 input.setDifference(difference.getAsDouble());
-        }
+        } else
+            input.setDifference(Double.parseDouble("0"));
+
         return input;
     }
 
@@ -42,21 +44,21 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
         IntegerTypeParam integerTypeParam = (IntegerTypeParam) input.getParam();
         Integer declared = integerTypeParam.getDeclaredValue();
         Integer measured = integerTypeParam.getMeasuredValue();
-        OptionalDouble percent = OptionalDouble.empty();
+        double percent = 0.0;
 
-        if ((declared != null && declared > 0) && (measured!= null && measured > 0))
-            percent = OptionalDouble.of((measured * 100) / declared);
+        if ((declared != null && declared > 0) && (measured != null && measured > 0))
+            percent = OptionalDouble.of((measured * 100) / declared)
+                    .orElse(0.0);
 
-        if (percent.isPresent())
-            input.setPercent(percent.getAsDouble());
-
+        input.setPercent(percent);
         return input;
     }
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
         Integer availablePoints = input.getAvailablePoints();
         Double percent = input.getPercent();
-        Double percentAbs;
+        double percentAbs;
+        double score = 0.0;
 
         if (percent != null) {
             percentAbs = Math.abs(percent);
@@ -66,11 +68,11 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
             else if (percentAbs < 0)
                 percentAbs = Double.parseDouble("0");
 
-            OptionalDouble score = OptionalDouble.of((percentAbs / 100) * availablePoints);
-
-            if (score.isPresent())
-                input.setScore(score.getAsDouble());
+            score = OptionalDouble.of((percentAbs / 100) * availablePoints)
+                    .orElse(0.0);
         }
+        input.setScore(score);
+
         return input;
     }
 }

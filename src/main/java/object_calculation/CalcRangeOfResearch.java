@@ -16,20 +16,36 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     @NonNull
     private TestCardConfig config;
 
-    private Integer totalAvailablePoints = 0;
-    private Double gainedPoints = 0.0;
-
     @Override
     public RangeOfResearchCalcModel calculate(RangeOfResearch input) {
         RangeOfResearchCalcModel calcModel = new RangeOfResearchCalcModel(input);
 
-        calcModel = calcScore(calcPercent(calcAvailablePointsFromParamsAndGainedPoints(calcModel)));
-        System.out.println("==========\tname: " + calcModel.getRangeOfResearch().getNameInPolish() + "\tavailable: " + calcModel.getSumOfAvailablePoints() + "\tgained: " + calcModel.getSumOfGainedPoints() + "\tpercent:" + calcModel.getPercent() + "\tscore: " + calcModel.getScore() + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<");
+        calcModel = calcScore(
+                calcPercent(
+                        calcDifference(
+                                calcAvailablePointsFromParamsAndGainedPoints(calcModel)
+                        )));
+
+        printSummary(calcModel);
         return calcModel;
+    }
+
+    private void printSummary(RangeOfResearchCalcModel calcModel){
+        System.out.println("==========\tname: " + calcModel.getRangeOfResearch().getNameInPolish()
+                + "\tsum of available: " + calcModel.getSumOfAvailablePoints()
+                + "\tsum of gained: " + calcModel.getSumOfGainedPoints()
+                + "\tpercent:" + calcModel.getPercent()
+                + "\tscore: " + calcModel.getScore()
+                + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<");
     }
 
     private RangeOfResearchCalcModel calcAvailablePointsFromParamsAndGainedPoints(RangeOfResearchCalcModel input) {
         RangeOfResearch rangeOfResearch = input.getRangeOfResearch();
+
+        Integer totalAvailablePoints = 0;
+        Integer totalUnAvailablePoints = 0;
+        Integer numberOfNotAvailableParams = 0;
+        Double gainedPoints = 0.0;
 
         ParamListCalculator paramListCalculator = new ParamListCalculator(config);
         List<ParamCalcModel> paramsCalculated = paramListCalculator.calculate(rangeOfResearch.getParams());
@@ -39,16 +55,34 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
             Double paramScore = param.getScore();
 
             if (paramAvailablePoints != null) {
-                this.totalAvailablePoints = this.totalAvailablePoints + paramAvailablePoints;
+                totalAvailablePoints = totalAvailablePoints + paramAvailablePoints;
 
-                if (paramScore != null)
-                    this.gainedPoints = this.gainedPoints + paramScore;
+                if (paramScore != null && paramScore > 0.0)
+                    gainedPoints = gainedPoints + paramScore;
+                else {
+                    totalUnAvailablePoints = totalUnAvailablePoints + paramAvailablePoints;
+                    numberOfNotAvailableParams++;
+                }
             }
         }
 
         input.setSumOfAvailablePoints(totalAvailablePoints);
         input.setSumOfGainedPoints(gainedPoints);
+        input.setSumOfUnavailablePoints(totalUnAvailablePoints);
+        input.setNumberOfNotAvailableParams(numberOfNotAvailableParams);
 
+        return input;
+    }
+
+    private RangeOfResearchCalcModel calcDifference(RangeOfResearchCalcModel input) {
+        Integer availablePoints = input.getSumOfAvailablePoints();
+        Double gainedPoints = input.getSumOfGainedPoints();
+        double difference = 0.0;
+
+        if (availablePoints != null && gainedPoints != null)
+            difference = availablePoints - gainedPoints;
+
+        input.setDifference(difference);
         return input;
     }
 
@@ -56,10 +90,9 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
         Integer sumOfAvailablePoints = input.getSumOfAvailablePoints();
         Double sumOfGainedPointsFromParams = input.getSumOfGainedPoints();
 
-        OptionalDouble percent = OptionalDouble.of((sumOfGainedPointsFromParams * 100) / sumOfAvailablePoints);
-
-        if (percent.isPresent())
-            input.setPercent(percent.getAsDouble());
+        double percent = OptionalDouble.of((sumOfGainedPointsFromParams * 100) / sumOfAvailablePoints)
+                .orElse(0.0);
+        input.setPercent(percent);
 
         return input;
     }
@@ -73,10 +106,9 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
         else if (percent < 0)
             percent = Double.parseDouble("0");
 
-        OptionalDouble score = OptionalDouble.of((percent / 100) * availablePoints);
-
-        if (score.isPresent())
-            input.setScore(score.getAsDouble());
+        double score = OptionalDouble.of((percent / 100) * availablePoints)
+                .orElse(0.0);
+        input.setScore(score);
 
         return input;
     }

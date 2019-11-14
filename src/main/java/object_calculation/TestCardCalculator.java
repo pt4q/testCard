@@ -18,6 +18,8 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     private TestCardConfig config;
 
     private Integer totalAvailablePoints = 0;
+    private Integer totalUnAvailablePoints = 0;
+    private Integer numberOfNotAvailableParams = 0;
     private Double gainedPoints = 0.0;
 
     @Override
@@ -25,8 +27,13 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
         calcModel = calcScore(calcPercent(calcAvailableAndGainedPoints(calcModel)));
 
-        System.out.println("==========\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore()) ;
+        printSummary(calcModel);
         return calcModel;
+    }
+
+    private void printSummary(TestCardCalcModel calcModel) {
+        System.out.println("++++++++++++\t" + "KARTA TESTOWA" + "\t" + calcModel.getSumOfAvailablePoints() + "\t" + calcModel.getSumOfGainedPoints() + "\t" + calcModel.getPercent() + "\t" + calcModel.getScore() + "\t++++++++++++");
+        System.out.println("unavailable points: " + totalUnAvailablePoints + "\tnumber of not available params: " + numberOfNotAvailableParams);
     }
 
     private List<RangeOfResearchCalcModel> calcAllRangeOfResearch(List<RangeOfResearch> input) {
@@ -38,8 +45,16 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         List<RangeOfResearchCalcModel> rangeOfResearchesCalculated = calcAllRangeOfResearch(testCard.getRangeOfResearchList());
 
         for (RangeOfResearchCalcModel rangeOfResearch : rangeOfResearchesCalculated) {
-            this.totalAvailablePoints = totalAvailablePoints + rangeOfResearch.getSumOfAvailablePoints();
-            this.gainedPoints = gainedPoints + rangeOfResearch.getSumOfGainedPoints();
+            Integer sumOfAvailablePoints = rangeOfResearch.getSumOfAvailablePoints();
+            Double sumOfGainedPoints = rangeOfResearch.getSumOfGainedPoints();
+            Integer sumOfUnavailablePoints = rangeOfResearch.getSumOfUnavailablePoints();
+            Integer numberOfNotAvailableParams = rangeOfResearch.getNumberOfNotAvailableParams();
+
+            this.totalAvailablePoints = totalAvailablePoints + sumOfAvailablePoints;
+            this.gainedPoints = gainedPoints + sumOfGainedPoints;
+
+            addToNotAvailablePoints(sumOfUnavailablePoints);
+            addToNotAvailableParams(numberOfNotAvailableParams);
         }
 
         input.setSumOfAvailablePoints(totalAvailablePoints);
@@ -48,14 +63,23 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         return input;
     }
 
+    private void addToNotAvailablePoints(Integer totalUnavailablePoints) {
+        if (totalUnavailablePoints != null)
+            this.totalUnAvailablePoints = this.totalUnAvailablePoints + totalUnavailablePoints;
+    }
+
+    private void addToNotAvailableParams(Integer totalNotAvailableParams) {
+        if (totalNotAvailableParams != null)
+            this.numberOfNotAvailableParams = this.numberOfNotAvailableParams + totalNotAvailableParams;
+    }
+
     private TestCardCalcModel calcPercent(TestCardCalcModel input) {
         Integer sumOfAvailablePoints = input.getSumOfAvailablePoints();
         Double sumOfGainedPoints = input.getSumOfGainedPoints();
-        OptionalDouble percent =OptionalDouble.of((sumOfGainedPoints * 100) / sumOfAvailablePoints);
+        double percent = OptionalDouble.of((sumOfGainedPoints * 100) / sumOfAvailablePoints)
+                .orElse(Double.parseDouble("0"));
 
-        if(percent.isPresent())
-            input.setPercent(percent.getAsDouble());
-
+        input.setPercent(percent);
         return input;
     }
 
@@ -68,11 +92,10 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
         else if (percent < 0)
             percent = Double.parseDouble("0");
 
-        OptionalDouble score = OptionalDouble.of((percent / 100) * availablePoints);
+        double score = OptionalDouble.of((percent / 100) * availablePoints)
+                .orElse(Double.parseDouble("0"));
 
-        if (score.isPresent())
-            input.setScore(score.getAsDouble());
-
+        input.setScore(score);
         return input;
     }
 }
