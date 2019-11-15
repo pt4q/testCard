@@ -4,33 +4,37 @@ import config.TestCardConfig;
 import domain.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import object_calculation.models.ParamCalcModel;
+import object_printing.models.ParamPrintModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-class ParamStringGenerator implements Generator<List<List<ParamPrintModel>>, List<Param>> {
+class ParamStringGenerator implements Generator<List<List<ParamPrintModel>>, List<ParamCalcModel>> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<List<ParamPrintModel>> generate(List<Param> input) {
+    public List<List<ParamPrintModel>> generate(List<ParamCalcModel> input) {
         return generateParamPrintModels(input);
     }
 
-    private List<List<ParamPrintModel>> generateParamPrintModels(List<Param> input) {
+    private List<List<ParamPrintModel>> generateParamPrintModels(List<ParamCalcModel> input) {
         List<List<ParamPrintModel>> result = new ArrayList<>();
 
-        for (Param param : input) {
+        for (ParamCalcModel paramCalcModel : input) {
+            Param param = paramCalcModel.getParam();
+
             if (param instanceof BinaryTypeParam)
-                result.add(new BinaryTypeParamStringGenerator(config).generate((BinaryTypeParam) param));
+                result.add(new BinaryTypeParamStringGenerator(config).generate(paramCalcModel));
             else if (param instanceof DoubleTypeParam)
-                result.add(new DoubleTypeParamStringGenerator(config).generate((DoubleTypeParam) param));
+                result.add(new DoubleTypeParamStringGenerator(config).generate(paramCalcModel));
             else if (param instanceof IntegerTypeParam)
-                result.add(new IntegerTypeParamStringGenerator(config).generate((IntegerTypeParam) param));
+                result.add(new IntegerTypeParamStringGenerator(config).generate(paramCalcModel));
             else if (param instanceof TextTypeParam)
-                result.add(new TextTypeParamStringGenerator(config).generate((TextTypeParam) param));
+                result.add(new TextTypeParamStringGenerator(config).generate(paramCalcModel));
         }
 
         return result;

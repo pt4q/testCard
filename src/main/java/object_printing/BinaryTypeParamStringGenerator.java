@@ -5,29 +5,32 @@ import config.TestCardConfig;
 import domain.BinaryTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import object_calculation.models.ParamCalcModel;
+import object_printing.models.ParamPrintModel;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
-class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>, BinaryTypeParam> {
+class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>, ParamCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<ParamPrintModel> generate(BinaryTypeParam input) {
+    public List<ParamPrintModel> generate(ParamCalcModel input) {
+        BinaryTypeParam btp = (BinaryTypeParam) input.getParam();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        Boolean measuredValue = input.getMeasuredValue();
-        Boolean declaredValue = input.getDeclaredValue();
+        Boolean measuredValue = btp.getMeasuredValue();
+        Boolean declaredValue = btp.getDeclaredValue();
 
         String measuredBinaryToStringValue = convertMeasuredValueToString(measuredValue);
         String declaredBinaryToStringValue = convertDeclaredValueToString(declaredValue);
 
         return Arrays.asList(
-                new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), input.getNameInPolish()),
-                new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(), input.getPunctation().toString()),
-                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), input.getValueString()),
+                new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), btp.getNameInPolish()),
+                new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(), btp.getPunctation().toString()),
+                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), btp.getValueString()),
                 new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), measuredBinaryToStringValue),
                 new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), declaredBinaryToStringValue)
         );

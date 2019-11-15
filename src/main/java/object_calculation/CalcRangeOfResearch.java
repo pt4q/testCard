@@ -43,6 +43,8 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     private RangeOfResearchCalcModel calcAvailablePointsFromParamsAndGainedPoints(RangeOfResearchCalcModel input) {
         RangeOfResearch rangeOfResearch = input.getRangeOfResearch();
 
+        input.setPunctation(input.getRangeOfResearch().getPunctation());
+
         Integer totalAvailablePoints = 0;
         Integer totalUnAvailablePoints = 0;
         Integer numberOfNotAvailableParams = 0;
@@ -50,6 +52,8 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
 
         ParamListCalculator paramListCalculator = new ParamListCalculator(config);
         List<ParamCalcModel> paramsCalculated = paramListCalculator.calculate(rangeOfResearch.getParams());
+
+        input.setParamCalcModelList(paramsCalculated);
 
         for (ParamCalcModel param : paramsCalculated) {
             Integer paramAvailablePoints = param.getAvailablePoints();

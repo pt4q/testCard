@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @RequiredArgsConstructor
 public class TestCardCalcModel {
 
     @NonNull
     private TestCard testCard;
+    private List<RangeOfResearchCalcModel> rangeOfResearchCalcModelList;
 
     private Integer sumOfAvailablePoints;
     private Double sumOfGainedPoints;

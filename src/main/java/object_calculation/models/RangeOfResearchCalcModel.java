@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Data
 @RequiredArgsConstructor
 public class RangeOfResearchCalcModel {
 
     @NonNull
     private RangeOfResearch rangeOfResearch;
+    private List<ParamCalcModel> paramCalcModelList;
 
     private Integer sumOfAvailablePoints;
     private Double sumOfGainedPoints;
@@ -18,7 +21,7 @@ public class RangeOfResearchCalcModel {
     private Integer sumOfUnavailablePoints;
     private Integer numberOfNotAvailableParams;
 
-//    private Integer punctation;
+    private Integer punctation;
     private Double difference;
     private Double score;
     private Double percent;
