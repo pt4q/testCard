@@ -31,10 +31,11 @@ class CalcRangeOfResearch implements Calculator<RangeOfResearchCalcModel, RangeO
     }
 
     private void printSummary(RangeOfResearchCalcModel calcModel){
-        System.out.println("==========\tname: " + calcModel.getRangeOfResearch().getNameInPolish()
-                + "\tsum of available: " + calcModel.getSumOfAvailablePoints()
+        System.out.println("==========\t" + calcModel.getRangeOfResearch().getNameInPolish()
+                + "\t||\tsum of available: " + calcModel.getSumOfAvailablePoints()
                 + "\tsum of gained: " + calcModel.getSumOfGainedPoints()
                 + "\tpercent:" + calcModel.getPercent()
+                + "\tavailable points: " + calcModel.getRangeOfResearch().getPunctation()
                 + "\tscore: " + calcModel.getScore()
                 + "\t==========\t>>> " + calcModel.getRangeOfResearch().getParams().size() + " <<<");
     }
