@@ -10,11 +10,15 @@ import lombok.NonNull;
 @Builder
 public class TestCardConfig {
     @NonNull
+    private CsvConfig csvConfig;
+    @NonNull
     private TestCardColumnsNumbers columnsNumbers;
     @NonNull
     private TestCardAndParamMarks paramTypes;
     @NonNull
     private BinaryTypePositiveDefinition positiveDefinition;
-//    @NonNull
-//    private ParametersCalcConfig calcConfig;
+    @NonNull
+    private CalcConfig calcConfig;
+    @NonNull
+    private PrintConfig printConfig;
 }

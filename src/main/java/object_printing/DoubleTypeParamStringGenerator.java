@@ -10,25 +10,31 @@ import object_calculation.models.ParamCalcModel;
 import object_printing.models.ParamPrintModel;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
-class DoubleTypeParamStringGenerator implements Generator<List<ParamPrintModel>, ParamCalcModel> {
+class DoubleTypeParamStringGenerator implements Generator<Map<Integer, String>, ParamCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<ParamPrintModel> generate(ParamCalcModel input) {
+    public Map<Integer, String> generate(ParamCalcModel input) {
         DoubleTypeParam dtp = (DoubleTypeParam) input.getParam();
-        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
-        return Arrays.asList(
-                new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(),dtp.getNameInPolish()),
-                new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(),dtp.getPunctation().toString()),
-                new ParamPrintModel(columnsNumbers.getReadValueColumnNumber(),dtp.getValueString()),
-                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(),dtp.getMeasuredValue().toString()),
-                new ParamPrintModel(columnsNumbers.getDeclaredValuesColumnNumber(),dtp.getDeclaredValue().toString())
-        );
+        return new HashMap<Integer, String>() {{
+            put(0, dtp.getNameInPolish());
+            put(1, dtp.getPunctation().toString());
+            put(2, dtp.getValueString());
+            put(3, dtp.getDeclaredValue().toString());
+            put(4, dtp.getMeasuredValue().toString());
+            put(5, input.getDifference().toString());
+            put(6, "");
+            put(7, input.getAvailablePoints().toString());
+            put(8, input.getScore().toString());
+            put(9, "");
+        }};
     }
 }

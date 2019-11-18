@@ -5,24 +5,24 @@ import domain.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
-import object_printing.models.ParamPrintModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
-class ParamStringGenerator implements Generator<List<List<ParamPrintModel>>, List<ParamCalcModel>> {
+class ParamStringGenerator implements Generator<List<Map<Integer, String>>, List<ParamCalcModel>> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<List<ParamPrintModel>> generate(List<ParamCalcModel> input) {
-        return generateParamPrintModels(input);
+    public List<Map<Integer, String>> generate(List<ParamCalcModel> input) {
+        return convertParamsToListWithMaps(input);
     }
 
-    private List<List<ParamPrintModel>> generateParamPrintModels(List<ParamCalcModel> input) {
-        List<List<ParamPrintModel>> result = new ArrayList<>();
+    private List<Map<Integer, String>> convertParamsToListWithMaps(List<ParamCalcModel> input) {
+        List<Map<Integer, String>> result = new ArrayList<>();
 
         for (ParamCalcModel paramCalcModel : input) {
             Param param = paramCalcModel.getParam();
@@ -36,12 +36,6 @@ class ParamStringGenerator implements Generator<List<List<ParamPrintModel>>, Lis
             else if (param instanceof TextTypeParam)
                 result.add(new TextTypeParamStringGenerator(config).generate(paramCalcModel));
         }
-
         return result;
-    }
-
-    private Integer calcMaxColumnNumberFromConfig() {
-        TestCardColumnSequencer columnSequencer = new TestCardColumnSequencer();
-        return columnSequencer.calcMaxNumberOfColumn(config);
     }
 }

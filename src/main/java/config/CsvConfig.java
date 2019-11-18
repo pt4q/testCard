@@ -6,9 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CalcConfig {
+public class CsvConfig {
 
     @NonNull
-    private Double maxPercentTolerance;
-
+    private String defaultSeparator;
 }
