@@ -34,15 +34,15 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
         List<List<String>> inputList = removeEverythingBeforeHeader(convertMapToList(searchAndRemoveEmptyLines(input)));
         inputList = removeNotMarkedLines(inputList);
 
-        header = getHeader(inputList);
-        inputList = removeHeader(inputList, header);
+//        header = getHeader(inputList);
+//        inputList = removeHeader(inputList, header);
 
         rangeOfResearchList = createRangeOfResearchList(inputList);
 
         testCard = new TestCard().builder()
-                .header(header)
+//                .header(header)
                 .rangeOfResearchList(rangeOfResearchList)
-                .punctation(getGeneralPunctation(header))
+//                .punctation(getGeneralPunctation(header))
                 .build();
 
         return testCard;

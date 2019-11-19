@@ -25,19 +25,20 @@ class ParamFactory implements Builder<Param, List<String>> {
         String paramType = paramTypeRecognizer(input);
 
         if (paramType != null) {
-            if (paramType.equals(testCardAndParamMarks.getBINARY_TYPE())) {
-                BinaryTypeParamBuilder builder = new BinaryTypeParamBuilder(config);
-                return builder.build(input);
-            } else if (paramType.equals(testCardAndParamMarks.getTEXT_TYPE())) {
-                TextTypeParamBuilder builder = new TextTypeParamBuilder(config);
-                return builder.build(input);
-            } else if (paramType.equals(testCardAndParamMarks.getDOUBLE_TYPE())) {
-                DoubleTypeParamBuilder builder = new DoubleTypeParamBuilder(config);
-                return builder.build(input);
-            } else if (paramType.equals(testCardAndParamMarks.getINTEGER_TYPE())) {
-                IntegerTypeParameterBuilder builder = new IntegerTypeParameterBuilder(config);
-                return builder.build(input);
-            }
+            if (paramType.equals(testCardAndParamMarks.getBINARY_TYPE()))
+                return new BinaryTypeParamBuilder(config).build(input);
+
+             else if (paramType.equals(testCardAndParamMarks.getTEXT_TYPE()))
+                return new TextTypeParamBuilder(config).build(input);
+
+             else if (paramType.equals(testCardAndParamMarks.getDOUBLE_TYPE()))
+                return new DoubleTypeParamBuilder(config).build(input);
+
+             else if (paramType.equals(testCardAndParamMarks.getINTEGER_TYPE()))
+                return new IntegerTypeParameterBuilder(config).build(input);
+
+             else if (paramType.equals(testCardAndParamMarks.getHEADER_TYPE()))
+                return new HeaderTypeParamBuilder(config).build(input);
         }
         throw new RecognizeParamTypeException(ParamFactoryStatusEnum.PARAM_BUILD_NOT_RECOGNIZED.toString() + " for " + input.get(1));
     }
@@ -46,9 +47,8 @@ class ParamFactory implements Builder<Param, List<String>> {
         TestCardColumnsNumbers testCardColumnsNumbers = config.getColumnsNumbers();
         TestCardAndParamMarks testCardAndParamMarks = config.getParamTypes();
 
-        TestCardAndParamMarks result = null;
         Integer inputSize = input.size();
-        String type = null;
+        String type;
 
         if (inputSize > 2) {
             type = input.get(testCardColumnsNumbers.getParamTypeColumnNumber());
@@ -64,6 +64,9 @@ class ParamFactory implements Builder<Param, List<String>> {
 
             else if (StringMatcher.isMatch(type, testCardAndParamMarks.getINTEGER_TYPE()))
                 return testCardAndParamMarks.getINTEGER_TYPE();
+
+            else if (StringMatcher.isMatch(type, testCardAndParamMarks.getHEADER_TYPE()))
+                return testCardAndParamMarks.getHEADER_TYPE();
         } else
             System.out.println(input.get(1));
 

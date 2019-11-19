@@ -1,6 +1,5 @@
 package object_printing;
 
-import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
 import domain.BinaryTypeParam;
 import lombok.NonNull;

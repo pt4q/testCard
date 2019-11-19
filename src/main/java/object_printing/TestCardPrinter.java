@@ -25,10 +25,6 @@ public class TestCardPrinter implements Generator<String, TestCard> {
         return null;
     }
 
-    private Integer calcMaxColumnNumberFromConfig() {
-        TestCardColumnSequencer columnSequencer = new TestCardColumnSequencer();
-        return columnSequencer.calcMaxNumberOfColumn(config);
-    }
 
     private List<String> generateListOfRangeOfResearch() {
         return null;

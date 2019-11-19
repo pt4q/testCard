@@ -20,12 +20,33 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     public List<String> generate(TestCardCalcModel input) {
         List<String> result = new ArrayList<>();
 
+        convertRangeOfResearchWithParamsToStringList(input.getRangeOfResearchCalcModelList()).stream()
+                .forEach(result::add);
 
         return result;
     }
 
+    private List<String> testCardHeader(TestCardCalcModel testCardCalcModel) {
+        TestCard tc = testCardCalcModel.getTestCard();
+        List<List<String>> headerLines = tc.getHeader();
+        String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
 
-    private List<List<String>> convertListOfMapsToListOfStrings(List<RangeOfResearchCalcModel> calcModelList) {
+       return headerLines.stream()
+                .map(list -> testCardHeaderLine(list).stream()
+                        .map(s -> s + defaultSeparator)
+                        .collect(Collectors.joining()))
+                .collect(Collectors.toList());
+    }
+
+    private List<String> testCardHeaderLine(List<String> input) {
+        Integer headerTypeSign = config.getColumnsNumbers().getParamTypeColumnNumber();
+        if (input.size() > 3)
+            input.remove(headerTypeSign);
+
+        return input;
+    }
+
+    private List<String> convertRangeOfResearchWithParamsToStringList(List<RangeOfResearchCalcModel> calcModelList) {
         List<String> result = new ArrayList<>();
         List<Map<Integer, String>> listOfMaps = generateListOfMaps(calcModelList);
         String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
@@ -33,7 +54,7 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
         for (Map<Integer, String> valuesInMap : listOfMaps) {
             String line = valuesInMap.entrySet().stream()
                     .sorted(Map.Entry.comparingByKey())
-                    .map(entry -> entry.getValue() + defaultSeparator)
+                    .map(entry -> (entry.getValue() + defaultSeparator))
                     .collect(Collectors.joining());
 
             result.add(line);
