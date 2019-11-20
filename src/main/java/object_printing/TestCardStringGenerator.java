@@ -20,22 +20,19 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     public List<String> generate(TestCardCalcModel input) {
         List<String> result = new ArrayList<>();
 
+//        addTestCardHeader(input)
+//                .forEach(result::add);
+
         convertRangeOfResearchWithParamsToStringList(input.getRangeOfResearchCalcModelList()).stream()
                 .forEach(result::add);
 
         return result;
     }
 
-    private List<String> testCardHeader(TestCardCalcModel testCardCalcModel) {
+    private List<String> addTestCardHeader(TestCardCalcModel testCardCalcModel) {
         TestCard tc = testCardCalcModel.getTestCard();
-//        List<List<String>> headerLines = tc.getHeaders();
-        String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
-return null;
-//       return headerLines.stream()
-//                .map(list -> testCardHeaderLine(list).stream()
-//                        .map(s -> s + defaultSeparator)
-//                        .collect(Collectors.joining()))
-//                .collect(Collectors.toList());
+
+        return null;
     }
 
     private List<String> testCardHeaderLine(List<String> input) {
@@ -67,8 +64,7 @@ return null;
         List<Map<Integer, String>> result = new ArrayList<>();
 
         for (RangeOfResearchCalcModel calcModel : calcModelList) {
-            generateRangeOfResearchListOfMaps(calcModel)
-                    .forEach(result::add);
+            result.addAll(generateRangeOfResearchListOfMaps(calcModel));
         }
 
         return result;

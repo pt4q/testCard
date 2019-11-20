@@ -57,6 +57,7 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
             addToNotAvailableParams(numberOfNotAvailableParams);
         }
 
+        input.setRangeOfResearchCalcModelList(rangeOfResearchesCalculated);
         input.setSumOfAvailablePoints(totalAvailablePoints);
         input.setSumOfGainedPoints(gainedPoints);
 

@@ -4,25 +4,26 @@ import config.TestCardConfig;
 import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import object_calculation.models.TestCardCalcModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class TestCardPrinter implements Generator<String, TestCard> {
+public class TestCardPrinter implements Generator<String, TestCardCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public String generate(TestCard input) {
+    public String generate(TestCardCalcModel input) {
         return generateStringLines(input).stream()
                 .map(s -> s + "\n")
                 .collect(Collectors.joining());
     }
 
-    public List<String> generateStringLines(TestCard testCard) {
-        return null;
+    public List<String> generateStringLines(TestCardCalcModel testCard) {
+        return new TestCardStringGenerator(config).generate(testCard);
     }
 
 

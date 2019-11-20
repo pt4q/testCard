@@ -44,8 +44,11 @@ public class Runner {
 
         System.out.println("\nu^u^u^u\tTest card calculated successfully!!!\tu^u^u^u\n");
 
-//        testCardPrinter = new TestCardPrinter(testCardConfig);
-//        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCard);
+        testCardPrinter = new TestCardPrinter(testCardConfig);
+        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCardCalcModel);
+
+        if (testCardGeneratedLines != null)
+            System.out.println("///");;
 
 //        if (testCard != null)
 //            System.out.println(testCardPrinter.generate(testCard));
