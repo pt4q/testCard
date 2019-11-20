@@ -28,7 +28,7 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
     @Override
     public TestCard create(Map<Integer, List<String>> input) throws RecognizeParamTypeException {
         TestCard testCard;
-        List<List<String>> header;
+        RangeOfResearch header;
         List<RangeOfResearch> rangeOfResearchList;
 
         List<List<String>> inputList = removeEverythingBeforeHeader(convertMapToList(searchAndRemoveEmptyLines(input)));
@@ -38,17 +38,51 @@ public class TestCardCreator implements Creator<TestCard, Map<Integer, List<Stri
 //        inputList = removeHeader(inputList, header);
 
         rangeOfResearchList = createRangeOfResearchList(inputList);
+        header = getHeaderFromRorList(rangeOfResearchList);
+        rangeOfResearchList = removeHeaderFromRoRs(rangeOfResearchList, header);
 
         testCard = new TestCard().builder()
-//                .header(header)
+                .header(header)
                 .rangeOfResearchList(rangeOfResearchList)
-//                .punctation(getGeneralPunctation(header))
+                .punctation(header.getPunctation())
                 .build();
 
         return testCard;
     }
 
-    private Integer getGeneralPunctation(List<List<String>> header){
+    private RangeOfResearch getHeaderFromRorList(List<RangeOfResearch> input) {
+        String headerBegin = config.getParamTypes().getTestCardBeginWordOrSentence();
+
+        for (RangeOfResearch rangeOfResearch : input) {
+            String rorName = rangeOfResearch.getNameInPolish();
+
+            if (StringMatcher.isInputContainsAWordAtBegin(rorName, headerBegin)) {
+                return rangeOfResearch;
+            }
+        }
+        return null;
+    }
+
+    private List<RangeOfResearch> removeHeaderFromRoRs(List<RangeOfResearch> rors, RangeOfResearch ror) {
+        Integer listSize = rors.size();
+
+        if (ror != null) {
+            String rorName = ror.getNameInPolish();
+
+            for (int i = 0; i < listSize; i++) {
+                RangeOfResearch readed = rors.get(i);
+                String readedName = readed.getNameInPolish();
+
+                if (StringMatcher.isMatch(readedName, rorName)) {
+                    rors.remove(i);
+                    return rors;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Integer getGeneralPunctation(List<List<String>> header) {
         StringValueConverter converter = new StringValueConverter();
         Integer punctation = converter.castToInteger(header.get(0).get(config.getColumnsNumbers().getPunctationColumnNumber()));
         return punctation;

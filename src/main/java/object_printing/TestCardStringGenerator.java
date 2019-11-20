@@ -28,14 +28,14 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
 
     private List<String> testCardHeader(TestCardCalcModel testCardCalcModel) {
         TestCard tc = testCardCalcModel.getTestCard();
-        List<List<String>> headerLines = tc.getHeader();
+//        List<List<String>> headerLines = tc.getHeaders();
         String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
-
-       return headerLines.stream()
-                .map(list -> testCardHeaderLine(list).stream()
-                        .map(s -> s + defaultSeparator)
-                        .collect(Collectors.joining()))
-                .collect(Collectors.toList());
+return null;
+//       return headerLines.stream()
+//                .map(list -> testCardHeaderLine(list).stream()
+//                        .map(s -> s + defaultSeparator)
+//                        .collect(Collectors.joining()))
+//                .collect(Collectors.toList());
     }
 
     private List<String> testCardHeaderLine(List<String> input) {

@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class TestCard {
 
-    private List<List<String>> header;
+    private RangeOfResearch header;
     private List<RangeOfResearch> rangeOfResearchList;
     private Integer punctation;
 
