@@ -17,6 +17,7 @@ class CalcIntegerTypeParam implements Calculator<ParamCalcModel, IntegerTypePara
     @Override
     public ParamCalcModel calculate(IntegerTypeParam input) {
         ParamCalcModel calcModel = new ParamCalcModel(input);
+
         calcModel.setAvailablePoints(input.getPunctation());
 
         calcModel = calcScore(calcPercent(calcDifference(calcModel)));

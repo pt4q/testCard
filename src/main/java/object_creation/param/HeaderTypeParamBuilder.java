@@ -21,21 +21,19 @@ class HeaderTypeParamBuilder implements Builder<HeaderTypeParam, List<String>> {
     public HeaderTypeParam build(List<String> input) throws RecognizeParamTypeException {
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
-        HeaderTypeParam header = HeaderTypeParam.builder()
-                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
-                .build();
+        HeaderTypeParam header = new HeaderTypeParam(input.get(columnsNumbers.getNameInPolishColumnNumber()));
 
         try {
             header.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
 
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            header.setType(null);
+//            header.setType(null);
         }
 
         try {
             header.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            header.setValueString(null);
+//            header.setValueString(null);
         }
 
         return header;

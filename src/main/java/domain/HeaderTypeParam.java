@@ -1,21 +1,19 @@
 package domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class HeaderTypeParam implements Param<String> {
 
-    private String nameInPolish;
+    private String nameInPolish = "";
 
-    private String type;
+    private String type = "";
 
-    private String valueString;
+    private String valueString = "";
+
+    public HeaderTypeParam(String nameInPolish) {
+        this.nameInPolish = nameInPolish;
+    }
 
     @Override
     public Integer getPunctation() {

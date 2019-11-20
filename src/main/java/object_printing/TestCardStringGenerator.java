@@ -1,6 +1,7 @@
 package object_printing;
 
 import config.TestCardConfig;
+import domain.RangeOfResearch;
 import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import object_calculation.models.TestCardCalcModel;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Map.Entry.comparingByKey;
 
 @RequiredArgsConstructor
 class TestCardStringGenerator implements Generator<List<String>, TestCardCalcModel> {
@@ -20,8 +23,8 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     public List<String> generate(TestCardCalcModel input) {
         List<String> result = new ArrayList<>();
 
-//        addTestCardHeader(input)
-//                .forEach(result::add);
+        addTestCardHeader(input)
+                .forEach(result::add);
 
         convertRangeOfResearchWithParamsToStringList(input.getRangeOfResearchCalcModelList()).stream()
                 .forEach(result::add);
@@ -30,9 +33,19 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     }
 
     private List<String> addTestCardHeader(TestCardCalcModel testCardCalcModel) {
-        TestCard tc = testCardCalcModel.getTestCard();
+        List<Map<Integer, String>> headers = getTestCardHeaderListOfMaps(testCardCalcModel);
+        String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
 
-        return null;
+        return headers.stream()
+                .map(map -> map.entrySet().stream()
+                        .map(Map.Entry::getValue)
+                        .map(s -> s + defaultSeparator)
+                        .collect(Collectors.joining()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Map<Integer, String>> getTestCardHeaderListOfMaps(TestCardCalcModel testCardCalcModel) {
+        return new HeaderStringGenerator(config).generate(testCardCalcModel);
     }
 
     private List<String> testCardHeaderLine(List<String> input) {
@@ -50,7 +63,7 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
 
         for (Map<Integer, String> valuesInMap : listOfMaps) {
             String line = valuesInMap.entrySet().stream()
-                    .sorted(Map.Entry.comparingByKey())
+                    .sorted(comparingByKey())
                     .map(entry -> (entry.getValue() + defaultSeparator))
                     .collect(Collectors.joining());
 

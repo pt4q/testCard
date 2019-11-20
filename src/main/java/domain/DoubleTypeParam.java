@@ -3,20 +3,16 @@ package domain;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
 public class DoubleTypeParam implements Param {
-    private String nameInPolish;
+    private String nameInPolish = "";
 
-    private Integer punctation;
-    private String type;
+    private Integer punctation = 0;
+    private String type = "";
 
-    private String valueString;
-    private Double measuredValue;
-    private Double declaredValue;
+    private String valueString = "";
+    private Double measuredValue = 0.0;
+    private Double declaredValue = 0.0;
 
     public String toString() {
         return nameInPolish
@@ -24,4 +20,7 @@ public class DoubleTypeParam implements Param {
                 + " " + measuredValue.toString() ;
     }
 
+    public DoubleTypeParam(String nameInPolish) {
+        this.nameInPolish = nameInPolish;
+    }
 }

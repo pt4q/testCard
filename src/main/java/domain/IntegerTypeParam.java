@@ -3,17 +3,20 @@ package domain;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class IntegerTypeParam implements Param <Integer> {
-    private String nameInPolish;
+    private String nameInPolish = "";
 
-    private Integer punctation;
-    private String type;
+    private Integer punctation = 0;
+    private String type ="";
 
-    private String valueString;
-    private Integer measuredValue;
-    private Integer declaredValue;
+    private String valueString ="";
+    private Integer measuredValue = 0;
+    private Integer declaredValue = 0;
 
+    public IntegerTypeParam(String nameInPolish) {
+        this.nameInPolish = nameInPolish;
+    }
 }

@@ -21,34 +21,32 @@ class IntegerTypeParameterBuilder implements Builder<IntegerTypeParam, List<Stri
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
-        IntegerTypeParam parameter = new IntegerTypeParam().builder()
-                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
-                .build();
+        IntegerTypeParam parameter = new IntegerTypeParam(input.get(columnsNumbers.getNameInPolishColumnNumber()));
 
         try {
             parameter.setPunctation(converter.castToInteger(input.get(columnsNumbers.getPunctationColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setPunctation(null);
+//            parameter.setPunctation(null);
         }
 
         try {
             parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            parameter.setType(null);
+//            parameter.setType(null);
         }
 
         try {
             parameter.setDeclaredValue(converter.castToInteger(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setDeclaredValue(null);
+//            parameter.setDeclaredValue(null);
         }
 
         try {
             parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(converter.castToInteger(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValueString(null);
-            parameter.setMeasuredValue(null);
+//            parameter.setValueString(null);
+//            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

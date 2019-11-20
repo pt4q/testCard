@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
 import object_printing.models.ParamPrintModel;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 class IntegerTypeParamStringGenerator implements Generator<Map<Integer, String>, ParamCalcModel> {

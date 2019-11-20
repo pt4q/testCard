@@ -25,7 +25,13 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     @Override
     public TestCardCalcModel calculate(TestCard input) {
         TestCardCalcModel calcModel = new TestCardCalcModel(input);
-        calcModel = calcScore(calcPercent(calcAvailableAndGainedPoints(calcModel)));
+        calcModel = calcScore(
+                calcPercent(
+                        calcDifference(
+                                calcAvailableAndGainedPoints(calcModel))));
+
+        calcModel.setSumOfUnavailablePoints(totalUnAvailablePoints);
+        calcModel.setNumberOfNotAvailableParams(numberOfNotAvailableParams);
 
         printSummary(calcModel);
         return calcModel;
@@ -57,10 +63,10 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
             addToNotAvailableParams(numberOfNotAvailableParams);
         }
 
-        input.setRangeOfResearchCalcModelList(rangeOfResearchesCalculated);
         input.setSumOfAvailablePoints(totalAvailablePoints);
         input.setSumOfGainedPoints(gainedPoints);
 
+        input.setRangeOfResearchCalcModelList(rangeOfResearchesCalculated);
         return input;
     }
 
@@ -72,6 +78,17 @@ public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCar
     private void addToNotAvailableParams(Integer totalNotAvailableParams) {
         if (totalNotAvailableParams != null)
             this.numberOfNotAvailableParams = this.numberOfNotAvailableParams + totalNotAvailableParams;
+    }
+
+    private TestCardCalcModel calcDifference(TestCardCalcModel input) {
+        Integer sumOfAvailablePoints = input.getSumOfAvailablePoints();
+        Double sumOfGainedPoints = input.getSumOfGainedPoints();
+
+        double difference = OptionalDouble.of(sumOfAvailablePoints - sumOfGainedPoints)
+                .orElse(0.0);
+
+        input.setDifference(difference);
+        return input;
     }
 
     private TestCardCalcModel calcPercent(TestCardCalcModel input) {

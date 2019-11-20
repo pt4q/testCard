@@ -1,16 +1,12 @@
 package object_printing;
 
-import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
 import domain.TextTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
-import object_printing.models.ParamPrintModel;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor

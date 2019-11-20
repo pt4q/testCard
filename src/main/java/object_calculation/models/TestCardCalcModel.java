@@ -1,6 +1,5 @@
 package object_calculation.models;
 
-import domain.Param;
 import domain.TestCard;
 import lombok.Data;
 import lombok.NonNull;
@@ -18,6 +17,9 @@ public class TestCardCalcModel {
 
     private Integer sumOfAvailablePoints;
     private Double sumOfGainedPoints;
+
+    private Integer sumOfUnavailablePoints;
+    private Integer numberOfNotAvailableParams;
 
     private Double score;
     private Double difference;
