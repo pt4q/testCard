@@ -1,4 +1,4 @@
-package config;
+package csv;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -9,5 +9,7 @@ import lombok.RequiredArgsConstructor;
 public class CsvConfig {
 
     @NonNull
-    private String defaultSeparator;
+    private String writerSeparator;
+    @NonNull
+    private String readerSeparator;
 }

@@ -1,8 +1,6 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
-import domain.RangeOfResearch;
-import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.RangeOfResearchCalcModel;
@@ -34,7 +32,7 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
 
     private List<String> addTestCardHeader(TestCardCalcModel testCardCalcModel) {
         List<Map<Integer, String>> headers = getTestCardHeaderListOfMaps(testCardCalcModel);
-        String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
+        String defaultSeparator = config.getCsvConfig().getWriterSeparator();
 
         return headers.stream()
                 .map(map -> map.entrySet().stream()
@@ -59,7 +57,7 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     private List<String> convertRangeOfResearchWithParamsToStringList(List<RangeOfResearchCalcModel> calcModelList) {
         List<String> result = new ArrayList<>();
         List<Map<Integer, String>> listOfMaps = generateListOfMaps(calcModelList);
-        String defaultSeparator = config.getCsvConfig().getDefaultSeparator();
+        String defaultSeparator = config.getCsvConfig().getWriterSeparator();
 
         for (Map<Integer, String> valuesInMap : listOfMaps) {
             String line = valuesInMap.entrySet().stream()

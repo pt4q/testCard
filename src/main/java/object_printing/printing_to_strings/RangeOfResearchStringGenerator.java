@@ -1,4 +1,4 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
 import domain.RangeOfResearch;
