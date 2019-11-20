@@ -2,18 +2,18 @@ package domain;
 
 import lombok.*;
 
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
 public class BinaryTypeParam implements Param {
-    private String nameInPolish;
+    private String nameInPolish = "";
 
-    private Integer punctation;
-    private String type;
+    private Integer punctation = 0;
+    private String type = "";
 
-    private String valueString;
-    private Boolean measuredValue;
-    private Boolean declaredValue;
+    private String valueString = "";
+    private Boolean measuredValue = false;
+    private Boolean declaredValue = false;
+
+    public BinaryTypeParam(String nameInPolish) {
+        this.nameInPolish = nameInPolish;
+    }
 }

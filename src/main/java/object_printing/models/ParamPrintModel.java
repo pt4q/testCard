@@ -1,10 +1,10 @@
-package object_printing;
+package object_printing.models;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-class ParamPrintModel {
+public class ParamPrintModel {
 
     @NonNull
     private Integer columnNumber;

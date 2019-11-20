@@ -2,18 +2,18 @@ package domain;
 
 import lombok.*;
 
-@Setter
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class TextTypeParam implements Param {
-    private String nameInPolish;
+    private String nameInPolish = "";
 
-    private Integer punctation;
-    private String type;
+    private Integer punctation = 0;
+    private String type = "";
 
-    private String valueString;
-    private String measuredValue;
-    private String declaredValue;
+    private String valueString = "";
+    private String measuredValue = "";
+    private String declaredValue = "";
+
+    public TextTypeParam(String nameInPolish) {
+        this.nameInPolish = nameInPolish;
+    }
 }

@@ -1,31 +1,51 @@
 package object_printing;
 
-import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
-import domain.Param;
 import domain.RangeOfResearch;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import object_calculation.models.ParamCalcModel;
+import object_calculation.models.RangeOfResearchCalcModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
-class RangeOfResearchStringGenerator implements Generator<List<List<String>>, RangeOfResearch> {
+class RangeOfResearchStringGenerator implements Generator<List<Map<Integer, String>>, RangeOfResearchCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<List<String>> generate(RangeOfResearch input) {
-        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        List<List<String>> result = null;
+    public List<Map<Integer, String>> generate(RangeOfResearchCalcModel input) {
+        List<Map<Integer, String>> result = new ArrayList<>();
 
-//        for()
+        result.add(generateRangeOfResearch(input));
+        generateStringListOfParameters(input.getParamCalcModelList())
+                .forEach(result::add);
 
         return result;
     }
 
-    private List<List<String>> generateListOfParameters(List<Param> params){
-        return null;
+    private Map<Integer, String> generateRangeOfResearch(RangeOfResearchCalcModel input) {
+        RangeOfResearch ror = input.getRangeOfResearch();
+        return new HashMap<Integer, String>() {{
+            put(0, ror.getNameInPolish());
+            put(1, ror.getPunctation().toString());
+            put(2, "");
+            put(3, "");
+            put(4, input.getNumberOfNotAvailableParams().toString());
+            put(5, input.getSumOfAvailablePoints().toString());
+            put(6, input.getSumOfGainedPoints().toString());
+            put(7, input.getDifference().toString());
+            put(8, input.getPercent().toString());
+            put(9, input.getScore().toString());
+        }};
+    }
+
+    private List<Map<Integer, String>> generateStringListOfParameters(List<ParamCalcModel> params) {
+        return new ParamStringGenerator(config).generate(params);
     }
 }

@@ -23,37 +23,35 @@ class BinaryTypeParamBuilder implements Builder<BinaryTypeParam, List<String>> {
         StringValueConverter converter = new StringValueConverter();
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
 
-        BinaryTypeParam parameter = new BinaryTypeParam().builder()
-                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
-                .build();
+        BinaryTypeParam parameter = new BinaryTypeParam(input.get(columnsNumbers.getNameInPolishColumnNumber()));
 
         try {
             parameter.setPunctation(converter.castToInteger(input.get(columnsNumbers.getPunctationColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setPunctation(null);
+//            parameter.setPunctation(null);
         }
 
         try {
             parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            parameter.setType(null);
+//            parameter.setType(null);
         }
 
         try {
             parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValueString(null);
+//            parameter.setValueString(null);
 
         }
         try {
             parameter.setMeasuredValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getMeasuredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setMeasuredValue(null);
+//            parameter.setMeasuredValue(null);
         }
         try {
             parameter.setDeclaredValue(positiveDefinition.checkIsPositive(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setDeclaredValue(null);
+//            parameter.setDeclaredValue(null);
         }
         return parameter;
     }

@@ -7,6 +7,9 @@ import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_printing.TestCardPrinter;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Runner {
     public static void main(String[] args) {
@@ -17,12 +20,15 @@ public class Runner {
         TestCardPrinter testCardPrinter;
         TestCard testCard = null;
 
-        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3,3, 4);
+        CsvConfig csvConfig = new CsvConfig(";");
+        TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 3, 4);
         TestCardAndParamMarks testCardAndParamMarks = new TestCardAndParamMarks("#", "h", "b", "n", "f", "i");
-        BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"),"TAK","NIE");
-//        ParametersCalcConfig parametersCalcConfig = new ParametersCalcConfig();
+        BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"), "TAK", "NIE");
 
-        testCardConfig = new TestCardConfig(testCardColumnsNumbers, testCardAndParamMarks, positiveDefinition);
+        CalcConfig calcConfig = new CalcConfig(20.0);
+        PrintConfig printConfig = new PrintConfig();
+
+        testCardConfig = new TestCardConfig(csvConfig, testCardColumnsNumbers, testCardAndParamMarks, positiveDefinition, calcConfig, printConfig);
 
         testCardReader = new ReadTestCardFromFile(testCardConfig);
         try {
@@ -38,8 +44,11 @@ public class Runner {
 
         System.out.println("\nu^u^u^u\tTest card calculated successfully!!!\tu^u^u^u\n");
 
-//        testCardPrinter = new TestCardPrinter(testCardConfig);
-//        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCard);
+        testCardPrinter = new TestCardPrinter(testCardConfig);
+        List<String> testCardGeneratedLines = testCardPrinter.generateStringLines(testCardCalcModel);
+
+        if (testCardGeneratedLines != null)
+            System.out.println("///");;
 
 //        if (testCard != null)
 //            System.out.println(testCardPrinter.generate(testCard));

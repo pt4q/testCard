@@ -21,34 +21,32 @@ class TextTypeParamBuilder implements Builder<TextTypeParam, List<String>> {
         TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
         StringValueConverter converter = new StringValueConverter();
 
-        TextTypeParam parameter = new TextTypeParam().builder()
-                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
-                .build();
+        TextTypeParam parameter = new TextTypeParam(input.get(columnsNumbers.getNameInPolishColumnNumber()));
 
         try {
             parameter.setPunctation(converter.castToInteger(input.get(columnsNumbers.getPunctationColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setPunctation(null);
+//            parameter.setPunctation(null);
         }
 
         try {
             parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            parameter.setType(null);
+//            parameter.setType(null);
         }
 
         try {
             parameter.setDeclaredValue(input.get(columnsNumbers.getDeclaredValuesColumnNumber()));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setDeclaredValue(null);
+//            parameter.setDeclaredValue(null);
         }
 
         try {
             parameter.setValueString(input.get(columnsNumbers.getReadValueColumnNumber()));
             parameter.setMeasuredValue(input.get(columnsNumbers.getMeasuredValuesColumnNumber()));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValueString(null);
-            parameter.setMeasuredValue(null);
+//            parameter.setValueString(null);
+//            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

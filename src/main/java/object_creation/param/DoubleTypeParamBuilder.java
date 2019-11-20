@@ -26,28 +26,26 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
         String punctation;
         String value;
 
-        DoubleTypeParam parameter = new DoubleTypeParam().builder()
-                .nameInPolish(input.get(columnsNumbers.getNameInPolishColumnNumber()))
-                .build();
+        DoubleTypeParam parameter = new DoubleTypeParam(input.get(columnsNumbers.getNameInPolishColumnNumber()));
 
         try {
             punctation = input.get(columnsNumbers.getPunctationColumnNumber());
             if (punctation != null || !punctation.equals(""))
                 parameter.setPunctation(converter.castToInteger(punctation));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            System.out.println();
+
         }
 
         try {
             parameter.setType(input.get(columnsNumbers.getParamTypeColumnNumber()));
         } catch (IndexOutOfBoundsException | NullPointerException e) {
-            parameter.setType(null);
+//            parameter.setType(null);
         }
 
         try {
             parameter.setDeclaredValue(converter.castToDouble(input.get(columnsNumbers.getDeclaredValuesColumnNumber())));
         } catch (IndexOutOfBoundsException e) {
-            parameter.setDeclaredValue(null);
+//            parameter.setDeclaredValue(null);
         }
 
         try {
@@ -61,8 +59,8 @@ public class DoubleTypeParamBuilder implements Builder<DoubleTypeParam, List<Str
                 parameter.setMeasuredValue(converter.castToDouble(value));
 
         } catch (IndexOutOfBoundsException e) {
-            parameter.setValueString(null);
-            parameter.setMeasuredValue(null);
+//            parameter.setValueString(null);
+//            parameter.setMeasuredValue(null);
         }
         return parameter;
     }

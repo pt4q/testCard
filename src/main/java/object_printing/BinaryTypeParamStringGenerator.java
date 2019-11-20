@@ -1,36 +1,41 @@
 package object_printing;
 
-import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
 import domain.BinaryTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import object_calculation.models.ParamCalcModel;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
-class BinaryTypeParamStringGenerator implements Generator<List<ParamPrintModel>, BinaryTypeParam> {
+class BinaryTypeParamStringGenerator implements Generator<Map<Integer, String>, ParamCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public List<ParamPrintModel> generate(BinaryTypeParam input) {
-        TestCardColumnsNumbers columnsNumbers = config.getColumnsNumbers();
-        Boolean measuredValue = input.getMeasuredValue();
-        Boolean declaredValue = input.getDeclaredValue();
+    public Map<Integer, String> generate(ParamCalcModel input) {
+        BinaryTypeParam btp = (BinaryTypeParam) input.getParam();
+        Boolean measuredValue = btp.getMeasuredValue();
+        Boolean declaredValue = btp.getDeclaredValue();
 
         String measuredBinaryToStringValue = convertMeasuredValueToString(measuredValue);
         String declaredBinaryToStringValue = convertDeclaredValueToString(declaredValue);
 
-        return Arrays.asList(
-                new ParamPrintModel(columnsNumbers.getNameInPolishColumnNumber(), input.getNameInPolish()),
-                new ParamPrintModel(columnsNumbers.getPunctationColumnNumber(), input.getPunctation().toString()),
-                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), input.getValueString()),
-                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), measuredBinaryToStringValue),
-                new ParamPrintModel(columnsNumbers.getMeasuredValuesColumnNumber(), declaredBinaryToStringValue)
-        );
+        return new HashMap<Integer, String>() {{
+            put(0, btp.getNameInPolish());
+            put(1, btp.getPunctation().toString());
+            put(2, btp.getValueString());
+            put(3, declaredBinaryToStringValue);
+            put(4, measuredBinaryToStringValue);
+            put(5, input.getDifference().toString());
+            put(6, "");
+            put(7, input.getAvailablePoints().toString());
+            put(8, input.getScore().toString());
+            put(9, "");
+        }};
     }
 
     private String convertMeasuredValueToString(Boolean measuredValue) {
