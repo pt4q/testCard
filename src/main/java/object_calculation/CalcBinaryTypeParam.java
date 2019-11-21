@@ -51,11 +51,11 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
 
     private ParamCalcModel calcPercent(ParamCalcModel input) {
         Double difference = input.getDifference();
-        double percent = 0.0;
+        double percent = 100.0;
 
         if (difference != null)
             if (difference == 0)
-                percent = 100.0;
+                percent = 0.0;
 
         input.setPercent(percent);
         return input;
@@ -63,7 +63,7 @@ class CalcBinaryTypeParam implements Calculator<ParamCalcModel, BinaryTypeParam>
 
     private ParamCalcModel calcScore(ParamCalcModel input) {
         Integer availablePoints = input.getAvailablePoints();
-        Double percent = input.getPercent();
+        Double percent = (100 - input.getPercent());
         double score = 0.0;
 
         if (availablePoints != null && percent != null)

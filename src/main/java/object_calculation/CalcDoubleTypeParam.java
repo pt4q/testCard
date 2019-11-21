@@ -45,7 +45,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
         double percent = 0.0;
 
         if ((declared != null && declared > 0) && (measured != null && measured > 0))
-            percent = OptionalDouble.of((measured * 100) / declared)
+            percent = OptionalDouble.of(100- ((measured * 100) / declared))
                     .orElse(0.0);
 
         input.setPercent(percent);
@@ -66,7 +66,7 @@ class CalcDoubleTypeParam implements Calculator<ParamCalcModel, DoubleTypeParam>
             else if (percentAbs < 0)
                 percentAbs = Double.parseDouble("0");
 
-            score = OptionalDouble.of((percentAbs / 100) * availablePoints)
+            score = OptionalDouble.of(((100 - percentAbs) / 100) * availablePoints)
                     .orElse(0.0);
         }
 

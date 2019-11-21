@@ -1,4 +1,4 @@
-package object_printing.printing_to_strings;
+package object_printing.printing;
 
 import config.TestCardConfig;
 import domain.RangeOfResearch;
@@ -43,7 +43,7 @@ class RangeOfResearchStringGenerator implements Generator<List<Map<Integer, Stri
             put(7, input.getPercent().toString());
             put(8, input.getNumberOfNotAvailableParams().toString());
             put(9, input.getSumOfAvailablePoints().toString());
-            put(10, input.getSumOfGainedPoints().toString());
+            put(10, "");
             put(11, input.getScore().toString());
         }};
     }

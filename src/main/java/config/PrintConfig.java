@@ -26,7 +26,7 @@ public class PrintConfig {
         columnNamesWithNumbers.put(5, "Wartość zmierzona przetworzona");
         columnNamesWithNumbers.put(6, "Różnica");
         columnNamesWithNumbers.put(7, "Procent odchyłki");
-        columnNamesWithNumbers.put(8, "Liczba dostępnych parametrów");
+        columnNamesWithNumbers.put(8, "Liczba niedostępnych parametrów");
         columnNamesWithNumbers.put(9, "Suma dostępnych pkt");
         columnNamesWithNumbers.put(10, "Suma przyznanych pkt");
         columnNamesWithNumbers.put(11, "Wynik");

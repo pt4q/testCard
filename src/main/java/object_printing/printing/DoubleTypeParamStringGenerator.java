@@ -1,7 +1,8 @@
-package object_printing.printing_to_strings;
+package object_printing.printing;
+
 
 import config.TestCardConfig;
-import domain.TextTypeParam;
+import domain.DoubleTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
@@ -10,22 +11,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-class TextTypeParamStringGenerator implements Generator<Map<Integer, String>, ParamCalcModel> {
+class DoubleTypeParamStringGenerator implements Generator<Map<Integer, String>, ParamCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
     public Map<Integer, String> generate(ParamCalcModel input) {
-        TextTypeParam ttp = (TextTypeParam) input.getParam();
+        DoubleTypeParam dtp = (DoubleTypeParam) input.getParam();
 
         return new HashMap<Integer, String>() {{
-            put(0, ttp.getType());
-            put(1, ttp.getNameInPolish());
-            put(2, ttp.getPunctation().toString());
-            put(3, ttp.getValueString());
-            put(4, ttp.getDeclaredValue());
-            put(5, ttp.getMeasuredValue());
+            put(0, dtp.getType());
+            put(1, dtp.getNameInPolish());
+            put(2, dtp.getPunctation().toString());
+            put(3, dtp.getValueString());
+            put(4, dtp.getDeclaredValue().toString());
+            put(5, dtp.getMeasuredValue().toString());
             put(6, input.getDifference().toString());
             put(7, input.getPercent().toString());
             put(8, "");

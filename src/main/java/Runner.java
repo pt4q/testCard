@@ -7,7 +7,7 @@ import object_calculation.models.TestCardCalcModel;
 import object_creation.ReadTestCardFromFile;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_printing.WriteTestCardToFile;
-import object_printing.printing_to_strings.TestCardPrinter;
+import object_printing.printing.TestCardPrinter;
 
 import java.util.Arrays;
 import java.util.List;

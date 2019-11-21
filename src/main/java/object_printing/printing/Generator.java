@@ -1,4 +1,4 @@
-package object_printing.printing_to_strings;
+package object_printing.printing;
 
 public interface Generator<O, I> {
 

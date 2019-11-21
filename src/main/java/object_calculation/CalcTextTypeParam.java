@@ -47,9 +47,9 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam> {
 
         if (difference != null)
             if (difference == 0)
-                percent = 100.0;
-            else
                 percent = 0.0;
+            else
+                percent = 100.0;
 
         input.setPercent(percent);
         return input;
@@ -61,7 +61,7 @@ class CalcTextTypeParam implements Calculator<ParamCalcModel, TextTypeParam> {
         double score = 0.0;
 
         if (availablePoints != null && percent != null)
-            score = OptionalDouble.of(availablePoints * (percent / 100))
+            score = OptionalDouble.of(availablePoints * ((100 - percent) / 100))
                     .orElse(0.0);
 
         input.setScore(score);
