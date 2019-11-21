@@ -4,8 +4,7 @@ import com.opencsv.CSVWriter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,17 +16,16 @@ public class CsvFileWriter {
     private CsvConfig config;
 
     public void saveStringListToFile(String filePath, String fileName, List<String> input) {
-        try {
-            Writer writer = Files.newBufferedWriter(Paths.get(filePath + fileName));
+        char lineSeparator = config.getWriterSeparator().toCharacter();
 
-            CSVWriter csvWriter = new CSVWriter(writer,
-                    CSVWriter.DEFAULT_SEPARATOR,
-                    CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                    CSVWriter.DEFAULT_LINE_END);
+        try (PrintWriter outputFile = new PrintWriter(new File(filePath + fileName))) {
+
+            CSVWriter csvWriter = new CSVWriter(outputFile,
+                    lineSeparator);
 
             for (String line : input) {
-                saveToFile(csvWriter, line.split(config.getWriterSeparator()));
+                saveToFile(csvWriter, line.split(config.getWriterSeparator().toString()));
+//                saveToFile(outputFile, line);
             }
 
             System.out.println(fileName + " written in: " + filePath);
@@ -36,7 +34,12 @@ public class CsvFileWriter {
             throw new IllegalArgumentException(CsvOperationStatusEnum.FILE_CANT_BE_SAVE.toString());
         }
     }
-    private void saveToFile(CSVWriter writer, String[] line){
+
+    private void saveToFile(CSVWriter writer, String[] line) {
         writer.writeNext(line);
+    }
+
+    private void saveToFile(PrintWriter pw, String line) {
+        pw.write(line);
     }
 }

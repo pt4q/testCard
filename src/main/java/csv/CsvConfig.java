@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public class CsvConfig {
 
     @NonNull
-    private String writerSeparator;
+    private CsvFileSeparatorEnum writerSeparator;
     @NonNull
-    private String readerSeparator;
+    private CsvFileSeparatorEnum readerSeparator;
 }

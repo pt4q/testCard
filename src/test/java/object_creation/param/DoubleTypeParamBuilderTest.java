@@ -2,6 +2,7 @@ package object_creation.param;
 
 import config.*;
 import csv.CsvConfig;
+import csv.CsvFileSeparatorEnum;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;
@@ -21,7 +22,7 @@ public class DoubleTypeParamBuilderTest {
     @Before
     public void setUp() throws Exception {
         TestCardConfig testCardConfig;
-        CsvConfig csvConfig = new CsvConfig(";", ";");
+        CsvConfig csvConfig = new CsvConfig(CsvFileSeparatorEnum.SEMICOLON, CsvFileSeparatorEnum.TAB);
         TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 3, 4);
         TestCardAndParamMarks testCardAndParamMarks = new TestCardAndParamMarks("#", "h", "b", "n", "f", "i");
         BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"), "TAK", "NIE");

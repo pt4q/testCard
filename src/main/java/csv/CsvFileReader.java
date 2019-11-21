@@ -63,7 +63,7 @@ public class CsvFileReader {
     }
 
     private String[] splitLine(String[] input) {
-        String separator = config.getWriterSeparator();
+        String separator = config.getReaderSeparator().toString();
         String line = Arrays.stream(input)
                 .map(s -> s + ".")
                 .collect(Collectors.joining());

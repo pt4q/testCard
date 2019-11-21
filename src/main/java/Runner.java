@@ -1,5 +1,6 @@
 import config.*;
 import csv.CsvConfig;
+import csv.CsvFileSeparatorEnum;
 import domain.TestCard;
 import object_calculation.TestCardCalculator;
 import object_calculation.models.TestCardCalcModel;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class Runner {
     public static void main(String[] args) {
-        String fileNameForReader = "DED7850 Karta badań - Młotowiertarka_ref.csv/";
+        String fileNameForReader = "DED7850 Karta badań - Młotowiertarka_ref.csv";
         String fileNameForWriter = "COMPUTED_" + fileNameForReader;
 
         String pathToFile = "D:\\KP\\Workspace\\Java\\testCard\\src\\test\\resources\\";
@@ -23,7 +24,7 @@ public class Runner {
         TestCardPrinter testCardPrinter;
         TestCard testCard = null;
 
-        CsvConfig csvConfig = new CsvConfig(";", ";");
+        CsvConfig csvConfig = new CsvConfig(CsvFileSeparatorEnum.SEMICOLON, CsvFileSeparatorEnum.TAB);
         TestCardColumnsNumbers testCardColumnsNumbers = new TestCardColumnsNumbers(0, 1, 2, 2, 3, 3, 4);
         TestCardAndParamMarks testCardAndParamMarks = new TestCardAndParamMarks("#", "h", "b", "n", "f", "i");
         BinaryTypePositiveDefinition positiveDefinition = new BinaryTypePositiveDefinition(Arrays.asList("ok", "tak", "yes"), "TAK", "NIE");
