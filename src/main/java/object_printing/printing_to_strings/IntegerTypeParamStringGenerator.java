@@ -19,16 +19,18 @@ class IntegerTypeParamStringGenerator implements Generator<Map<Integer, String>,
         IntegerTypeParam itp = (IntegerTypeParam) input.getParam();
 
         return new HashMap<Integer, String>() {{
-            put(0, itp.getNameInPolish());
-            put(1, itp.getPunctation().toString());
-            put(2, itp.getValueString());
-            put(3, itp.getDeclaredValue().toString());
-            put(4, itp.getMeasuredValue().toString());
-            put(5, input.getDifference().toString());
-            put(6, "");
-            put(7, input.getAvailablePoints().toString());
-            put(8, input.getScore().toString());
-            put(9, "");
+            put(0, itp.getType());
+            put(1, itp.getNameInPolish());
+            put(2, itp.getPunctation().toString());
+            put(3, itp.getValueString());
+            put(4, itp.getDeclaredValue().toString());
+            put(5, itp.getMeasuredValue().toString());
+            put(6, input.getDifference().toString());
+            put(7, input.getPercent().toString());
+            put(8, "");
+            put(9, input.getAvailablePoints().toString());
+            put(10, input.getScore().toString());
+            put(11, "");
         }};
     }
 }

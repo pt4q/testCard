@@ -20,6 +20,7 @@ class HeaderStringGenerator implements Generator<List<Map<Integer, String>>, Tes
     public List<Map<Integer, String>> generate(TestCardCalcModel input) {
         List<Map<Integer, String>> result = new ArrayList<>();
         result.add(generateMainHeaderWithScore(input));
+
         result.addAll(generateHeaders(input.getTestCard().getHeader().getParams()));
 
         return result;
@@ -27,18 +28,21 @@ class HeaderStringGenerator implements Generator<List<Map<Integer, String>>, Tes
 
     private Map<Integer, String> generateMainHeaderWithScore(TestCardCalcModel input){
         RangeOfResearch header = input.getTestCard().getHeader();
+        String rangeOfResearchMark = config.getParamTypes().getRANGE_OF_RESEARCH_MARK();
 
         return new LinkedHashMap<Integer, String>() {{
-            put(0, header.getNameInPolish());
-            put(1, header.getPunctation().toString());
-            put(2, "");
+            put(0, rangeOfResearchMark);
+            put(1, header.getNameInPolish());
+            put(2, header.getPunctation().toString());
             put(3, "");
-            put(4, input.getNumberOfNotAvailableParams().toString());
-            put(5, input.getSumOfAvailablePoints().toString());
-            put(6, input.getSumOfGainedPoints().toString());
-            put(7, input.getDifference().toString());
-            put(8, input.getPercent().toString());
-            put(9, input.getScore().toString());
+            put(4, "");
+            put(5, "");
+            put(6, input.getDifference().toString());
+            put(7, input.getPercent().toString());
+            put(8, input.getNumberOfNotAvailableParams().toString());
+            put(9, input.getSumOfAvailablePoints().toString());
+            put(10, input.getSumOfGainedPoints().toString());
+            put(11, input.getScore().toString());
         }};
     }
 

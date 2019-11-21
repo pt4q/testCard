@@ -73,12 +73,17 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
             String line = valuesInMap.entrySet().stream()
                     .sorted(comparingByKey())
                     .map(entry -> (entry.getValue() + defaultSeparator))
+                    .map(this::replaceTheDotWithAComma)
                     .collect(Collectors.joining());
 
             result.add(line);
         }
 
         return result;
+    }
+
+    private String replaceTheDotWithAComma(String input){
+        return input.replaceAll("\\.", ",");
     }
 
     private List<Map<Integer, String>> generateListOfMaps(List<RangeOfResearchCalcModel> calcModelList) {
