@@ -1,4 +1,4 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
 import domain.HeaderTypeParam;
@@ -25,16 +25,17 @@ class HeaderTypeParamStringGenerator implements Generator<Map<Integer, String>, 
 
     private Map<Integer, String> generateHeaderTypeParamMap(HeaderTypeParam input){
         return new LinkedHashMap<Integer, String>() {{
-            put(0, input.getNameInPolish());
-            put(1, "");
-            put(2, input.getValueString());
-            put(3, "");
+            put(0, input.getType());
+            put(1, input.getNameInPolish());
+            put(2, "");
+            put(3, input.getValueString());
             put(4, "");
             put(5, "");
             put(6, "");
             put(7, "");
             put(8, "");
             put(9, "");
+            put(10, "");
         }};
     }
 }

@@ -1,7 +1,6 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
-import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.TestCardCalcModel;

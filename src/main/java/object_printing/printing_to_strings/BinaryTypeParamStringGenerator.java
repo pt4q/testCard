@@ -1,4 +1,4 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
 import domain.BinaryTypeParam;
@@ -25,16 +25,18 @@ class BinaryTypeParamStringGenerator implements Generator<Map<Integer, String>, 
         String declaredBinaryToStringValue = convertDeclaredValueToString(declaredValue);
 
         return new HashMap<Integer, String>() {{
-            put(0, btp.getNameInPolish());
-            put(1, btp.getPunctation().toString());
-            put(2, btp.getValueString());
-            put(3, declaredBinaryToStringValue);
-            put(4, measuredBinaryToStringValue);
-            put(5, input.getDifference().toString());
-            put(6, "");
-            put(7, input.getAvailablePoints().toString());
-            put(8, input.getScore().toString());
-            put(9, "");
+            put(0, btp.getType());
+            put(1, btp.getNameInPolish());
+            put(2, btp.getPunctation().toString());
+            put(3, btp.getValueString());
+            put(4, declaredBinaryToStringValue);
+            put(5, measuredBinaryToStringValue);
+            put(6, input.getDifference().toString());
+            put(7, input.getPercent().toString());
+            put(8, "");
+            put(9, input.getAvailablePoints().toString());
+            put(10, input.getScore().toString());
+            put(11, "");
         }};
     }
 

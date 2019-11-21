@@ -3,7 +3,7 @@ package object_creation;
 import domain.TestCard;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import object_creation.creation_utils.CsvFileReader;
+import csv.CsvFileReader;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import object_creation.test_card.TestCardCreator;
 import config.TestCardConfig;
@@ -17,11 +17,8 @@ public class ReadTestCardFromFile {
     private TestCardConfig config;
     private TestCard testCard;
 
-    public TestCard createTestCardFromFile(String pathToFile) throws RecognizeParamTypeException {
-        CsvFileReader reader = new CsvFileReader().builder()
-                .pathToFile(pathToFile)
-                .fileSeparator("\t")
-                .build();
+    public TestCard createTestCardFromFile(String pathToFile, String fileName) throws RecognizeParamTypeException {
+        CsvFileReader reader = new CsvFileReader(config.getCsvConfig(), pathToFile, fileName);
 
         Map lines = reader.read();
 

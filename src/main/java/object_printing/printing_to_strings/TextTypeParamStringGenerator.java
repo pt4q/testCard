@@ -1,4 +1,4 @@
-package object_printing;
+package object_printing.printing_to_strings;
 
 import config.TestCardConfig;
 import domain.TextTypeParam;
@@ -20,16 +20,18 @@ class TextTypeParamStringGenerator implements Generator<Map<Integer, String>, Pa
         TextTypeParam ttp = (TextTypeParam) input.getParam();
 
         return new HashMap<Integer, String>() {{
-            put(0, ttp.getNameInPolish());
-            put(1, ttp.getPunctation().toString());
-            put(2, ttp.getValueString());
-            put(3, ttp.getDeclaredValue());
-            put(4, ttp.getMeasuredValue());
-            put(5, input.getDifference().toString());
-            put(6, "");
-            put(7, input.getAvailablePoints().toString());
-            put(8, input.getScore().toString());
-            put(9, "");
+            put(0, ttp.getType());
+            put(1, ttp.getNameInPolish());
+            put(2, ttp.getPunctation().toString());
+            put(3, ttp.getValueString());
+            put(4, ttp.getDeclaredValue());
+            put(5, ttp.getMeasuredValue());
+            put(6, input.getDifference().toString());
+            put(7, input.getPercent().toString());
+            put(8, "");
+            put(9, input.getAvailablePoints().toString());
+            put(10, input.getScore().toString());
+            put(11, "");
         }};
     }
 }
