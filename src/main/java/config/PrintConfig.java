@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 @Getter
 @RequiredArgsConstructor
@@ -13,10 +13,10 @@ public class PrintConfig {
     private int maxColumnNumber;
 
     @Setter
-    private HashMap<Integer, String> columnNamesWithNumbers = setDefaultValuesInColumnNamesWithNumbers();
+    private LinkedHashMap<Integer, String> columnNamesWithNumbers = setDefaultValuesInColumnNamesWithNumbers();
 
-    private HashMap<Integer, String> setDefaultValuesInColumnNamesWithNumbers(){
-        columnNamesWithNumbers = new HashMap<>();
+    private LinkedHashMap<Integer, String> setDefaultValuesInColumnNamesWithNumbers(){
+        columnNamesWithNumbers = new LinkedHashMap<>();
 
         columnNamesWithNumbers.put(0,"Nazwa");
         columnNamesWithNumbers.put(1,"Punktacja");

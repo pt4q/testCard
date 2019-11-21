@@ -21,6 +21,7 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
     public List<String> generate(TestCardCalcModel input) {
         List<String> result = new ArrayList<>();
 
+        result.add(addTitle());
 
         addTestCardHeader(input)
                 .forEach(result::add);
@@ -29,6 +30,14 @@ class TestCardStringGenerator implements Generator<List<String>, TestCardCalcMod
                 .forEach(result::add);
 
         return result;
+    }
+
+    private String addTitle() {
+        String defaultSeparator = config.getCsvConfig().getWriterSeparator().toString();
+        return config.getPrintConfig().getColumnNamesWithNumbers().entrySet().stream()
+                .map(Map.Entry::getValue)
+                .map(s -> s + defaultSeparator)
+                .collect(Collectors.joining());
     }
 
     private List<String> addTestCardHeader(TestCardCalcModel testCardCalcModel) {
