@@ -1,25 +1,42 @@
 package ui;
 
-import picocli.CommandLine;
+import config.TestCardAndParamMarks;
 import picocli.CommandLine.*;
+
+import java.util.List;
 
 @Command(version = "v1.0.0", header = "Test Card Calculator")
 public class ConsoleUI implements Runnable {
 
-    @Parameters(paramLabel = "FILE", description = "input file")
-    String fileLocation;
+    @Parameters(arity = "1", paramLabel = "FILE", description = "input file location")
+    private String fileLocation;
 
-    @Option(names = {"-c", "--print-to-console"}, description = "print results to console")
-    boolean printToConsole;
+    @Option(arity = "1..", names = {"-n", "-file-name"}, description = "file name; e.g: \"-n fileName1 fileName2\"")
+    private List<String> fileName;
 
-    @Option(names = {"-f", "--print-to-file"}, description = "print results to file")
-    boolean printToFile;
-
-    @Option(names = {"-h", "--help"}, usageHelp = true, description = "display a help message")
+    @Option(names = {"-h", "-?", "--help"}, usageHelp = true, description = "display THIS message")
     private boolean helpRequested = false;
+
+    @Option(names = {"-m", "--print-marks"}, description = "print default (type \"-m true\" if you want to use it) ")
+    private boolean requestToPrintMarks;
 
     @Override
     public void run() {
+        calcFile();
+        printMarks();
+    }
 
+    private void calcFile() {
+//        for (String singleFile : fileLocation)
+        ConsoleRunner consoleRunner = new ConsoleRunner();
+
+//        System.out.println(fileLocation);
+//        System.out.println(fileName.get(0));
+//        System.out.println(fileName.get(1));
+    }
+
+    private void printMarks() {
+        if (requestToPrintMarks)
+            System.out.println(new TestCardAndParamMarks().toString());
     }
 }
