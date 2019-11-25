@@ -2,24 +2,25 @@ package config;
 
 import lombok.*;
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestCardAndParamMarks {
-    @NonNull
+    @Builder.Default
     private String RANGE_OF_RESEARCH_MARK = "#";
-    @NonNull
+    @Builder.Default
     private String HEADER_TYPE = "h";
-    @NonNull
+    @Builder.Default
     private String BINARY_TYPE = "b";
-    @NonNull
+    @Builder.Default
     private String TEXT_TYPE = "t";
-    @NonNull
+    @Builder.Default
     private String DOUBLE_TYPE = "f";
-    @NonNull
+    @Builder.Default
     private String INTEGER_TYPE = "i";
-
+    @Builder.Default
     private String PIC_TYPE = "p";
-    @NonNull
+    @Builder.Default
     private String testCardBeginWordOrSentence = "KARTA ";
 
 //    public TestCardAndParamMarks(String RANGE_OF_RESEARCH_MARK, String HEADER_TYPE, String BINARY_TYPE, String TEXT_TYPE, String DOUBLE_TYPE, String INTEGER_TYPE, String PIC_TYPE, String testCardBeginWordOrSentence) {

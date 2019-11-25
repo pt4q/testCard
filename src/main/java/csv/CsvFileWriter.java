@@ -15,8 +15,9 @@ public class CsvFileWriter {
 
     public void saveStringListToFile(String filePath, String fileName, List<String> input) {
         char lineSeparator = config.getWriterSeparator().toCharacter();
+        String fileNamePrefix = config.getNewFilePrefix();
 
-        try (PrintWriter outputFile = new PrintWriter(new File(filePath + fileName))) {
+        try (PrintWriter outputFile = new PrintWriter(new File(filePath + fileNamePrefix + "_" + fileName))) {
 
             CSVWriter csvWriter = new CSVWriter(outputFile,
                     lineSeparator);

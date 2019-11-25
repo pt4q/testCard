@@ -26,8 +26,8 @@ public class FileNameProcessorTest {
 
     private Object[] testListsWithFileNames() {
         return new Object[]{
-                new Object[]{new ArrayList<>(Arrays.asList("DED7850 Karta badań - Młotowiertarka ref.csv", "DED7850", "Karta", "badań", "-", "Młotowiertarka.csv")),
-                        new ArrayList<>(Arrays.asList("DED7850 Karta badań - Młotowiertarka ref.csv", "DED7850 Karta badań - Młotowiertarka.csv"))}
+                new Object[]{new ArrayList<>(Arrays.asList("DED7850 Karta badań - Młotowiertarka_ref.csv", "DED7850", "Karta", "badań", "-", "Młotowiertarka.csv")),
+                        new ArrayList<>(Arrays.asList("DED7850 Karta badań - Młotowiertarka_ref.csv", "DED7850 Karta badań - Młotowiertarka.csv"))}
         };
     }
 }
