@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 @RequiredArgsConstructor
-public class TestCardCalculator implements Calculator<TestCardCalcModel, TestCard> {
+public class TestCardCalculatorFacade implements Calculator<TestCardCalcModel, TestCard> {
 
     @NonNull
     private TestCardConfig config;

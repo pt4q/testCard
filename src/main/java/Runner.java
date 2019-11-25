@@ -1,19 +1,5 @@
-import config.*;
-import csv.CsvConfig;
-import csv.CsvFileSeparatorEnum;
-import domain.TestCard;
-import object_calculation.TestCardCalculator;
-import object_calculation.models.TestCardCalcModel;
-import object_creation.ReadTestCardFromFile;
-import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
-import object_printing.WriteTestCardToFile;
-import object_printing.printing.TestCardPrinter;
 import picocli.CommandLine;
 import ui.ConsoleUI;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 public class Runner {
     public static void main(String[] args) {

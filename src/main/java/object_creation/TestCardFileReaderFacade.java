@@ -11,7 +11,7 @@ import config.TestCardConfig;
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class ReadTestCardFromFile {
+public class TestCardFileReaderFacade {
 
     @NonNull
     private TestCardConfig config;

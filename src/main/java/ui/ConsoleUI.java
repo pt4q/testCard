@@ -1,6 +1,7 @@
 package ui;
 
 import config.TestCardAndParamMarks;
+import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import picocli.CommandLine.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class ConsoleUI implements Runnable {
     private String fileLocation;
 
     @Option(arity = "1..", names = {"-n", "-file-name"}, description = "file name; e.g: \"-n fileName1 fileName2\"")
-    private List<String> fileName;
+    private List<String> fileNames;
 
     @Option(names = {"-h", "-?", "--help"}, usageHelp = true, description = "display THIS message")
     private boolean helpRequested = false;
@@ -29,6 +30,11 @@ public class ConsoleUI implements Runnable {
     private void calcFile() {
 //        for (String singleFile : fileLocation)
         ConsoleRunner consoleRunner = new ConsoleRunner();
+        try {
+            consoleRunner.compute(fileLocation, fileNames);
+        } catch (RecognizeParamTypeException e) {
+            System.out.println(e.getMessage());
+        }
 
 //        System.out.println(fileLocation);
 //        System.out.println(fileName.get(0));

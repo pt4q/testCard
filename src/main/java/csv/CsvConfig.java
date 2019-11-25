@@ -12,4 +12,6 @@ public class CsvConfig {
     private CsvFileSeparatorEnum writerSeparator;
     @NonNull
     private CsvFileSeparatorEnum readerSeparator;
+    @NonNull
+    private String newFilePrefix;
 }

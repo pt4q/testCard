@@ -9,24 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class TestCardPrinter implements Generator<String, TestCardCalcModel> {
+public class TestCardPrinter implements Generator<List<String>, TestCardCalcModel> {
 
     @NonNull
     private TestCardConfig config;
 
     @Override
-    public String generate(TestCardCalcModel input) {
-        return generateStringLines(input).stream()
-                .map(s -> s + "\n")
-                .collect(Collectors.joining());
-    }
-
-    public List<String> generateStringLines(TestCardCalcModel testCard) {
+    public List<String> generate(TestCardCalcModel testCard) {
         return new TestCardStringGenerator(config).generate(testCard);
     }
-
-
-    private List<String> generateListOfRangeOfResearch() {
-        return null;
+    
+    public String generateString(TestCardCalcModel input) {
+        return generate(input).stream()
+                .map(s -> s + "\n")
+                .collect(Collectors.joining());
     }
 }

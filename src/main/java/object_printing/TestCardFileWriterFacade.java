@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class WriteTestCardToFile {
+public class TestCardFileWriterFacade {
 
     @NonNull
     private TestCardConfig config;
@@ -17,5 +17,4 @@ public class WriteTestCardToFile {
         CsvFileWriter csvFileWriter = new CsvFileWriter(config.getCsvConfig());
         csvFileWriter.saveStringListToFile(filePath, fileName, input);
     }
-
 }
