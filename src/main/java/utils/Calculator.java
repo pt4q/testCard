@@ -1,4 +1,4 @@
-package object_calculation;
+package utils;
 
 public interface Calculator <O, I> {
 

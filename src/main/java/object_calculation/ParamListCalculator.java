@@ -5,12 +5,13 @@ import domain.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
+import utils.Calculator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ParamListCalculator implements Calculator <List<ParamCalcModel> , List<Param>> {
+public class ParamListCalculator implements Calculator<List<ParamCalcModel> , List<Param>> {
 
     @NonNull
     private TestCardConfig config;

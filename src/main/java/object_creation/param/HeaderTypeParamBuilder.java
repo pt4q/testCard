@@ -5,7 +5,7 @@ import config.TestCardConfig;
 import domain.HeaderTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import object_creation.creation_utils.Builder;
+import utils.Builder;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 
 import java.util.List;

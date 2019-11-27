@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.RangeOfResearchCalcModel;
 import object_calculation.models.TestCardCalcModel;
+import utils.Calculator;
 
 import java.util.List;
 import java.util.OptionalDouble;

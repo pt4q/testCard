@@ -2,7 +2,7 @@ package object_creation.range_of_reserch;
 
 import domain.RangeOfResearch;
 import lombok.*;
-import object_creation.creation_utils.Creator;
+import utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import config.TestCardConfig;
 

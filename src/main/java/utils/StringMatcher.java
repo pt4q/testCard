@@ -1,4 +1,4 @@
-package object_creation.creation_utils;
+package utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,5 +21,14 @@ public class StringMatcher {
         Matcher matcher = pattern.matcher(input);
 
         return matcher;
+    }
+
+    private static boolean isDigit(String input) {
+        try {
+            Double.parseDouble(input);
+            return true;
+        }catch (NumberFormatException e){
+            return false;
+        }
     }
 }

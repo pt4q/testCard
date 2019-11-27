@@ -3,7 +3,7 @@ package object_creation.param;
 import domain.Param;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import object_creation.creation_utils.Creator;
+import utils.Creator;
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 import config.TestCardConfig;
 

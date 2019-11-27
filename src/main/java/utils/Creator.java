@@ -1,4 +1,4 @@
-package object_creation.creation_utils;
+package utils;
 
 import object_creation.param.status_and_exceptions.RecognizeParamTypeException;
 

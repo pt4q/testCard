@@ -1,9 +1,8 @@
 package ui;
 
-import domain.IntegerTypeParam;
-import object_creation.creation_utils.StringMatcher;
+import utils.Processor;
+import utils.StringMatcher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileNameProcessor implements Processor<List<String>, List<String>> {

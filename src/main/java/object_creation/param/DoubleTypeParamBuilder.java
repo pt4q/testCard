@@ -3,8 +3,8 @@ package object_creation.param;
 import domain.DoubleTypeParam;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import object_creation.creation_utils.Builder;
-import object_creation.creation_utils.StringValueConverter;
+import utils.Builder;
+import utils.StringValueConverter;
 import config.TestCardColumnsNumbers;
 import config.TestCardConfig;
 

@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import object_calculation.models.ParamCalcModel;
 import object_calculation.models.RangeOfResearchCalcModel;
+import utils.Calculator;
 
 import java.util.List;
 import java.util.OptionalDouble;
